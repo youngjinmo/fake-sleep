@@ -1,1 +1,11 @@
-// Screen provider contracts are introduced in the display slice.
+import CoreGraphics
+
+struct ScreenDescriptor: Equatable, Hashable {
+  let id: UInt32
+  let frame: CGRect
+}
+
+@MainActor
+protocol ScreenProviding {
+  func currentScreens() -> [ScreenDescriptor]
+}
