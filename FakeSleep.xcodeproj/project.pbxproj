@@ -1,0 +1,301 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* main.swift */; };
+		A10000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* AppDelegate.swift */; };
+		A10000000000000000000003 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* AppContainer.swift */; };
+		A10000000000000000000004 /* FakeSleepCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* FakeSleepCoordinator.swift */; };
+		A10000000000000000000005 /* FakeSleepState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* FakeSleepState.swift */; };
+		A10000000000000000000006 /* ScreenProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* ScreenProviding.swift */; };
+		A10000000000000000000007 /* OverlayPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* OverlayPresenting.swift */; };
+		A10000000000000000000008 /* OverlayWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* OverlayWindowController.swift */; };
+		A10000000000000000000009 /* SystemScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* SystemScreenProvider.swift */; };
+		A1000000000000000000000A /* KeyboardShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* KeyboardShortcut.swift */; };
+		A1000000000000000000000B /* HotKeyRegistering.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B /* HotKeyRegistering.swift */; };
+		A1000000000000000000000C /* CarbonHotKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C /* CarbonHotKeyController.swift */; };
+		A1000000000000000000000D /* ShortcutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D /* ShortcutStore.swift */; };
+		A1000000000000000000000E /* LoginItemManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E /* LoginItemManaging.swift */; };
+		A1000000000000000000000F /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000F /* LoginItemManager.swift */; };
+		A10000000000000000000010 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* StatusMenuController.swift */; };
+		A10000000000000000000011 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* SettingsView.swift */; };
+		A10000000000000000000012 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012 /* SettingsViewModel.swift */; };
+		A10000000000000000000013 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013 /* SettingsWindowController.swift */; };
+		A10000000000000000000014 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014 /* ShortcutRecorderView.swift */; };
+		A10000000000000000000015 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015 /* Localizable.xcstrings */; };
+		A10000000000000000000016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016 /* Assets.xcassets */; };
+		A10000000000000000000017 /* FakeSleepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000001 /* FakeSleepTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A40000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A50000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A60000000000000000000002;
+			remoteInfo = FakeSleep;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* FakeSleepCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSleepCoordinator.swift; sourceTree = "<group>"; };
+		A20000000000000000000005 /* FakeSleepState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSleepState.swift; sourceTree = "<group>"; };
+		A20000000000000000000006 /* ScreenProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProviding.swift; sourceTree = "<group>"; };
+		A20000000000000000000007 /* OverlayPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayPresenting.swift; sourceTree = "<group>"; };
+		A20000000000000000000008 /* OverlayWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayWindowController.swift; sourceTree = "<group>"; };
+		A20000000000000000000009 /* SystemScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemScreenProvider.swift; sourceTree = "<group>"; };
+		A2000000000000000000000A /* KeyboardShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcut.swift; sourceTree = "<group>"; };
+		A2000000000000000000000B /* HotKeyRegistering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRegistering.swift; sourceTree = "<group>"; };
+		A2000000000000000000000C /* CarbonHotKeyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonHotKeyController.swift; sourceTree = "<group>"; };
+		A2000000000000000000000D /* ShortcutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutStore.swift; sourceTree = "<group>"; };
+		A2000000000000000000000E /* LoginItemManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManaging.swift; sourceTree = "<group>"; };
+		A2000000000000000000000F /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
+		A20000000000000000000010 /* StatusMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
+		A20000000000000000000011 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A20000000000000000000012 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		A20000000000000000000013 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		A20000000000000000000014 /* ShortcutRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRecorderView.swift; sourceTree = "<group>"; };
+		A20000000000000000000015 /* Localizable.xcstrings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		A20000000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A20000000000000000000017 /* FakeSleep.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FakeSleep.entitlements; sourceTree = "<group>"; };
+		A20000000000000000000018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A20000000000000000000019 /* Fake Sleep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fake Sleep.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000000000000000000001A /* FakeSleepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FakeSleepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A30000000000000000000001 /* FakeSleepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSleepTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A70000000000000000000001 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A70000000000000000000002 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A80000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A80000000000000000000002 /* FakeSleep */,
+				A80000000000000000000003 /* FakeSleepTests */,
+				A80000000000000000000004 /* Products */,
+				A20000000000000000000017 /* FakeSleep.entitlements */,
+			);
+			sourceTree = "<group>";
+		};
+		A80000000000000000000002 /* FakeSleep */ = {
+			isa = PBXGroup;
+			children = (
+				A80000000000000000000005 /* App */,
+				A80000000000000000000006 /* Core */,
+				A80000000000000000000007 /* Overlay */,
+				A80000000000000000000008 /* HotKey */,
+				A80000000000000000000009 /* LoginItem */,
+				A8000000000000000000000A /* MenuBar */,
+				A8000000000000000000000B /* Settings */,
+				A8000000000000000000000C /* Resources */,
+			);
+			path = FakeSleep;
+			sourceTree = "<group>";
+		};
+		A80000000000000000000003 /* FakeSleepTests */ = {
+			isa = PBXGroup;
+			children = (A30000000000000000000001 /* FakeSleepTests.swift */);
+			path = FakeSleepTests;
+			sourceTree = "<group>";
+		};
+		A80000000000000000000004 /* Products */ = {isa = PBXGroup; children = (A20000000000000000000019 /* Fake Sleep.app */, A2000000000000000000001A /* FakeSleepTests.xctest */); name = Products; sourceTree = "<group>"; };
+		A80000000000000000000005 /* App */ = {isa = PBXGroup; children = (A20000000000000000000001 /* main.swift */, A20000000000000000000002 /* AppDelegate.swift */, A20000000000000000000003 /* AppContainer.swift */); path = App; sourceTree = "<group>"; };
+		A80000000000000000000006 /* Core */ = {isa = PBXGroup; children = (A20000000000000000000004 /* FakeSleepCoordinator.swift */, A20000000000000000000005 /* FakeSleepState.swift */, A20000000000000000000006 /* ScreenProviding.swift */); path = Core; sourceTree = "<group>"; };
+		A80000000000000000000007 /* Overlay */ = {isa = PBXGroup; children = (A20000000000000000000007 /* OverlayPresenting.swift */, A20000000000000000000008 /* OverlayWindowController.swift */, A20000000000000000000009 /* SystemScreenProvider.swift */); path = Overlay; sourceTree = "<group>"; };
+		A80000000000000000000008 /* HotKey */ = {isa = PBXGroup; children = (A2000000000000000000000A /* KeyboardShortcut.swift */, A2000000000000000000000B /* HotKeyRegistering.swift */, A2000000000000000000000C /* CarbonHotKeyController.swift */, A2000000000000000000000D /* ShortcutStore.swift */); path = HotKey; sourceTree = "<group>"; };
+		A80000000000000000000009 /* LoginItem */ = {isa = PBXGroup; children = (A2000000000000000000000E /* LoginItemManaging.swift */, A2000000000000000000000F /* LoginItemManager.swift */); path = LoginItem; sourceTree = "<group>"; };
+		A8000000000000000000000A /* MenuBar */ = {isa = PBXGroup; children = (A20000000000000000000010 /* StatusMenuController.swift */); path = MenuBar; sourceTree = "<group>"; };
+		A8000000000000000000000B /* Settings */ = {isa = PBXGroup; children = (A20000000000000000000011 /* SettingsView.swift */, A20000000000000000000012 /* SettingsViewModel.swift */, A20000000000000000000013 /* SettingsWindowController.swift */, A20000000000000000000014 /* ShortcutRecorderView.swift */); path = Settings; sourceTree = "<group>"; };
+		A8000000000000000000000C /* Resources */ = {isa = PBXGroup; children = (A20000000000000000000015 /* Localizable.xcstrings */, A20000000000000000000016 /* Assets.xcassets */, A20000000000000000000018 /* Info.plist */); path = Resources; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A60000000000000000000002 /* FakeSleep */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000002 /* Build configuration list for PBXNativeTarget "FakeSleep" */;
+			buildPhases = (A90000000000000000000001 /* Sources */, A70000000000000000000001 /* Frameworks */, A90000000000000000000002 /* Resources */);
+			buildRules = ();
+			dependencies = ();
+			name = FakeSleep;
+			productName = FakeSleep;
+			productReference = A20000000000000000000019 /* Fake Sleep.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A60000000000000000000003 /* FakeSleepTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000003 /* Build configuration list for PBXNativeTarget "FakeSleepTests" */;
+			buildPhases = (A90000000000000000000003 /* Sources */, A70000000000000000000002 /* Frameworks */, A90000000000000000000004 /* Resources */);
+			buildRules = ();
+			dependencies = (A90000000000000000000005 /* PBXTargetDependency */);
+			name = FakeSleepTests;
+			productName = FakeSleepTests;
+			productReference = A2000000000000000000001A /* FakeSleepTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A50000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					A60000000000000000000002 = {
+						CreatedOnToolsVersion = 26.0;
+						SystemCapabilities = { com.apple.Sandbox = { enabled = 1; }; };
+					};
+					A60000000000000000000003 = { CreatedOnToolsVersion = 26.0; TestTargetID = A60000000000000000000002; };
+				};
+			};
+			buildConfigurationList = AA0000000000000000000001 /* Build configuration list for PBXProject "FakeSleep" */;
+			compatibilityVersion = "Xcode 16.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, ko, Base);
+			mainGroup = A80000000000000000000001;
+			productRefGroup = A80000000000000000000004 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (A60000000000000000000002 /* FakeSleep */, A60000000000000000000003 /* FakeSleepTests */);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A90000000000000000000002 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000015 /* Localizable.xcstrings in Resources */, A10000000000000000000016 /* Assets.xcassets in Resources */); runOnlyForDeploymentPostprocessing = 0; };
+		A90000000000000000000004 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A90000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001 /* main.swift in Sources */, A10000000000000000000002 /* AppDelegate.swift in Sources */, A10000000000000000000003 /* AppContainer.swift in Sources */, A10000000000000000000004 /* FakeSleepCoordinator.swift in Sources */, A10000000000000000000005 /* FakeSleepState.swift in Sources */, A10000000000000000000006 /* ScreenProviding.swift in Sources */, A10000000000000000000007 /* OverlayPresenting.swift in Sources */, A10000000000000000000008 /* OverlayWindowController.swift in Sources */, A10000000000000000000009 /* SystemScreenProvider.swift in Sources */, A1000000000000000000000A /* KeyboardShortcut.swift in Sources */, A1000000000000000000000B /* HotKeyRegistering.swift in Sources */, A1000000000000000000000C /* CarbonHotKeyController.swift in Sources */, A1000000000000000000000D /* ShortcutStore.swift in Sources */, A1000000000000000000000E /* LoginItemManaging.swift in Sources */, A1000000000000000000000F /* LoginItemManager.swift in Sources */, A10000000000000000000010 /* StatusMenuController.swift in Sources */, A10000000000000000000011 /* SettingsView.swift in Sources */, A10000000000000000000012 /* SettingsViewModel.swift in Sources */, A10000000000000000000013 /* SettingsWindowController.swift in Sources */, A10000000000000000000014 /* ShortcutRecorderView.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		A90000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000017 /* FakeSleepTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A90000000000000000000005 /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = A60000000000000000000002 /* FakeSleep */; targetProxy = A40000000000000000000001 /* PBXContainerItemProxy */; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AB0000000000000000000001 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			}; name = Debug; };
+		AB0000000000000000000002 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			}; name = Release; };
+		AB0000000000000000000003 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fake Sleep.app/Contents/MacOS/Fake Sleep";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+			}; name = Debug; };
+		AB0000000000000000000004 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fake Sleep.app/Contents/MacOS/Fake Sleep";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+			}; name = Release; };
+		AC0000000000000000000001 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = FakeSleep/FakeSleep.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = FakeSleep/Resources/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.FakeSleep;
+				PRODUCT_MODULE_NAME = FakeSleep;
+				PRODUCT_NAME = "Fake Sleep";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			}; name = Debug; };
+		AC0000000000000000000002 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = FakeSleep/FakeSleep.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = FakeSleep/Resources/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.FakeSleep;
+				PRODUCT_MODULE_NAME = FakeSleep;
+				PRODUCT_NAME = "Fake Sleep";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			}; name = Release; };
+		AC0000000000000000000003 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+				ARCHS = arm64;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.FakeSleepTests;
+				PRODUCT_NAME = FakeSleepTests;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fake Sleep.app/Contents/MacOS/Fake Sleep";
+			}; name = Debug; };
+		AC0000000000000000000004 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+				ARCHS = arm64;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.FakeSleepTests;
+				PRODUCT_NAME = FakeSleepTests;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fake Sleep.app/Contents/MacOS/Fake Sleep";
+			}; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA0000000000000000000001 /* Build configuration list for PBXProject "FakeSleep" */ = {isa = XCConfigurationList; buildConfigurations = (AB0000000000000000000001, AB0000000000000000000002); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		AA0000000000000000000002 /* Build configuration list for PBXNativeTarget "FakeSleep" */ = {isa = XCConfigurationList; buildConfigurations = (AC0000000000000000000001, AC0000000000000000000002); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		AA0000000000000000000003 /* Build configuration list for PBXNativeTarget "FakeSleepTests" */ = {isa = XCConfigurationList; buildConfigurations = (AC0000000000000000000003, AC0000000000000000000004); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = A50000000000000000000001 /* Project object */;
+}

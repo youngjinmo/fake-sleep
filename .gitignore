@@ -1,0 +1,19 @@
+.DS_Store
+
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# Swift Package Manager checkouts and build products
+.build/
+Packages/
+
+# Local signing and editor state
+*.p12
+*.mobileprovision
+.swiftpm/
+
