@@ -28,25 +28,3 @@ enum FakeSleepError: Equatable, LocalizedError {
     NSLocalizedString(localizationKey, comment: "")
   }
 }
-
-struct ShortcutModifiers: OptionSet, Codable, Hashable {
-  let rawValue: UInt32
-
-  static let command = ShortcutModifiers(rawValue: 1 << 0)
-  static let option = ShortcutModifiers(rawValue: 1 << 1)
-  static let control = ShortcutModifiers(rawValue: 1 << 2)
-  static let shift = ShortcutModifiers(rawValue: 1 << 3)
-}
-
-struct KeyboardShortcut: Equatable, Codable, Hashable {
-  let keyCode: UInt32
-  let modifiers: ShortcutModifiers
-}
-
-@MainActor
-protocol HotKeyRegistering: AnyObject {
-  var isPrimaryRegistered: Bool { get }
-  func registerPrimary(_ shortcut: KeyboardShortcut, handler: @escaping () -> Void) throws
-  func registerEmergencyEscape(handler: @escaping () -> Void) throws
-  func unregisterEmergencyEscape()
-}

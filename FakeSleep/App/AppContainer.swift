@@ -1,17 +1,19 @@
 import AppKit
-import Carbon.HIToolbox
 
 @MainActor
 final class AppContainer {
   private let screenProvider: SystemScreenProvider
   private let overlayController: OverlayWindowController
+  private let shortcutStore: ShortcutStore
   private let hotKeyRegistrar: HotKeyRegistering
+  private let shortcutManager: ShortcutManager
   private let cursor: CursorManaging
   private let coordinator: FakeSleepCoordinator
 
   init() {
     let screenProvider = SystemScreenProvider()
     let overlayController = OverlayWindowController()
+    let shortcutStore = ShortcutStore()
     let hotKeyRegistrar = CarbonHotKeyController()
     let cursor = SystemCursorAdapter()
     let coordinator = FakeSleepCoordinator(
@@ -23,9 +25,19 @@ final class AppContainer {
 
     self.screenProvider = screenProvider
     self.overlayController = overlayController
+    self.shortcutStore = shortcutStore
     self.hotKeyRegistrar = hotKeyRegistrar
     self.cursor = cursor
     self.coordinator = coordinator
+
+    let shortcutManager = ShortcutManager(
+      store: shortcutStore,
+      registrar: hotKeyRegistrar,
+      handler: { @MainActor [weak coordinator] in
+        coordinator?.toggle()
+      }
+    )
+    self.shortcutManager = shortcutManager
 
     overlayController.onScreenConfigurationChange = { @MainActor [weak coordinator] in
       coordinator?.handleScreenConfigurationChange()
@@ -34,17 +46,7 @@ final class AppContainer {
       coordinator?.handleWake()
     }
 
-    let defaultShortcut = KeyboardShortcut(
-      keyCode: UInt32(kVK_ANSI_S),
-      modifiers: [.command, .option]
-    )
-    do {
-      try hotKeyRegistrar.registerPrimary(defaultShortcut) { @MainActor [weak coordinator] in
-        coordinator?.toggle()
-      }
-    } catch {
-      // The coordinator reports the missing restore path when activation is attempted.
-    }
+    shortcutManager.registerOnLaunch()
   }
 
   func prepareForTermination() {

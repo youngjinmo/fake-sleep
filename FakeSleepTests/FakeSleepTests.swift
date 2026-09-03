@@ -536,6 +536,175 @@ final class SystemScreenProviderTests: XCTestCase {
 }
 
 @MainActor
+final class ShortcutBehaviorTests: XCTestCase {
+  private var defaults: UserDefaults!
+  private var suiteName: String!
+
+  override func setUp() {
+    super.setUp()
+    suiteName = "FakeSleepTests.ShortcutBehavior.\(UUID().uuidString)"
+    defaults = UserDefaults(suiteName: suiteName)
+    defaults.removePersistentDomain(forName: suiteName)
+  }
+
+  override func tearDown() {
+    defaults.removePersistentDomain(forName: suiteName)
+    defaults = nil
+    suiteName = nil
+    super.tearDown()
+  }
+
+  func test빈저장소는실행시기본단축키를등록하고저장한다() {
+    let store = ShortcutStore(defaults: defaults)
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+
+    // Given: 저장된 단축키가 없다.
+    // When: 앱 실행 시 단축키를 등록한다.
+    manager.registerOnLaunch()
+
+    // Then: Option-Command-S를 등록하고 같은 값이 저장된다.
+    XCTAssertEqual(registrar.primaryRegistrations, [.defaultShortcut])
+    XCTAssertEqual(store.load(), .defaultShortcut)
+    XCTAssertEqual(manager.currentShortcut, .defaultShortcut)
+  }
+
+  func test유효한사용자단축키는등록되고저장된다() {
+    let store = ShortcutStore(defaults: defaults)
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    let customShortcut = KeyboardShortcut(keyCode: 0, modifiers: [.command])
+
+    // Given: 기본 단축키가 실행 시 등록되어 있다.
+    manager.registerOnLaunch()
+
+    // When: 유효한 사용자 단축키로 변경한다.
+    let changed = manager.setShortcut(customShortcut)
+
+    // Then: 변경에 성공하고 등록·저장 값이 사용자 단축키다.
+    XCTAssertTrue(changed)
+    XCTAssertEqual(registrar.primaryRegistrations.last, customShortcut)
+    XCTAssertEqual(store.load(), customShortcut)
+    XCTAssertEqual(manager.currentShortcut, customShortcut)
+    XCTAssertNil(manager.error)
+  }
+
+  func test수식키없는단축키는거절되고저장하지않는다() {
+    let store = ShortcutStore(defaults: defaults)
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    let invalidShortcut = KeyboardShortcut(keyCode: 0, modifiers: [])
+
+    // Given: 기본 단축키가 저장되어 있다.
+    try! store.save(.defaultShortcut)
+    manager.registerOnLaunch()
+
+    // When: 수식키가 없는 단축키를 설정한다.
+    let changed = manager.setShortcut(invalidShortcut)
+
+    // Then: 설정을 거절하고 기존 값만 유지한다.
+    XCTAssertFalse(changed)
+    XCTAssertEqual(manager.currentShortcut, .defaultShortcut)
+    XCTAssertEqual(store.load(), .defaultShortcut)
+    XCTAssertEqual(registrar.primaryRegistrations, [.defaultShortcut])
+  }
+
+  func testShift만있는단축키는거절되고저장하지않는다() {
+    let store = ShortcutStore(defaults: defaults)
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    let invalidShortcut = KeyboardShortcut(keyCode: 0, modifiers: [.shift])
+
+    // Given: 기본 단축키가 저장되어 있다.
+    try! store.save(.defaultShortcut)
+    manager.registerOnLaunch()
+
+    // When: Shift만 포함한 단축키를 설정한다.
+    let changed = manager.setShortcut(invalidShortcut)
+
+    // Then: 설정을 거절하고 기존 값만 유지한다.
+    XCTAssertFalse(changed)
+    XCTAssertEqual(manager.currentShortcut, .defaultShortcut)
+    XCTAssertEqual(store.load(), .defaultShortcut)
+    XCTAssertEqual(registrar.primaryRegistrations, [.defaultShortcut])
+  }
+
+  func testEscape녹화는취소되고기본단축키로저장하지않는다() {
+    // Given: Escape 키 입력을 녹화기에 전달한다.
+    let outcome = ShortcutRecorderLogic.outcome(keyCode: 53, modifiers: [])
+
+    // When: 녹화 결과를 확인한다.
+    // Then: Escape는 취소이며 primary 단축키가 될 수 없다.
+    guard case .cancelled = outcome else {
+      return XCTFail("Escape 녹화는 취소되어야 한다")
+    }
+    XCTAssertNil(ShortcutStore(defaults: defaults).load())
+  }
+
+  func test등록충돌은기존단축키와저장값을유지하고오류를보고한다() {
+    let store = ShortcutStore(defaults: defaults)
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    let oldShortcut = KeyboardShortcut(keyCode: 0, modifiers: [.command])
+    let newShortcut = KeyboardShortcut(keyCode: 11, modifiers: [.option, .command])
+
+    // Given: 기존 단축키가 등록·저장되어 있고 새 등록은 충돌한다.
+    try! store.save(oldShortcut)
+    manager.registerOnLaunch()
+    registrar.primaryRegistrationSucceeds = false
+
+    // When: 충돌하는 단축키로 변경한다.
+    let changed = manager.setShortcut(newShortcut)
+
+    // Then: 변경 실패를 알리고 기존 등록·저장 값을 복원한다.
+    XCTAssertFalse(changed)
+    XCTAssertEqual(manager.currentShortcut, oldShortcut)
+    XCTAssertEqual(store.load(), oldShortcut)
+    XCTAssertEqual(registrar.primaryRegistrations, [oldShortcut, newShortcut, oldShortcut])
+    XCTAssertNotNil(manager.error)
+  }
+
+  func test저장된잘못된키와수식키는기본값으로대체된다() {
+    let store = ShortcutStore(defaults: defaults)
+    defaults.set(Int(UInt32.max), forKey: "shortcut.keyCode")
+    defaults.set(Int(UInt32.max), forKey: "shortcut.modifiers")
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+
+    // Given: 저장소에 허용되지 않은 키와 수식키 비트가 있다.
+    // When: 앱 실행 시 저장된 단축키를 읽는다.
+    manager.registerOnLaunch()
+
+    // Then: 기본 단축키를 등록하고 저장한다.
+    XCTAssertEqual(registrar.primaryRegistrations, [.defaultShortcut])
+    XCTAssertEqual(store.load(), .defaultShortcut)
+    XCTAssertEqual(manager.currentShortcut, .defaultShortcut)
+  }
+
+  func test코디네이터활성화시에만EmergencyEscape를등록하고복원시에해제한다() {
+    let registrar = HotKeyRegistrarSpy()
+    let coordinator = FakeSleepCoordinator(
+      screenProvider: ScreenProviderSpy(screens: [.init(id: 1)]),
+      overlayPresenter: OverlayPresenterSpy(),
+      hotKeyRegistrar: registrar,
+      cursor: CursorSpy()
+    )
+
+    // Given: 코디네이터가 깨어 있다.
+    XCTAssertEqual(registrar.registerEmergencyEscapeCount, 0)
+    XCTAssertEqual(registrar.unregisterEmergencyEscapeCount, 0)
+
+    // When: 가짜 슬립을 활성화한 뒤 복원한다.
+    coordinator.activate()
+    XCTAssertEqual(registrar.registerEmergencyEscapeCount, 1)
+    coordinator.restore()
+
+    // Then: 활성화 중 한 번 등록되고 복원 시 한 번 해제된다.
+    XCTAssertEqual(registrar.unregisterEmergencyEscapeCount, 1)
+  }
+}
+
+@MainActor
 final class OverlayWindowControllerTests: XCTestCase {
   func test새화면마다창을하나씩생성한다() {
     let factory = OverlayWindowFactorySpy()
@@ -735,9 +904,12 @@ private final class OverlayWindowFactorySpy: OverlayWindowCreating {
 
 @MainActor
 private final class HotKeyRegistrarSpy: HotKeyRegistering {
-  let primaryRegistrationSucceeds: Bool
+  var primaryRegistrationSucceeds: Bool
   let emergencyRegistrationSucceeds: Bool
   private(set) var isPrimaryRegistered: Bool
+  private(set) var primaryRegistrations: [KeyboardShortcut] = []
+  private(set) var primaryRegistrationErrors: [Error] = []
+  private(set) var registerEmergencyEscapeCount = 0
   private(set) var unregisterEmergencyEscapeCount = 0
   private(set) var emergencyEscapeHandler: (() -> Void)?
 
@@ -748,12 +920,18 @@ private final class HotKeyRegistrarSpy: HotKeyRegistering {
   }
 
   func registerPrimary(_ shortcut: KeyboardShortcut, handler: @escaping () -> Void) throws {
-    guard primaryRegistrationSucceeds else { throw HotKeyError.unavailable }
+    primaryRegistrations.append(shortcut)
+    guard primaryRegistrationSucceeds else {
+      primaryRegistrationErrors.append(HotKeyError.unavailable)
+      isPrimaryRegistered = false
+      throw HotKeyError.unavailable
+    }
     isPrimaryRegistered = true
   }
 
   func registerEmergencyEscape(handler: @escaping () -> Void) throws {
     guard emergencyRegistrationSucceeds else { throw HotKeyError.unavailable }
+    registerEmergencyEscapeCount += 1
     emergencyEscapeHandler = handler
   }
 
