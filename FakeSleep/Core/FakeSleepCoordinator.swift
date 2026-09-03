@@ -1,3 +1,5 @@
+import Foundation
+
 @MainActor
 protocol CursorManaging {
   func hide()
@@ -12,6 +14,8 @@ final class FakeSleepCoordinator {
   private let cursor: CursorManaging
   private let onStateChange: ((FakeSleepState) -> Void)?
   private let onErrorChange: ((FakeSleepError?) -> Void)?
+  private var stateObservers: [UUID: (FakeSleepState) -> Void] = [:]
+  private var errorObservers: [UUID: (FakeSleepError?) -> Void] = [:]
 
   private var emergencyEscapeRegistered = false
   private var cursorIsHidden = false
@@ -112,6 +116,30 @@ final class FakeSleepCoordinator {
     restore()
   }
 
+  @discardableResult
+  func addStateObserver(_ observer: @escaping (FakeSleepState) -> Void) -> UUID {
+    let id = UUID()
+    stateObservers[id] = observer
+    observer(state)
+    return id
+  }
+
+  func removeStateObserver(_ id: UUID) {
+    stateObservers.removeValue(forKey: id)
+  }
+
+  @discardableResult
+  func addErrorObserver(_ observer: @escaping (FakeSleepError?) -> Void) -> UUID {
+    let id = UUID()
+    errorObservers[id] = observer
+    observer(error)
+    return id
+  }
+
+  func removeErrorObserver(_ id: UUID) {
+    errorObservers.removeValue(forKey: id)
+  }
+
   private func registerEmergencyEscape() -> Bool {
     do {
       try hotKeyRegistrar.registerEmergencyEscape { [weak self] in
@@ -172,6 +200,7 @@ final class FakeSleepCoordinator {
 
     state = newState
     onStateChange?(newState)
+    stateObservers.values.forEach { $0(newState) }
   }
 
   private func updateError(_ newError: FakeSleepError?) {
@@ -179,6 +208,7 @@ final class FakeSleepCoordinator {
 
     error = newError
     onErrorChange?(newError)
+    errorObservers.values.forEach { $0(newError) }
   }
 
   private func rollbackResources() {

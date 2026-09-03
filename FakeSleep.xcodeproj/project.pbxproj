@@ -30,6 +30,7 @@
 		A10000000000000000000015 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015 /* Localizable.xcstrings */; };
 		A10000000000000000000016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016 /* Assets.xcassets */; };
 		A10000000000000000000017 /* FakeSleepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000001 /* FakeSleepTests.swift */; };
+		A10000000000000000000018 /* InterfaceSliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000002 /* InterfaceSliceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		A20000000000000000000019 /* Fake Sleep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fake Sleep.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000000000000000000001A /* FakeSleepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FakeSleepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A30000000000000000000001 /* FakeSleepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSleepTests.swift; sourceTree = "<group>"; };
+		A30000000000000000000002 /* InterfaceSliceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceSliceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +107,7 @@
 		};
 		A80000000000000000000003 /* FakeSleepTests */ = {
 			isa = PBXGroup;
-			children = (A30000000000000000000001 /* FakeSleepTests.swift */);
+			children = (A30000000000000000000001 /* FakeSleepTests.swift */, A30000000000000000000002 /* InterfaceSliceTests.swift */);
 			path = FakeSleepTests;
 			sourceTree = "<group>";
 		};
@@ -183,7 +185,7 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		A90000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001 /* main.swift in Sources */, A10000000000000000000002 /* AppDelegate.swift in Sources */, A10000000000000000000003 /* AppContainer.swift in Sources */, A10000000000000000000004 /* FakeSleepCoordinator.swift in Sources */, A10000000000000000000005 /* FakeSleepState.swift in Sources */, A10000000000000000000006 /* ScreenProviding.swift in Sources */, A10000000000000000000007 /* OverlayPresenting.swift in Sources */, A10000000000000000000008 /* OverlayWindowController.swift in Sources */, A10000000000000000000009 /* SystemScreenProvider.swift in Sources */, A1000000000000000000000A /* KeyboardShortcut.swift in Sources */, A1000000000000000000000B /* HotKeyRegistering.swift in Sources */, A1000000000000000000000C /* CarbonHotKeyController.swift in Sources */, A1000000000000000000000D /* ShortcutStore.swift in Sources */, A1000000000000000000000E /* LoginItemManaging.swift in Sources */, A1000000000000000000000F /* LoginItemManager.swift in Sources */, A10000000000000000000010 /* StatusMenuController.swift in Sources */, A10000000000000000000011 /* SettingsView.swift in Sources */, A10000000000000000000012 /* SettingsViewModel.swift in Sources */, A10000000000000000000013 /* SettingsWindowController.swift in Sources */, A10000000000000000000014 /* ShortcutRecorderView.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
-		A90000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000017 /* FakeSleepTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		A90000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000017 /* FakeSleepTests.swift in Sources */, A10000000000000000000018 /* InterfaceSliceTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
