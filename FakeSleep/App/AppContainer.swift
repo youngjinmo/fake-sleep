@@ -9,7 +9,7 @@ final class AppContainer {
   private let shortcutManager: ShortcutManager
   private let cursor: CursorManaging
   private let coordinator: FakeSleepCoordinator
-  private let loginItemManager: LoginItemManaging
+  private let loginItemManager: LoginItemManager
   private let settingsViewModel: SettingsViewModel
   private let settingsWindowController: SettingsWindowController
   private let statusMenuController: StatusMenuController
@@ -52,7 +52,7 @@ final class AppContainer {
 
     shortcutManager.registerOnLaunch()
 
-    let loginItemManager = UnavailableLoginItemManager()
+    let loginItemManager = LoginItemManager()
     let settingsViewModel = SettingsViewModel(
       shortcutManager: shortcutManager,
       loginItemManager: loginItemManager,
@@ -87,27 +87,5 @@ private final class SystemCursorAdapter: CursorManaging {
 
   func unhide() {
     NSCursor.unhide()
-  }
-}
-
-@MainActor
-private final class UnavailableLoginItemManager: LoginItemManaging {
-  private(set) var status: LoginItemStatus = .unavailable
-
-  func setEnabled(_ enabled: Bool) throws {
-    throw LoginItemUnavailableError()
-  }
-
-  func openSystemSettings() {}
-}
-
-private struct LoginItemUnavailableError: LocalizedError {
-  var errorDescription: String? {
-    NSLocalizedString(
-      "loginItem.error.unavailable",
-      bundle: .main,
-      value: "Launch at Login is unavailable.",
-      comment: ""
-    )
   }
 }

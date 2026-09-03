@@ -8,6 +8,7 @@ enum LoginItemStatus: Equatable {
 @MainActor
 protocol LoginItemManaging: AnyObject {
   var status: LoginItemStatus { get }
+  func refreshStatus()
   func setEnabled(_ enabled: Bool) throws
   func openSystemSettings()
 }

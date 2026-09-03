@@ -65,6 +65,7 @@ final class SettingsViewModel: ObservableObject {
   }
 
   func refreshLoginItemStatus() {
+    loginItemManager.refreshStatus()
     loginItemStatus = loginItemManager.status
     refreshError()
   }

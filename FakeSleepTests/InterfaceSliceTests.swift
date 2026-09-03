@@ -132,6 +132,7 @@ final class SettingsWindowControllerTests: XCTestCase {
     // Given: 설정 창을 열었고 로그인 항목이 비활성 상태다.
     controller.open()
     XCTAssertEqual(model.loginItemStatus, .disabled)
+    XCTAssertEqual(loginItemManager.refreshStatusCalls, 1)
 
     // When: 외부에서 로그인 항목 상태가 바뀐 뒤 앱 활성화 알림을 게시한다.
     loginItemManager.status = .enabled
@@ -140,6 +141,7 @@ final class SettingsWindowControllerTests: XCTestCase {
 
     // Then: view model이 최신 로그인 항목 상태를 표시한다.
     XCTAssertEqual(model.loginItemStatus, .enabled)
+    XCTAssertEqual(loginItemManager.refreshStatusCalls, 2)
   }
 
   private func makeViewModel(
@@ -233,6 +235,28 @@ final class SettingsViewModelTests: XCTestCase {
     // Then: 새로 읽은 상태가 오류를 지우지 않는다.
     XCTAssertNotNil(model.error)
   }
+
+  func test로그인항목상태새로고침은manager의refreshStatus를호출한다() {
+    let loginItemManager = InterfaceLoginItemManagerSpy()
+    let model = SettingsViewModel(
+      shortcutManager: ShortcutManager(
+        store: ShortcutStore(defaults: UserDefaults(suiteName: UUID().uuidString)!),
+        registrar: InterfaceHotKeyRegistrarSpy(),
+        handler: {}
+      ),
+      loginItemManager: loginItemManager,
+      coordinator: nil
+    )
+
+    // Given: view model이 로그인 항목 manager를 주입받았다.
+    XCTAssertEqual(loginItemManager.refreshStatusCalls, 0)
+
+    // When: 로그인 항목 상태를 새로고침한다.
+    model.refreshLoginItemStatus()
+
+    // Then: manager의 refreshStatus가 실제로 한 번 호출된다.
+    XCTAssertEqual(loginItemManager.refreshStatusCalls, 1)
+  }
 }
 
 @MainActor
@@ -283,6 +307,7 @@ private final class InterfaceLoginItemManagerSpy: LoginItemManaging {
   var status: LoginItemStatus = .disabled
   var setEnabledSucceeds = true
   private(set) var setEnabledCalls: [Bool] = []
+  private(set) var refreshStatusCalls = 0
 
   func setEnabled(_ enabled: Bool) throws {
     setEnabledCalls.append(enabled)
@@ -290,6 +315,10 @@ private final class InterfaceLoginItemManagerSpy: LoginItemManaging {
       throw InterfaceLoginItemError.unavailable
     }
     status = enabled ? .enabled : .disabled
+  }
+
+  func refreshStatus() {
+    refreshStatusCalls += 1
   }
 
   func openSystemSettings() {}
