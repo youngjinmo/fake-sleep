@@ -15,15 +15,15 @@ final class StatusMenuControllerTests: XCTestCase {
     let menu = try XCTUnwrap(controller.statusItem.menu)
 
     // Then: 첫 항목은 시작이고 설정과 종료 항목을 포함한다.
-    XCTAssertEqual(menu.items.first?.title, "Start Fake Sleep")
-    XCTAssertTrue(menu.items.contains { $0.title == "Settings…" })
-    XCTAssertTrue(menu.items.contains { $0.title == "Quit Fake Sleep" })
+    XCTAssertEqual(menu.items.first?.title, localized("menu.startFakeSleep", fallback: "Start Fake Sleep"))
+    XCTAssertTrue(menu.items.contains { $0.title == localized("menu.settings", fallback: "Settings…") })
+    XCTAssertTrue(menu.items.contains { $0.title == localized("menu.quitFakeSleep", fallback: "Quit Fake Sleep") })
 
     // When: 주입된 코디네이터 상태를 활성으로 바꾼다.
     coordinator.activate()
 
     // Then: 첫 항목은 디스플레이 복원으로 갱신된다.
-    XCTAssertEqual(menu.items.first?.title, "Restore Displays")
+    XCTAssertEqual(menu.items.first?.title, localized("menu.restoreDisplays", fallback: "Restore Displays"))
   }
 
   func test상태에따라상태바이미지와접근성정보를갱신한다() {
@@ -82,6 +82,10 @@ final class StatusMenuControllerTests: XCTestCase {
       hotKeyRegistrar: InterfaceHotKeyRegistrarSpy(),
       cursor: InterfaceCursorSpy()
     )
+  }
+
+  private func localized(_ key: String, fallback: String) -> String {
+    NSLocalizedString(key, bundle: .main, value: fallback, comment: "")
   }
 }
 
