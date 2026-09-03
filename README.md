@@ -1,41 +1,68 @@
 # Fake Sleep
 
-## Product summary
+### A quiet, software-only blackout for every display.
 
-Fake Sleep is a native, menu-bar-only macOS utility for making connected displays look switched off. When activated, it places an opaque black software overlay over every logical display. The configured shortcut or Escape restores the displays immediately.
+[English](README.md) · [한국어](README.ko.md) · [简体中文](README.zh-CN.md)
 
-The app always starts awake and never changes the physical state of a display. It does not dim the backlight or reduce power consumption.
+Fake Sleep is a native, menu-bar-only macOS utility that makes connected displays look switched off. It places an opaque black overlay over every logical display, then removes every overlay when you restore it.
 
-## Features
+> It changes what you see, not what your display does.
 
-- Covers every connected display with a black overlay.
-- Restores all displays with the same global shortcut or emergency Escape.
-- Supports display connection, disconnection, arrangement, resolution, wake, and Space changes while active.
-- Provides a configurable global shortcut, defaulting to Option-Command-S (`⌥⌘S`).
-- Includes a menu-bar status item with Settings and Quit actions.
-- Offers optional Launch at Login through macOS Login Items.
-- Includes English and Korean UI localization.
+The app always starts awake. It does not change physical brightness, monitor power, or backlight consumption.
 
-## Requirements
+## At a glance
 
-- Apple Silicon Mac (arm64).
+| | |
+| --- | --- |
+| Platform | Apple Silicon Mac · macOS 13 Ventura or later |
+| Interface | Menu bar only — no Dock icon |
+| Default shortcut | Option-Command-S (`⌥⌘S`) |
+| Recovery | The configured shortcut, plus Escape while active |
+| Stack | AppKit, SwiftUI, Carbon, and public macOS APIs |
+
+## What it does
+
+- Covers every connected display with an opaque black window.
+- Restores all displays together from the configured global shortcut or emergency Escape.
+- Tracks display connection, removal, arrangement, resolution, wake, and Space changes while active.
+- Keeps one overlay per logical display and reconciles the set without duplicates.
+- Provides shortcut recording, reset-to-default, and optional Launch at Login settings.
+- Ships with English and Korean UI localization.
+
+## Quick start
+
+This repository is source-only. Build and run the app from Xcode:
+
+1. Open `FakeSleep.xcodeproj`.
+2. Select the `FakeSleep` scheme and **My Mac** as the destination.
+3. Run with **Product → Run**.
+4. Use the moon icon in the menu bar to start or restore Fake Sleep.
+
+## Build from source
+
+### Requirements
+
+- Apple Silicon Mac (`arm64`).
 - macOS 13 Ventura or later.
-- Full Xcode for building the project.
+- Xcode with the macOS platform installed.
 
-## Build instructions
+### Xcode
 
-Open `FakeSleep.xcodeproj` in Xcode, select the `FakeSleep` scheme, and build for **My Mac**.
+Open `FakeSleep.xcodeproj`, choose the `FakeSleep` scheme, and build for **My Mac**. The project uses Swift 6, App Sandbox, and Hardened Runtime settings.
 
-The equivalent command-line test build is:
+### Command line
+
+Run the complete XCTest suite:
 
 ```sh
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
   xcodebuild -project FakeSleep.xcodeproj \
   -scheme FakeSleep \
-  -destination 'platform=macOS,arch=arm64' test
+  -destination 'platform=macOS,arch=arm64' \
+  CODE_SIGNING_ALLOWED=NO test
 ```
 
-For a Release build without a signing identity:
+Build a Release app without a signing identity:
 
 ```sh
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
@@ -46,44 +73,54 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
   CODE_SIGNING_ALLOWED=NO build
 ```
 
-## Usage
+The commands create a local build product in Xcode’s DerivedData directory. They do not produce a notarized or App Store-ready distribution package.
 
-Fake Sleep runs in the menu bar and does not add a Dock icon. Choose **Start Fake Sleep** to cover the displays, or **Restore Displays** to remove the overlays.
+## How to use it
 
-The default global shortcut is `⌥⌘S`. Open **Settings…** to record a different shortcut. The shortcut must contain one non-modifier key and at least Command, Option, or Control. Escape cancels shortcut recording and is reserved as the emergency restore key while Fake Sleep is active.
+### Menu bar
+
+Fake Sleep has no Dock icon. Select **Start Fake Sleep** to cover the displays, **Restore Displays** to remove the overlays, **Settings…** to configure the app, or **Quit Fake Sleep** to exit.
+
+### Shortcuts
+
+The default global shortcut is `⌥⌘S`. Open **Settings…** to record another combination. A shortcut must contain one non-modifier key and at least Command, Option, or Control; Shift can be added but cannot be the only modifier.
+
+Escape cancels shortcut recording. While Fake Sleep is active, Escape is the emergency restore key. If another application owns the selected shortcut, Fake Sleep keeps the previous working shortcut and reports the conflict inline.
 
 ## Launch at Login
 
-Launch at Login is off by default. Enabling it registers Fake Sleep with the macOS Login Items service. macOS may report **Approval Required** until the user approves the app.
+Launch at Login is off by default and uses macOS Login Items through `SMAppService.mainApp`.
 
-If approval is required, open the Login Items settings from the Fake Sleep Settings window and enable Fake Sleep under **Allow in the Background** or the applicable Login Items section. The toggle only reports enabled after macOS reports the service as enabled.
+If macOS shows **Approval Required**, choose **Open Login Items Settings** in Fake Sleep Settings and approve the app in System Settings. Fake Sleep reports **Enabled** only after macOS reports the service as enabled. Reopening Settings or returning to the app refreshes the status.
 
-## Multi-display and Spaces behavior
+## Multi-display and Spaces
 
-Fake Sleep covers each logical display using its exact screen frame, including the menu bar and Dock regions. Overlays join all Spaces and remain stationary and auxiliary to full-screen applications. Connecting or disconnecting displays, changing their arrangement or resolution, and waking the Mac triggers reconciliation while Fake Sleep is active.
+Each logical display receives an overlay sized to its exact screen frame, including the menu bar and Dock regions. Overlays join all Spaces, remain stationary, and cooperate with full-screen applications.
 
-## Privacy
+Display hot-plug, resolution, rotation, arrangement, and wake notifications trigger reconciliation while Fake Sleep is active. A removed display’s overlay is closed; a new display receives one overlay.
 
-Fake Sleep has no network, telemetry, screen-capture, Apple Events, accessibility, or user-data collection feature. It uses public macOS APIs and stores only the selected shortcut in the app's standard preferences. No display image or screen content is read.
+## Privacy and limitations
 
-## Limitation
+Fake Sleep uses no network, telemetry, screen capture, Apple Events, Accessibility permission, or user-data collection. It does not read screen contents. The only saved preference is the selected shortcut.
 
-Fake Sleep uses black software overlays only. It does not change physical brightness, use DDC/CI, control monitor power, or promise energy savings. The display backlight and other hardware remain under macOS and monitor control.
+The effect is visual only: Fake Sleep uses black software overlays and does not change physical brightness, use DDC/CI, control monitor power, or reduce energy consumption.
 
 ## Troubleshooting
 
-### Shortcut conflicts
+### A shortcut is unavailable
 
-If another application owns the selected shortcut, Fake Sleep keeps the previous working shortcut and shows an inline registration error. Choose another combination in Settings or use the menu bar item. Escape remains available for emergency restoration while Fake Sleep is active when its registration succeeded.
+Another app may already own the combination. Open Settings and choose a different shortcut. Your last valid shortcut remains active when a new registration fails. Use the menu bar item or Escape for restoration when available.
 
-### Login Items approval
+### Launch at Login remains pending
 
-If Launch at Login remains in **Approval Required**, use **Open Login Items Settings**, approve Fake Sleep in System Settings, then return to the app. Reopening Settings or bringing the app to the foreground refreshes the reported status.
+Open **Open Login Items Settings**, approve Fake Sleep, and return to the app. The displayed state is refreshed when Settings opens and when the app becomes active.
 
-### Display hot-plug behavior
+### A display changes while Fake Sleep is active
 
-When a display is connected or removed while active, Fake Sleep rebuilds the overlay set on the next display-configuration notification. If a display remains uncovered after a hardware or arrangement change, restore first, confirm the display is available to macOS, and activate Fake Sleep again.
+Fake Sleep reconciles overlays after macOS posts a display-configuration notification. If a display remains uncovered, restore first, confirm that macOS sees the display, and activate Fake Sleep again.
 
 ## App Store preparation
 
-Before distribution, replace the example bundle identifier `com.example.FakeSleep` with the identifier owned by the App Store team, select the correct signing team, and configure the required signing and provisioning settings in Xcode. App Store archive signing, notarization, App Store Connect metadata, screenshots, certificates, and publication are not included in this repository.
+Before distribution, replace the example bundle identifier `com.example.FakeSleep` with an identifier owned by the signing team, select the correct development team, and configure signing and provisioning in Xcode.
+
+App Store archive signing, notarization, App Store Connect metadata, certificates, screenshots, and publication are outside the scope of this source repository.
