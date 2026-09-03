@@ -5,7 +5,10 @@ import XCTest
 @MainActor
 final class FakeSleepTests: XCTestCase {
   func testAppContainerCanBeCreated() {
-    XCTAssertNotNil(AppContainer())
+    let container = AppContainer()
+
+    XCTAssertNotNil(container)
+    container.prepareForTermination()
   }
 
   func testAwake에서활성화하면모든화면을덮고커서를숨긴다() {
@@ -232,6 +235,110 @@ final class FakeSleepTests: XCTestCase {
     XCTAssertNotNil(coordinator.error)
   }
 
+  func test활성중새화면이추가되면전체화면을다시조정한다() {
+    let screenProvider = ScreenProviderSpy(screens: [.init(id: 1)])
+    let overlayPresenter = OverlayPresenterSpy()
+    let coordinator = makeCoordinator(screenProvider: screenProvider, overlayPresenter: overlayPresenter)
+
+    // Given: 한 화면을 덮은 활성 상태다.
+    coordinator.activate()
+    screenProvider.screens = [.init(id: 1), .init(id: 2)]
+
+    // When: 화면 구성 변경 콜백을 처리한다.
+    coordinator.handleScreenConfigurationChange()
+
+    // Then: 새 화면을 포함한 전체 구성이 한 번 조정된다.
+    XCTAssertEqual(overlayPresenter.reconcileCount, 2)
+    XCTAssertEqual(overlayPresenter.reconciledIDHistory, [[1], [1, 2]])
+    XCTAssertEqual(overlayPresenter.coveredScreenIDs, [1, 2])
+  }
+
+  func test활성중화면을제거하면남은화면만조정한다() {
+    let screenProvider = ScreenProviderSpy(screens: [.init(id: 1), .init(id: 2)])
+    let overlayPresenter = OverlayPresenterSpy()
+    let coordinator = makeCoordinator(screenProvider: screenProvider, overlayPresenter: overlayPresenter)
+
+    // Given: 두 화면을 덮은 활성 상태다.
+    coordinator.activate()
+    screenProvider.screens = [.init(id: 2)]
+
+    // When: 화면 구성 변경 콜백을 처리한다.
+    coordinator.handleScreenConfigurationChange()
+
+    // Then: 남은 화면만 조정 대상으로 전달된다.
+    XCTAssertEqual(overlayPresenter.lastReconciledScreenIDs, [2])
+    XCTAssertEqual(overlayPresenter.reconciledIDHistory, [[1, 2], [2]])
+    XCTAssertEqual(overlayPresenter.coveredScreenIDs, [2])
+  }
+
+  func test같은화면구성알림을반복해도중복창생성대상이늘어나지않는다() {
+    let screenProvider = ScreenProviderSpy(screens: [.init(id: 1), .init(id: 2)])
+    let overlayPresenter = OverlayPresenterSpy()
+    let coordinator = makeCoordinator(screenProvider: screenProvider, overlayPresenter: overlayPresenter)
+
+    // Given: 두 화면을 덮은 활성 상태다.
+    coordinator.activate()
+
+    // When: 동일한 화면 구성 알림을 반복한다.
+    coordinator.handleScreenConfigurationChange()
+    coordinator.handleScreenConfigurationChange()
+
+    // Then: 각 조정의 화면 ID는 동일하며 중복 ID가 생성되지 않는다.
+    XCTAssertEqual(overlayPresenter.reconciledIDHistory, [[1, 2], [1, 2], [1, 2]])
+    XCTAssertEqual(Set(overlayPresenter.reconciledIDHistory.flatMap { $0 }), [1, 2])
+    XCTAssertEqual(overlayPresenter.coveredScreenIDs, [1, 2])
+  }
+
+  func test활성중프레임만변경하면갱신된descriptor를전달한다() {
+    let original = ScreenDescriptor(id: 1, frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    let updated = ScreenDescriptor(id: 1, frame: CGRect(x: 10, y: 20, width: 300, height: 200))
+    let screenProvider = ScreenProviderSpy(screens: [original])
+    let overlayPresenter = OverlayPresenterSpy()
+    let coordinator = makeCoordinator(screenProvider: screenProvider, overlayPresenter: overlayPresenter)
+
+    // Given: 원래 프레임으로 활성화된 상태다.
+    coordinator.activate()
+    screenProvider.screens = [updated]
+
+    // When: 화면 구성 변경 콜백을 처리한다.
+    coordinator.handleScreenConfigurationChange()
+
+    // Then: 동일 ID에 갱신된 프레임이 전달된다.
+    XCTAssertEqual(overlayPresenter.reconciledDescriptors.last, [updated])
+  }
+
+  func test깨어있는상태의topology와wake콜백은조정하지않는다() {
+    let screenProvider = ScreenProviderSpy(screens: [.init(id: 1)])
+    let overlayPresenter = OverlayPresenterSpy()
+    let coordinator = makeCoordinator(screenProvider: screenProvider, overlayPresenter: overlayPresenter)
+
+    // Given: 코디네이터가 깨어 있다.
+    // When: topology와 wake 콜백을 호출한다.
+    coordinator.handleScreenConfigurationChange()
+    coordinator.handleWake()
+
+    // Then: 조정과 창 생성에 해당하는 호출이 없다.
+    XCTAssertEqual(overlayPresenter.reconcileCount, 0)
+    XCTAssertTrue(overlayPresenter.reconciledIDHistory.isEmpty)
+  }
+
+  func testhandleWake는활성상태의현재화면구성을조정한다() {
+    let screenProvider = ScreenProviderSpy(screens: [.init(id: 1)])
+    let overlayPresenter = OverlayPresenterSpy()
+    let coordinator = makeCoordinator(screenProvider: screenProvider, overlayPresenter: overlayPresenter)
+
+    // Given: 활성화 후 현재 화면 구성이 바뀌었다.
+    coordinator.activate()
+    screenProvider.screens = [.init(id: 2), .init(id: 3)]
+
+    // When: wake 콜백을 처리한다.
+    coordinator.handleWake()
+
+    // Then: 현재 화면 ID 전체가 조정된다.
+    XCTAssertEqual(overlayPresenter.lastReconciledScreenIDs, [2, 3])
+    XCTAssertEqual(overlayPresenter.coveredScreenIDs, [2, 3])
+  }
+
   func testEscape핸들러를호출하면메인액터에서복원한다() async {
     let overlayPresenter = OverlayPresenterSpy()
     let hotKeyRegistrar = HotKeyRegistrarSpy()
@@ -290,6 +397,255 @@ final class FakeSleepTests: XCTestCase {
 }
 
 @MainActor
+final class OverlayWindowFactoryTests: XCTestCase {
+  func test실제오버레이창은전체화면을덮는창속성을설정한다() throws {
+    let factory = OverlayWindowFactory()
+    let frame = CGRect(x: 37, y: 83, width: 321, height: 219)
+
+    // Given: 실제 NSScreen 목록과 무관한 임의의 화면 프레임이 있다.
+    // When: 오버레이 창 factory로 창을 생성한다.
+    let overlay = try XCTUnwrap(factory.makeWindow(frame: frame) as? NSWindow)
+    defer { overlay.close() }
+
+    // Then: 검은색 불투명 borderless screen-saver 창의 계약을 만족한다.
+    XCTAssertEqual(overlay.frame, frame)
+    XCTAssertTrue(overlay.styleMask.contains(.borderless))
+    XCTAssertEqual(overlay.backgroundColor, .black)
+    XCTAssertTrue(overlay.isOpaque)
+    XCTAssertEqual(overlay.alphaValue, 1)
+    XCTAssertFalse(overlay.hasShadow)
+    XCTAssertTrue(overlay.ignoresMouseEvents)
+    XCTAssertFalse(overlay.isReleasedWhenClosed)
+    XCTAssertEqual(overlay.level, .screenSaver)
+    XCTAssertTrue(overlay.collectionBehavior.contains(.canJoinAllSpaces))
+    XCTAssertTrue(overlay.collectionBehavior.contains(.stationary))
+    XCTAssertTrue(overlay.collectionBehavior.contains(.fullScreenAuxiliary))
+    XCTAssertTrue(overlay.collectionBehavior.contains(.ignoresCycle))
+    XCTAssertEqual(overlay.animationBehavior, .none)
+  }
+
+  func test첫창생성실패는covered화면에서제외되고다음조정에서재시도한다() {
+    let factory = OverlayWindowFactorySpy(makeWindowResults: [true, false, true])
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+    let screens = [ScreenDescriptor(id: 1), ScreenDescriptor(id: 2)]
+
+    // Given: 첫 번째 창은 생성되고 두 번째 창은 실패한다.
+    controller.reconcile(with: screens)
+    XCTAssertEqual(factory.makeWindowFrames.count, 2)
+    XCTAssertEqual(controller.coveredScreenIDs, [1])
+
+    // When: 실패했던 두 번째 화면을 포함해 다시 조정한다.
+    controller.reconcile(with: screens)
+
+    // Then: 첫 조정에서는 첫 화면만 덮고, 실패 창 생성은 재시도되어 완료된다.
+    XCTAssertEqual(factory.makeWindowFrames.count, 3)
+    XCTAssertEqual(controller.coveredScreenIDs, [1, 2])
+  }
+
+  func test중복화면ID는창을한번만생성한다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+    let duplicateScreens = [
+      ScreenDescriptor(id: 7, frame: CGRect(x: 0, y: 0, width: 100, height: 100)),
+      ScreenDescriptor(id: 7, frame: CGRect(x: 100, y: 0, width: 200, height: 100)),
+    ]
+
+    // Given: 동일한 ID를 가진 화면 descriptor가 입력된다.
+    // When: 화면 구성을 조정한다.
+    controller.reconcile(with: duplicateScreens)
+
+    // Then: 첫 descriptor 기준으로 창을 하나만 생성한다.
+    XCTAssertEqual(factory.makeWindowFrames.count, 1)
+    XCTAssertEqual(controller.coveredScreenIDs, [7])
+  }
+
+  func test주입된알림센터의화면변경과깨움알림을각각한번전달하고해제후전달하지않는다() async {
+    let notificationCenter = NotificationCenter()
+    let workspaceNotificationCenter = NotificationCenter()
+    var screenConfigurationChangeCount = 0
+    var wakeCount = 0
+    var controller: OverlayWindowController? = OverlayWindowController(
+      factory: OverlayWindowFactorySpy(),
+      notificationCenter: notificationCenter,
+      workspaceNotificationCenter: workspaceNotificationCenter
+    )
+    controller?.onScreenConfigurationChange = { screenConfigurationChangeCount += 1 }
+    controller?.onWake = { wakeCount += 1 }
+
+    // Given: 두 개의 주입된 알림 센터에 observer가 등록되어 있다.
+    // When: 화면 변경과 깨움 알림을 각각 게시한다.
+    notificationCenter.post(name: NSApplication.didChangeScreenParametersNotification, object: nil)
+    workspaceNotificationCenter.post(name: NSWorkspace.didWakeNotification, object: nil)
+    await Task.yield()
+
+    // Then: 각 callback이 정확히 한 번 호출된다.
+    XCTAssertEqual(screenConfigurationChangeCount, 1)
+    XCTAssertEqual(wakeCount, 1)
+
+    // When: controller를 해제한 뒤 같은 알림을 다시 게시한다.
+    controller = nil
+    notificationCenter.post(name: NSApplication.didChangeScreenParametersNotification, object: nil)
+    workspaceNotificationCenter.post(name: NSWorkspace.didWakeNotification, object: nil)
+    await Task.yield()
+
+    // Then: teardown된 observer는 callback을 호출하지 않는다.
+    XCTAssertEqual(screenConfigurationChangeCount, 1)
+    XCTAssertEqual(wakeCount, 1)
+  }
+}
+
+@MainActor
+final class SystemScreenProviderTests: XCTestCase {
+  func test화면번호와프레임으로descriptor를생성한다() throws {
+    let frame = CGRect(x: 12, y: 34, width: 567, height: 890)
+
+    // Given: UInt32 범위 안의 NSNumber 화면 번호와 임의의 프레임이 있다.
+    // When: pure descriptor helper로 descriptor를 만든다.
+    let descriptor = try XCTUnwrap(
+      SystemScreenProvider.descriptor(screenNumber: NSNumber(value: UInt32.max), frame: frame)
+    )
+
+    // Then: 화면 번호는 UInt32로 변환되고 프레임은 그대로 보존된다.
+    XCTAssertEqual(descriptor.id, UInt32.max)
+    XCTAssertEqual(descriptor.frame, frame)
+  }
+
+  func testnil과UInt32범위밖화면번호는descriptor를만들지않는다() {
+    let frame = CGRect(x: 1, y: 2, width: 3, height: 4)
+
+    // Given: nil과 UInt32 최대값을 초과한 화면 번호가 있다.
+    // When: 각각 descriptor helper에 전달한다.
+    let nilDescriptor = SystemScreenProvider.descriptor(screenNumber: nil, frame: frame)
+    let outOfRangeDescriptor = SystemScreenProvider.descriptor(
+      screenNumber: NSNumber(value: UInt64(UInt32.max) + 1),
+      frame: frame
+    )
+
+    // Then: 유효하지 않은 화면 번호는 모두 nil이다.
+    XCTAssertNil(nilDescriptor)
+    XCTAssertNil(outOfRangeDescriptor)
+  }
+}
+
+@MainActor
+final class OverlayWindowControllerTests: XCTestCase {
+  func test새화면마다창을하나씩생성한다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+
+    // Given: 두 화면이 있다.
+    let screens = [
+      ScreenDescriptor(id: 1, frame: CGRect(x: 0, y: 0, width: 100, height: 100)),
+      ScreenDescriptor(id: 2, frame: CGRect(x: 100, y: 0, width: 200, height: 100)),
+    ]
+
+    // When: 화면 구성을 조정한다.
+    controller.reconcile(with: screens)
+
+    // Then: 화면마다 창 하나가 생성되고 모두 덮인다.
+    XCTAssertEqual(factory.makeWindowFrames, screens.map(\.frame))
+    XCTAssertEqual(controller.coveredScreenIDs, [1, 2])
+    XCTAssertEqual(factory.windows.count, 2)
+  }
+
+  func test반복조정은중복창을생성하지않는다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+    let screen = ScreenDescriptor(id: 1, frame: .zero)
+
+    // Given: 한 화면을 조정했다.
+    controller.reconcile(with: [screen])
+
+    // When: 동일한 조정을 반복한다.
+    controller.reconcile(with: [screen])
+    controller.reconcile(with: [screen])
+
+    // Then: 생성 호출과 창 ID가 모두 하나다.
+    XCTAssertEqual(factory.makeWindowFrames, [.zero])
+    XCTAssertEqual(Set(factory.windows.map(\.id)).count, 1)
+    XCTAssertEqual(controller.coveredScreenIDs, [1])
+  }
+
+  func test기존화면의프레임을갱신한다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+    let initial = ScreenDescriptor(id: 1, frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    let updated = ScreenDescriptor(id: 1, frame: CGRect(x: 10, y: 20, width: 300, height: 200))
+
+    // Given: 기존 화면 창이 있다.
+    controller.reconcile(with: [initial])
+    let window = try! XCTUnwrap(factory.windows.first)
+
+    // When: 같은 화면의 프레임을 변경한다.
+    controller.reconcile(with: [updated])
+
+    // Then: 창을 새로 만들지 않고 프레임만 갱신한다.
+    XCTAssertEqual(factory.makeWindowFrames.count, 1)
+    XCTAssertEqual(window.frame, updated.frame)
+  }
+
+  func test화면연결이끊기면해당창을닫고제거한다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+
+    // Given: 두 화면의 창이 있다.
+    controller.reconcile(with: [.init(id: 1), .init(id: 2)])
+    let removedWindow = factory.windows.first { $0.id == 1 }!
+
+    // When: 한 화면의 연결이 끊긴다.
+    controller.reconcile(with: [.init(id: 2)])
+
+    // Then: 끊긴 화면의 창만 닫힌다.
+    XCTAssertEqual(removedWindow.closeCount, 1)
+    XCTAssertEqual(factory.windows.filter { $0.closeCount > 0 }.map(\.id), [1])
+    XCTAssertEqual(controller.coveredScreenIDs, [2])
+  }
+
+  func testremoveAll은모든창을닫는다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+
+    // Given: 두 화면의 창이 있다.
+    controller.reconcile(with: [.init(id: 1), .init(id: 2)])
+
+    // When: 모든 오버레이를 제거한다.
+    controller.removeAll()
+
+    // Then: 모든 창을 닫고 덮은 화면을 비운다.
+    XCTAssertTrue(factory.windows.allSatisfy { $0.closeCount == 1 })
+    XCTAssertTrue(controller.coveredScreenIDs.isEmpty)
+  }
+}
+
+@MainActor
 private final class ScreenProviderSpy: ScreenProviding {
   var screens: [ScreenDescriptor]
 
@@ -309,6 +665,8 @@ private final class OverlayPresenterSpy: OverlayPresenting {
   var reconcileCount = 0
   var removeAllCount = 0
   private(set) var lastReconciledScreenIDs: Set<UInt32> = []
+  private(set) var reconciledIDHistory: [Set<UInt32>] = []
+  private(set) var reconciledDescriptors: [[ScreenDescriptor]] = []
   init(coveredScreenIDs: Set<UInt32> = []) {
     self.coveredScreenIDs = coveredScreenIDs
     partialMode = !coveredScreenIDs.isEmpty
@@ -317,6 +675,8 @@ private final class OverlayPresenterSpy: OverlayPresenting {
   func reconcile(with screens: [ScreenDescriptor]) {
     reconcileCount += 1
     lastReconciledScreenIDs = Set(screens.map(\.id))
+    reconciledIDHistory.append(lastReconciledScreenIDs)
+    reconciledDescriptors.append(screens)
     if !partialMode {
       coveredScreenIDs = lastReconciledScreenIDs
     }
@@ -325,6 +685,51 @@ private final class OverlayPresenterSpy: OverlayPresenting {
   func removeAll() {
     removeAllCount += 1
     coveredScreenIDs = []
+  }
+}
+
+@MainActor
+private final class OverlayWindowSpy: OverlayWindowing {
+  let id: UInt32
+  var frame: CGRect
+  private(set) var orderFrontRegardlessCount = 0
+  private(set) var closeCount = 0
+
+  init(id: UInt32, frame: CGRect) {
+    self.id = id
+    self.frame = frame
+  }
+
+  func orderFrontRegardless() {
+    orderFrontRegardlessCount += 1
+  }
+
+  func close() {
+    closeCount += 1
+  }
+}
+
+@MainActor
+private final class OverlayWindowFactorySpy: OverlayWindowCreating {
+  private(set) var makeWindowFrames: [CGRect] = []
+  private(set) var windows: [OverlayWindowSpy] = []
+  private var nextWindowID: UInt32 = 1
+  private var makeWindowResults: [Bool]
+
+  init(makeWindowResults: [Bool] = []) {
+    self.makeWindowResults = makeWindowResults
+  }
+
+  func makeWindow(frame: CGRect) -> OverlayWindowing? {
+    makeWindowFrames.append(frame)
+    if !makeWindowResults.isEmpty, !makeWindowResults.removeFirst() {
+      return nil
+    }
+
+    let window = OverlayWindowSpy(id: nextWindowID, frame: frame)
+    nextWindowID += 1
+    windows.append(window)
+    return window
   }
 }
 
