@@ -276,7 +276,7 @@ final class SessionCoordinatorTests: XCTestCase {
     // Then: 준비 상태를 거치지 않고 즉시 활성화된다.
     XCTAssertEqual(coordinator.state, .active)
     XCTAssertEqual(coordinator.blackoutPreparationRemaining, 0)
-    XCTAssertTrue(scheduler.scheduledIntervals.isEmpty)
+    XCTAssertEqual(scheduler.scheduledIntervals, [2])
   }
 
   func test복원안내는2초후사라지고동작감소설정이면서서히사라지지않는다() {
@@ -321,13 +321,14 @@ final class SessionCoordinatorTests: XCTestCase {
       settingsStore: store
     )
 
-    // When: blackout 세션을 두 번 시작한다.
+    // When: blackout 세션을 두 번 시작하고 두 번째 안내의 만료를 실행한다.
     coordinator.start(configuration: .init(mode: .blackout, duration: .indefinite, batteryCutoffPercent: 0))
     coordinator.endSession(reason: .manual)
     coordinator.start(configuration: .init(mode: .blackout, duration: .indefinite, batteryCutoffPercent: 0))
+    scheduler.fireNext()
 
-    // Then: 두 번째 세션도 복원 안내를 새로 표시한다.
-    XCTAssertEqual(overlay.restoreHintEvents.map(\.visible), [true, true])
+    // Then: 두 번째 세션도 복원 안내를 새로 표시하고 2초 뒤 제거한다.
+    XCTAssertEqual(overlay.restoreHintEvents.map(\.visible), [true, true, false])
   }
 
   private func makeCoordinator(

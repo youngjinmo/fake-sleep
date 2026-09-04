@@ -346,15 +346,14 @@ final class FakeSleepCoordinator: FakeSleepCoordinatorProtocol {
     if isFirstBlackoutUse {
       settingsStore?.setBlackoutSafetyIntroShown(true)
     }
-    showRestoreHint(shouldScheduleDismissal: isFirstBlackoutUse || reduceMotion)
+    showRestoreHint()
 
     scheduleSessionExpiration()
     updateError(activationWarning)
   }
 
-  private func showRestoreHint(shouldScheduleDismissal: Bool) {
+  private func showRestoreHint() {
     overlayPresenter.setRestoreHintVisible(true, animated: !reduceMotion)
-    guard shouldScheduleDismissal else { return }
     schedule(after: 2) { [weak self] in
       guard let self, self.state == .active else { return }
       self.overlayPresenter.setRestoreHintVisible(false, animated: !self.reduceMotion)

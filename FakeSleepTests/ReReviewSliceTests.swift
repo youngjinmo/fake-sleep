@@ -132,6 +132,7 @@ final class ReReviewStatusMenuTests: XCTestCase {
     coordinator.start(configuration: .init(mode: .blackout, duration: .minutes(60), batteryCutoffPercent: 0))
     scheduler.now = 60 * 60
     scheduler.fireNext()
+    scheduler.fireNext()
     controller.refresh()
 
     // Then: 피드백에 실제 선택 시간 1시간이 표시된다.
