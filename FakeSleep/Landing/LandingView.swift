@@ -117,6 +117,10 @@ struct LandingView: View {
       fallback = "Could not cover every display."
     case .emergencyEscapeUnavailable:
       fallback = "Emergency Escape could not be registered."
+    case .batteryBelowCutoff(let percent, let cutoff):
+      fallback = "Battery is at (percent)%, which is at or below the (cutoff)% cutoff."
+    case .lockTimedOut:
+      fallback = "The Mac was not locked within 60 seconds."
     }
     return localized(error.localizationKey, fallback: fallback)
   }
