@@ -16,7 +16,7 @@ Fake Sleep 是一款帮助你离开座位时保持工作的原生 macOS 菜单�
 | --- | --- |
 | 平台 | Apple Silicon Mac · macOS 13 Ventura 或更高版本 |
 | 界面 | 仅菜单栏 — 不显示 Dock 图标 |
-| 默认快捷键 | Option-Command-S (`⌥⌘S`) |
+| 默认快捷键 | Control-Command-S (`⌃⌘S`) |
 | 默认会话 | 直到你停止 |
 | 电池保护 | 电量 10% 时自动停止（可配置） |
 | 恢复方式 | 已配置的快捷键，以及激活期间的 Escape |
@@ -101,7 +101,7 @@ Fake Sleep 不会显示 Dock 图标。选择 **安全离开** 来阻止系统闲
 
 ### 快捷键
 
-默认全局快捷键为 `⌥⌘S`。打开 **Settings…** 可以录制新的组合。快捷键必须包含一个非修饰键，以及 Command、Option 或 Control 中至少一个；可以添加 Shift，但不能只使用 Shift。
+默认全局快捷键为 `⌃⌘S`。打开 **Settings…** 可以录制新的组合。快捷键必须包含一个非修饰键，以及 Command、Option 或 Control 中至少一个；可以添加 Shift，但不能只使用 Shift。
 
 Escape 会取消快捷键录制。Fake Sleep 激活时，Escape 是紧急恢复键。如果所选快捷键已被其他应用占用，Fake Sleep 会保留上一个可用快捷键，并在设置界面内显示冲突。
 

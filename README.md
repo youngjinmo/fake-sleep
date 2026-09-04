@@ -16,7 +16,7 @@ Display sleep still follows your macOS settings. Fake Sleep does not change phys
 | --- | --- |
 | Platform | Apple Silicon Mac · macOS 13 Ventura or later |
 | Interface | Menu bar only — no Dock icon |
-| Default shortcut | Option-Command-S (`⌥⌘S`) |
+| Default shortcut | Control-Command-S (`⌃⌘S`) |
 | Default session | Until you stop it |
 | Battery protection | Auto-stop at 10% on battery (configurable) |
 | Recovery | The configured shortcut, plus Escape while active |
@@ -101,7 +101,7 @@ Choose one of **30 minutes**, **1 hour**, **2 hours**, **4 hours**, or **Until y
 
 ### Shortcuts
 
-The default global shortcut is `⌥⌘S`. Open **Settings…** to record another combination. A shortcut must contain one non-modifier key and at least Command, Option, or Control; Shift can be added but cannot be the only modifier.
+The default global shortcut is `⌃⌘S`. Open **Settings…** to record another combination. A shortcut must contain one non-modifier key and at least Command, Option, or Control; Shift can be added but cannot be the only modifier.
 
 Escape cancels shortcut recording. While Fake Sleep is active, Escape is the emergency restore key. If another application owns the selected shortcut, Fake Sleep keeps the previous working shortcut and reports the conflict inline.
 
