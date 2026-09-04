@@ -10,6 +10,7 @@ protocol OverlayWindowing: AnyObject {
   // Optional hooks let the real AppKit window receive and consume the first
   // restore input without requiring every test double to model NSWindow.
   func setRestoreHandler(_ handler: (() -> Void)?)
+  func setRestoreHintVisible(_ visible: Bool, animated: Bool)
   func makeKeyAndOrderFront()
   func resignKeyOverlay()
   func setCanBecomeKey(_ canBecomeKey: Bool)
@@ -25,6 +26,8 @@ extension OverlayWindowing {
   func setRestoreHandler(_ handler: (() -> Void)?) {
     onRestoreRequested = handler
   }
+
+  func setRestoreHintVisible(_ visible: Bool, animated: Bool) {}
 
   func makeKeyAndOrderFront() {
     orderFrontRegardless()
@@ -44,6 +47,7 @@ protocol OverlayWindowCreating: AnyObject {
 final class OverlayWindow: NSWindow, OverlayWindowing {
   private var didRequestRestore = false
   private var allowsKeyWindow = true
+  private var restoreHintView: OverlayRestoreHintView?
 
   var onRestoreRequested: (() -> Void)?
 
@@ -57,6 +61,33 @@ final class OverlayWindow: NSWindow, OverlayWindowing {
 
   func setRestoreHandler(_ handler: (() -> Void)?) {
     onRestoreRequested = handler
+  }
+
+  func setRestoreHintVisible(_ visible: Bool, animated: Bool) {
+    guard let contentView else { return }
+
+    if visible {
+      let hint = restoreHintView ?? makeRestoreHintView(in: contentView)
+      restoreHintView = hint
+      hint.alphaValue = animated ? 0 : 1
+      if animated {
+        NSAnimationContext.runAnimationGroup { context in
+          context.duration = 0.2
+          hint.animator().alphaValue = 1
+        }
+      }
+      return
+    }
+
+    guard let hint = restoreHintView else { return }
+    if animated {
+      NSAnimationContext.runAnimationGroup { context in
+        context.duration = 0.2
+        hint.animator().alphaValue = 0
+      }
+    } else {
+      hint.alphaValue = 0
+    }
   }
 
   func makeKeyAndOrderFront() {
@@ -95,6 +126,13 @@ final class OverlayWindow: NSWindow, OverlayWindowing {
     didRequestRestore = true
     onRestoreRequested?()
   }
+
+  private func makeRestoreHintView(in contentView: NSView) -> OverlayRestoreHintView {
+    let hint = OverlayRestoreHintView(frame: contentView.bounds)
+    hint.autoresizingMask = [.width, .height]
+    contentView.addSubview(hint)
+    return hint
+  }
 }
 
 @MainActor
@@ -114,6 +152,9 @@ final class OverlayWindowFactory: OverlayWindowCreating {
     window.ignoresMouseEvents = false
     window.acceptsMouseMovedEvents = true
     window.isReleasedWhenClosed = false
+    window.contentView = NSView(
+      frame: NSRect(origin: .zero, size: frame.size)
+    )
     window.level = .screenSaver
     window.collectionBehavior = [
       .canJoinAllSpaces,
@@ -213,6 +254,12 @@ final class OverlayWindowController: OverlayPresenting {
     onRestoreRequested = handler
   }
 
+  func setRestoreHintVisible(_ visible: Bool, animated: Bool) {
+    for window in windows.values {
+      window.setRestoreHintVisible(visible, animated: animated)
+    }
+  }
+
   func requestRestore() {
     handleRestoreRequest()
   }
@@ -284,6 +331,57 @@ final class OverlayWindowController: OverlayPresenting {
 
     primaryWindow.setCanBecomeKey(true)
     primaryWindow.makeKeyAndOrderFront()
+  }
+}
+
+private final class OverlayRestoreHintView: NSView {
+  private let stackView = NSStackView()
+
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+    configure()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  private func configure() {
+    let title = NSTextField(labelWithString: Self.localized(
+      "overlay.restoreHint.title",
+      fallback: "The screen is covered"
+    ))
+    title.font = .systemFont(ofSize: 24, weight: .semibold)
+    title.textColor = .white
+    title.alignment = .center
+
+    let message = NSTextField(labelWithString: Self.localized(
+      "overlay.restoreHint.message",
+      fallback: "Click or press any key to return."
+    ))
+    message.font = .systemFont(ofSize: 15)
+    message.textColor = NSColor.white.withAlphaComponent(0.85)
+    message.alignment = .center
+
+    stackView.orientation = .vertical
+    stackView.alignment = .centerX
+    stackView.spacing = 8
+    stackView.addArrangedSubview(title)
+    stackView.addArrangedSubview(message)
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(stackView)
+
+    NSLayoutConstraint.activate([
+      stackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 32),
+      stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -32),
+      stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+      stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+    ])
+  }
+
+  private static func localized(_ key: String, fallback: String) -> String {
+    NSLocalizedString(key, bundle: .main, value: fallback, comment: "")
   }
 }
 

@@ -4,6 +4,7 @@ protocol OverlayPresenting: AnyObject {
   var onRestoreRequested: (() -> Void)? { get set }
   func reconcile(with screens: [ScreenDescriptor])
   func removeAll()
+  func setRestoreHintVisible(_ visible: Bool, animated: Bool)
 
   // The default implementation keeps lightweight presenters source-compatible
   // while allowing the application presenter to connect the shared restore
@@ -21,4 +22,6 @@ extension OverlayPresenting {
   func setRestoreHandler(_ handler: (() -> Void)?) {
     onRestoreRequested = handler
   }
+
+  func setRestoreHintVisible(_ visible: Bool, animated: Bool) {}
 }

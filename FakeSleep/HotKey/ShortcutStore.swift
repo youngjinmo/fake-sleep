@@ -124,6 +124,11 @@ struct ShortcutStore {
     defaults.set(Int(shortcut.modifiers.rawValue), forKey: Self.modifiersKey)
   }
 
+  func clear() {
+    defaults.removeObject(forKey: Self.keyCodeKey)
+    defaults.removeObject(forKey: Self.modifiersKey)
+  }
+
   private static let keyCodeKey = "shortcut.keyCode"
   private static let modifiersKey = "shortcut.modifiers"
 
@@ -253,6 +258,13 @@ final class ShortcutManager {
   @discardableResult
   func resetToDefault() -> Bool {
     setShortcut(.defaultShortcut)
+  }
+
+  func clearShortcut() {
+    registrar.unregisterPrimary()
+    store.clear()
+    currentShortcut = nil
+    error = nil
   }
 
   private func register(_ shortcut: KeyboardShortcut) -> Bool {

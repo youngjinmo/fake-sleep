@@ -464,7 +464,7 @@ final class OverlayWindowFactoryTests: XCTestCase {
     XCTAssertTrue(overlay.isOpaque)
     XCTAssertEqual(overlay.alphaValue, 1)
     XCTAssertFalse(overlay.hasShadow)
-    XCTAssertTrue(overlay.ignoresMouseEvents)
+    XCTAssertFalse(overlay.ignoresMouseEvents)
     XCTAssertFalse(overlay.isReleasedWhenClosed)
     XCTAssertEqual(overlay.level, .screenSaver)
     XCTAssertTrue(overlay.collectionBehavior.contains(.canJoinAllSpaces))
@@ -862,6 +862,76 @@ final class OverlayWindowControllerTests: XCTestCase {
     XCTAssertTrue(factory.windows.allSatisfy { $0.closeCount == 1 })
     XCTAssertTrue(controller.coveredScreenIDs.isEmpty)
   }
+
+  func test복원요청은callback을한번호출하고반복요청을소비한다() {
+    let controller = OverlayWindowController(
+      factory: OverlayWindowFactorySpy(),
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+    var restoreCount = 0
+    controller.setRestoreHandler { restoreCount += 1 }
+
+    // Given: 오버레이 컨트롤러에 복원 callback이 연결되어 있다.
+    // When: 복원 요청을 연속으로 전달한다.
+    controller.requestRestore()
+    controller.requestRestore()
+
+    // Then: 복원 callback은 한 번만 호출된다.
+    XCTAssertEqual(restoreCount, 1)
+  }
+
+  func test복원요청이없으면callback을호출하지않는다() {
+    let controller = OverlayWindowController(
+      factory: OverlayWindowFactorySpy(),
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+    var restoreCount = 0
+    controller.setRestoreHandler { restoreCount += 1 }
+
+    // Given: 아직 오버레이 입력이 복원 요청으로 변환되지 않았다.
+    // When: 컨트롤러 상태를 확인한다.
+
+    // Then: callback은 호출되지 않는다.
+    XCTAssertEqual(restoreCount, 0)
+  }
+
+  func test주화면만key가능하고보조화면은key불가상태를유지한다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+
+    // Given: 두 화면에 오버레이를 배치한다.
+    controller.reconcile(with: [.init(id: 1), .init(id: 2)])
+
+    // Then: 첫 화면만 key window 승격을 받고 보조 화면은 해제된다.
+    XCTAssertEqual(factory.windows[0].setCanBecomeKeyValues, [true])
+    XCTAssertEqual(factory.windows[1].setCanBecomeKeyValues, [false])
+    XCTAssertEqual(factory.windows[1].resignKeyOverlayCount, 1)
+  }
+
+  func testremoveAll은각창의복원handler를제거한다() {
+    let factory = OverlayWindowFactorySpy()
+    let controller = OverlayWindowController(
+      factory: factory,
+      notificationCenter: NotificationCenter(),
+      workspaceNotificationCenter: NotificationCenter()
+    )
+
+    // Given: 두 화면에 복원 handler가 설치되어 있다.
+    controller.reconcile(with: [.init(id: 1), .init(id: 2)])
+
+    // When: 모든 오버레이를 제거한다.
+    controller.removeAll()
+
+    // Then: 창을 닫기 전에 모든 handler가 제거된다.
+    XCTAssertEqual(factory.windows.map(\.setRestoreHandlerCount), [2, 2])
+    XCTAssertTrue(factory.windows.allSatisfy { $0.lastRestoreHandler == nil })
+  }
 }
 
 @MainActor
@@ -913,6 +983,10 @@ private final class OverlayWindowSpy: OverlayWindowing {
   var frame: CGRect
   private(set) var orderFrontRegardlessCount = 0
   private(set) var closeCount = 0
+  private(set) var setRestoreHandlerCount = 0
+  private(set) var lastRestoreHandler: (() -> Void)?
+  private(set) var setCanBecomeKeyValues: [Bool] = []
+  private(set) var resignKeyOverlayCount = 0
 
   init(id: UInt32, frame: CGRect) {
     self.id = id
@@ -925,6 +999,19 @@ private final class OverlayWindowSpy: OverlayWindowing {
 
   func close() {
     closeCount += 1
+  }
+
+  func setRestoreHandler(_ handler: (() -> Void)?) {
+    setRestoreHandlerCount += 1
+    lastRestoreHandler = handler
+  }
+
+  func setCanBecomeKey(_ canBecomeKey: Bool) {
+    setCanBecomeKeyValues.append(canBecomeKey)
+  }
+
+  func resignKeyOverlay() {
+    resignKeyOverlayCount += 1
   }
 }
 

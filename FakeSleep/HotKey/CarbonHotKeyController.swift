@@ -153,7 +153,7 @@ final class CarbonHotKeyController: HotKeyRegistering {
     }
   }
 
-  private func unregisterPrimary() {
+  func unregisterPrimary() {
     if let primaryHotKey {
       UnregisterEventHotKey(primaryHotKey)
     }

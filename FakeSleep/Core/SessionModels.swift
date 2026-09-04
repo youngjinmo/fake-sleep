@@ -18,11 +18,15 @@ enum SessionDuration: Equatable, Codable, CaseIterable {
   var interval: TimeInterval? {
     switch self {
     case .minutes(let minutes):
-      guard minutes > 0 else { return nil }
-      return TimeInterval(minutes * 60)
+      guard minutes > 0, minutes <= Int.max / 60 else { return nil }
+      return TimeInterval(minutes) * 60
     case .indefinite:
       return nil
     }
+  }
+
+  var isPreset: Bool {
+    Self.presets.contains(self)
   }
 
   var minutesValue: Int? {

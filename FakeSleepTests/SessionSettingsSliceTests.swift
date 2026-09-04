@@ -3,6 +3,15 @@ import XCTest
 @testable import FakeSleep
 
 final class SessionSettingsStoreTests: XCTestCase {
+  func test세션시간프리셋은정해진다섯가지순서로제공된다() {
+    // Given: 제품에서 허용한 세션 시간 목록이 있다.
+    // When: duration preset을 읽는다.
+    let presets = SessionDuration.presets
+
+    // Then: 30분, 1시간, 2시간, 4시간, 무제한만 제공한다.
+    XCTAssertEqual(presets, [.minutes(30), .minutes(60), .minutes(120), .minutes(240), .indefinite])
+  }
+
   func test신규저장소는확정된기본값을제공한다() {
     // Given: 비어 있는 독립 UserDefaults suite가 주입되어 있다.
     let defaults = UserDefaults(suiteName: UUID().uuidString)!
@@ -85,5 +94,19 @@ final class SessionSettingsStoreTests: XCTestCase {
     XCTAssertEqual(store.settings, original)
     XCTAssertFalse(store.isOnboardingCompleted)
     XCTAssertNil(defaults.object(forKey: "onboarding.version"))
+  }
+
+  func testblackout안전소개표시는저장소간유지되고초기값은미표시다() {
+    // Given: 비어 있는 독립 UserDefaults suite가 있다.
+    let defaults = UserDefaults(suiteName: UUID().uuidString)!
+    let store = SessionSettingsStore(defaults: defaults)
+
+    // When: blackout 안전 소개를 표시 완료로 저장하고 새 저장소를 만든다.
+    XCTAssertFalse(store.isBlackoutSafetyIntroShown)
+    store.setBlackoutSafetyIntroShown(true)
+    let restored = SessionSettingsStore(defaults: defaults)
+
+    // Then: 소개 표시 여부가 저장소 간 유지된다.
+    XCTAssertTrue(restored.isBlackoutSafetyIntroShown)
   }
 }

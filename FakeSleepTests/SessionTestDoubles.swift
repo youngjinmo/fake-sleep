@@ -50,10 +50,12 @@ final class SessionPowerMonitorSpy: PowerMonitoring {
 final class SessionSchedulerSpy: SessionScheduling {
   var now: TimeInterval = 0
   private(set) var cancelCount = 0
+  private(set) var scheduledIntervals: [TimeInterval] = []
   private var callbacks: [() -> Void] = []
 
   @discardableResult
   func schedule(after interval: TimeInterval, _ callback: @escaping () -> Void) -> UUID {
+    scheduledIntervals.append(interval)
     callbacks.append(callback)
     return UUID()
   }
@@ -67,12 +69,18 @@ final class SessionSchedulerSpy: SessionScheduling {
     guard !callbacks.isEmpty else { return }
     callbacks.removeFirst()()
   }
+
+  func fire(at index: Int) {
+    guard callbacks.indices.contains(index) else { return }
+    callbacks.remove(at: index)()
+  }
 }
 
 @MainActor
 final class SessionOverlayPresenterSpy: OverlayPresenting {
   var coveredScreenIDs: Set<UInt32>
   private(set) var removeAllCount = 0
+  private(set) var restoreHintEvents: [(visible: Bool, animated: Bool)] = []
 
   init(coveredScreenIDs: Set<UInt32> = []) {
     self.coveredScreenIDs = coveredScreenIDs
@@ -88,6 +96,10 @@ final class SessionOverlayPresenterSpy: OverlayPresenting {
   func removeAll() {
     removeAllCount += 1
     coveredScreenIDs = []
+  }
+
+  func setRestoreHintVisible(_ visible: Bool, animated: Bool) {
+    restoreHintEvents.append((visible: visible, animated: animated))
   }
 }
 
@@ -105,9 +117,16 @@ final class SessionScreenProviderSpy: ScreenProviding {
 @MainActor
 final class SessionHotKeyRegistrarSpy: HotKeyRegistering {
   var isPrimaryRegistered = true
+  var emergencyRegistrationSucceeds = true
   func registerPrimary(_ shortcut: KeyboardShortcut, handler: @escaping () -> Void) throws {}
-  func registerEmergencyEscape(handler: @escaping () -> Void) throws {}
+  func registerEmergencyEscape(handler: @escaping () -> Void) throws {
+    guard emergencyRegistrationSucceeds else { throw SessionHotKeyRegistrationError.unavailable }
+  }
   func unregisterEmergencyEscape() {}
+}
+
+private enum SessionHotKeyRegistrationError: Error {
+  case unavailable
 }
 
 @MainActor

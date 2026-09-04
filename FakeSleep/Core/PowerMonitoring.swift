@@ -13,6 +13,7 @@ final class IOKitPowerMonitor: PowerMonitoring {
   private(set) var currentSnapshot: PowerSnapshot
   private var changeHandler: ((PowerSnapshot) -> Void)?
   private var pollingTimer: Timer?
+  private var powerSourceNotification: CFRunLoopSource?
 
   init() {
     currentSnapshot = Self.readSnapshot()
@@ -22,19 +23,48 @@ final class IOKitPowerMonitor: PowerMonitoring {
     stop()
     changeHandler = onChange
     currentSnapshot = Self.readSnapshot()
+    installPowerSourceNotification()
     pollingTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-      guard let self else { return }
-      let snapshot = Self.readSnapshot()
-      guard snapshot != self.currentSnapshot else { return }
-      self.currentSnapshot = snapshot
-      self.changeHandler?(snapshot)
+      Task { @MainActor [weak self] in
+        self?.refreshSnapshot()
+      }
     }
   }
 
   func stop() {
     pollingTimer?.invalidate()
     pollingTimer = nil
+    if let powerSourceNotification {
+      CFRunLoopRemoveSource(
+        CFRunLoopGetMain(),
+        powerSourceNotification,
+        .commonModes
+      )
+      self.powerSourceNotification = nil
+    }
     changeHandler = nil
+  }
+
+  private func installPowerSourceNotification() {
+    let context = Unmanaged.passUnretained(self).toOpaque()
+    guard let source = IOPSNotificationCreateRunLoopSource(
+      powerSourceDidChange,
+      context
+    )?.takeRetainedValue() else {
+      return
+    }
+
+    powerSourceNotification = source
+    CFRunLoopAddSource(CFRunLoopGetMain(), source, .commonModes)
+  }
+
+  fileprivate func refreshSnapshot() {
+    guard changeHandler != nil else { return }
+
+    let snapshot = Self.readSnapshot()
+    guard snapshot != currentSnapshot else { return }
+    currentSnapshot = snapshot
+    changeHandler?(snapshot)
   }
 
   static func readSnapshot() -> PowerSnapshot {
@@ -72,6 +102,17 @@ final class IOKitPowerMonitor: PowerMonitoring {
     }
 
     return PowerSnapshot(isUsingBattery: foundBattery, batteryPercent: batteryPercent)
+  }
+}
+
+private func powerSourceDidChange(_ context: UnsafeMutableRawPointer?) {
+  guard let context else { return }
+
+  let monitor = Unmanaged<IOKitPowerMonitor>
+    .fromOpaque(context)
+    .takeUnretainedValue()
+  Task { @MainActor [weak monitor] in
+    monitor?.refreshSnapshot()
   }
 }
 

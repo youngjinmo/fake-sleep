@@ -7,7 +7,14 @@ protocol CursorManaging {
 }
 
 @MainActor
-final class FakeSleepCoordinator {
+protocol FakeSleepCoordinatorProtocol: AnyObject {
+  var isSessionActive: Bool { get }
+  func start(configuration: SessionConfiguration)
+  func endSession(reason: SessionEndReason)
+}
+
+@MainActor
+final class FakeSleepCoordinator: FakeSleepCoordinatorProtocol {
   private let screenProvider: ScreenProviding
   private let overlayPresenter: OverlayPresenting
   private let hotKeyRegistrar: HotKeyRegistering
@@ -15,6 +22,8 @@ final class FakeSleepCoordinator {
   private let sleepPreventer: SleepPreventing
   private let powerMonitor: PowerMonitoring
   private let scheduler: SessionScheduling
+  private let settingsStore: SessionSettingsStore?
+  private let reduceMotion: Bool
   private let onStateChange: ((FakeSleepState) -> Void)?
   private let onErrorChange: ((FakeSleepError?) -> Void)?
   private let defaultConfiguration: SessionConfiguration
@@ -28,12 +37,15 @@ final class FakeSleepCoordinator {
   private var hasCleanedResources = true
   private var activationWarning: FakeSleepError?
   private var sessionMonotonicStart: TimeInterval?
+  private var activeSessionDuration: SessionDuration?
   private var lockDeadline: TimeInterval?
+  private var blackoutPreparationDeadline: TimeInterval?
 
   private(set) var state: FakeSleepState = .inactive
   private(set) var error: FakeSleepError?
   private(set) var currentSession: FakeSleepSession?
   private(set) var lastEndReason: SessionEndReason?
+  private(set) var lastEndedSessionDuration: SessionDuration?
 
   var isSessionActive: Bool { state != .inactive }
 
@@ -59,6 +71,14 @@ final class FakeSleepCoordinator {
     return max(0, deadline - scheduler.now)
   }
 
+  var blackoutPreparationRemaining: TimeInterval {
+    guard state == .preparingBlackout,
+          let deadline = blackoutPreparationDeadline else {
+      return 0
+    }
+    return max(0, deadline - scheduler.now)
+  }
+
   init(
     screenProvider: ScreenProviding,
     overlayPresenter: OverlayPresenting,
@@ -67,6 +87,8 @@ final class FakeSleepCoordinator {
     sleepPreventer: SleepPreventing = NoopSleepPreventer(),
     powerMonitor: PowerMonitoring = NoopPowerMonitor(),
     scheduler: SessionScheduling = NoopSessionScheduler(),
+    settingsStore: SessionSettingsStore? = nil,
+    reduceMotion: Bool = false,
     defaultConfiguration: SessionConfiguration = SessionConfiguration(
       mode: .blackout,
       duration: .indefinite,
@@ -82,6 +104,8 @@ final class FakeSleepCoordinator {
     self.sleepPreventer = sleepPreventer
     self.powerMonitor = powerMonitor
     self.scheduler = scheduler
+    self.settingsStore = settingsStore
+    self.reduceMotion = reduceMotion
     self.defaultConfiguration = defaultConfiguration
     self.onStateChange = onStateChange
     self.onErrorChange = onErrorChange
@@ -111,6 +135,7 @@ final class FakeSleepCoordinator {
 
     clearErrorForActivation()
     lastEndReason = nil
+    lastEndedSessionDuration = nil
     activationWarning = nil
     hasCleanedResources = false
 
@@ -129,6 +154,7 @@ final class FakeSleepCoordinator {
 
     let monotonicStart = scheduler.now
     sessionMonotonicStart = monotonicStart
+    activeSessionDuration = normalizedConfiguration.duration
     lockDeadline = nil
     let startedAt = Date()
     let durationInterval = normalizedConfiguration.duration.interval
@@ -149,12 +175,13 @@ final class FakeSleepCoordinator {
       self?.handlePowerChange(snapshot)
     }
 
-    guard registerEmergencyEscape() else {
+    let emergencyEscapeAvailable = registerEmergencyEscape()
+    guard hotKeyRegistrar.isPrimaryRegistered || emergencyEscapeAvailable else {
       failActivation(.noRestorePath)
       return
     }
 
-    if !hotKeyRegistrar.isPrimaryRegistered {
+    if !emergencyEscapeAvailable {
       activationWarning = .emergencyEscapeUnavailable
     }
 
@@ -176,6 +203,7 @@ final class FakeSleepCoordinator {
     }
 
     lastEndReason = reason
+    lastEndedSessionDuration = activeSessionDuration
     let cutoff = currentSession?.batteryCutoffPercent ?? 0
     cleanupResources()
     currentSession = nil
@@ -192,6 +220,11 @@ final class FakeSleepCoordinator {
     }
   }
 
+  func cancelBlackoutPreparation() {
+    guard state == .preparingBlackout else { return }
+    endSession(reason: .manual)
+  }
+
   func restore() {
     guard hasResourcesToClean else {
       updateError(nil)
@@ -202,13 +235,21 @@ final class FakeSleepCoordinator {
   }
 
   func handleWorkspaceSessionDidResignActive() {
-    guard state == .awaitingSystemLock else { return }
-    updateLockState(.locked)
-    updateState(.active)
+    guard currentSession?.mode == .secureLeave else { return }
+
+    switch state {
+    case .awaitingSystemLock:
+      updateLockState(.locked)
+      updateState(.active)
+    case .active:
+      updateLockState(.locked)
+    case .inactive, .preparingBlackout, .awake, .fakeSleeping:
+      break
+    }
   }
 
   func handleWorkspaceSessionDidBecomeActive() {
-    guard currentSession != nil else { return }
+    guard state == .active, currentSession?.mode == .secureLeave else { return }
     updateLockState(.unlocked)
   }
 
@@ -260,10 +301,30 @@ final class FakeSleepCoordinator {
       guard let self, self.state == .awaitingSystemLock else { return }
       self.endSession(reason: .lockTimedOut)
     }
+    scheduleSessionExpiration()
   }
 
   private func beginBlackout() {
+    guard shouldPrepareBlackout else {
+      activateBlackout()
+      return
+    }
+
+    let deadline = scheduler.now + 3
+    blackoutPreparationDeadline = deadline
     updateState(.preparingBlackout)
+    schedule(after: 3) { [weak self] in
+      guard let self, self.state == .preparingBlackout else { return }
+      self.blackoutPreparationDeadline = nil
+      self.activateBlackout()
+    }
+  }
+
+  private var shouldPrepareBlackout: Bool {
+    settingsStore?.isBlackoutSafetyIntroShown == false
+  }
+
+  private func activateBlackout() {
 
     let screens = screenProvider.currentScreens()
     guard !screens.isEmpty else {
@@ -281,12 +342,40 @@ final class FakeSleepCoordinator {
     cursorIsHidden = true
     updateState(.active)
 
-    if currentSession?.monotonicDeadline != nil {
-      schedule(after: remainingDuration) { [weak self] in
-        self?.endSession(reason: .timerExpired)
-      }
+    let isFirstBlackoutUse = shouldPrepareBlackout
+    if isFirstBlackoutUse {
+      settingsStore?.setBlackoutSafetyIntroShown(true)
     }
+    showRestoreHint(shouldScheduleDismissal: isFirstBlackoutUse || reduceMotion)
+
+    scheduleSessionExpiration()
     updateError(activationWarning)
+  }
+
+  private func showRestoreHint(shouldScheduleDismissal: Bool) {
+    overlayPresenter.setRestoreHintVisible(true, animated: !reduceMotion)
+    guard shouldScheduleDismissal else { return }
+    schedule(after: 2) { [weak self] in
+      guard let self, self.state == .active else { return }
+      self.overlayPresenter.setRestoreHintVisible(false, animated: !self.reduceMotion)
+    }
+  }
+
+  private func scheduleSessionExpiration() {
+    guard let deadline = currentSession?.monotonicDeadline else { return }
+
+    schedule(after: max(0, deadline - scheduler.now)) { [weak self] in
+      guard let self,
+            let currentDeadline = self.currentSession?.monotonicDeadline else {
+        return
+      }
+
+      guard self.scheduler.now >= currentDeadline else {
+        self.scheduleSessionExpiration()
+        return
+      }
+      self.endSession(reason: .timerExpired)
+    }
   }
 
   private func failActivation(_ failure: FakeSleepError) {
@@ -403,7 +492,9 @@ final class FakeSleepCoordinator {
     updateState(.inactive)
     activationWarning = nil
     sessionMonotonicStart = nil
+    activeSessionDuration = nil
     lockDeadline = nil
+    blackoutPreparationDeadline = nil
     hasCleanedResources = true
   }
 
@@ -417,19 +508,21 @@ final class FakeSleepCoordinator {
 
   private func updateLockState(_ lockState: SessionLockState) {
     guard var session = currentSession else { return }
+    guard session.lockState != lockState else { return }
     session.lockState = lockState
     currentSession = session
+    notifyStateObservers()
   }
 
   private func updateState(_ newState: FakeSleepState) {
     guard state != newState else { return }
     state = newState
-    // The preparing phase is an internal transactional phase. Keep the
-    // original observer contract focused on externally visible states while
-    // still exposing the phase through `state` to synchronous callers.
-    guard newState != .preparingBlackout else { return }
     onStateChange?(newState)
     stateObservers.values.forEach { $0(newState) }
+  }
+
+  private func notifyStateObservers() {
+    stateObservers.values.forEach { $0(state) }
   }
 
   private func updateError(_ newError: FakeSleepError?) {

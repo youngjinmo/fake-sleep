@@ -122,7 +122,11 @@ struct SessionSettingsStore {
 
   private func loadDuration() -> SessionDuration? {
     guard let data = defaults.data(forKey: Key.defaultDuration) else { return nil }
-    return try? decoder.decode(SessionDuration.self, from: data)
+    guard let duration = try? decoder.decode(SessionDuration.self, from: data),
+          duration.isPreset else {
+      return nil
+    }
+    return duration
   }
 
   private func loadBatteryCutoff() -> Int? {
@@ -151,11 +155,6 @@ struct SessionSettingsStore {
   }
 
   private static func normalizedDuration(_ duration: SessionDuration) -> SessionDuration {
-    switch duration {
-    case .indefinite:
-      return .indefinite
-    case .minutes(let minutes):
-      return minutes > 0 ? .minutes(minutes) : .indefinite
-    }
+    duration.isPreset ? duration : defaultSettings.defaultDuration
   }
 }
