@@ -11,6 +11,56 @@ final class FakeSleepTests: XCTestCase {
     container.prepareForTermination()
   }
 
+  func testAppContainer기본설정에서는실제랜딩창을자동으로표시한다() {
+    let suiteName = UUID().uuidString
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let presentationStore = LandingPresentationStore(defaults: defaults)
+
+    // Given: 처음 실행하는 앱처럼 랜딩 표시 설정이 비어 있다.
+    let container = AppContainer(landingPresentationStore: presentationStore)
+    defer { container.prepareForTermination() }
+
+    // When: AppContainer의 실제 조립이 끝난다.
+    // Then: 기본 설정에 따라 실제 랜딩 창이 표시된다.
+    XCTAssertTrue(NSApp.windows.contains {
+      $0.title == NSLocalizedString("landing.title", bundle: .main, value: "Fake Sleep", comment: "")
+    })
+  }
+
+  func testAppContainer메뉴와종료준비postcondition을확인한다() throws {
+    // Given: 실제 앱 컨테이너가 시스템 상태 표시줄에 메뉴를 구성한다.
+    let container = AppContainer()
+    defer { container.prepareForTermination() }
+    let statusMenuController = Mirror(reflecting: container).children.first {
+      $0.label == "statusMenuController"
+    }?.value as? StatusMenuController
+    let statusItem = statusMenuController?.statusItem
+    let userGuideItem = statusItem?.menu?.items.first {
+      $0.title == NSLocalizedString("menu.showUserGuide", bundle: .main, value: "Show User Guide", comment: "")
+    }
+    XCTAssertNotNil(statusItem)
+    XCTAssertNotNil(userGuideItem)
+    NSApp.windows
+      .filter { $0.title == NSLocalizedString("landing.title", bundle: .main, value: "Fake Sleep", comment: "") }
+      .forEach { $0.close() }
+
+    // When: Show User Guide 메뉴 항목의 실제 action을 호출하고 앱 종료를 준비한다.
+    let action = try XCTUnwrap(userGuideItem?.action)
+    let didSendUserGuideAction = NSApp.sendAction(action, to: userGuideItem?.target, from: userGuideItem)
+    XCTAssertTrue(didSendUserGuideAction)
+    XCTAssertTrue(NSApp.windows.contains {
+      $0.title == NSLocalizedString("landing.title", bundle: .main, value: "Fake Sleep", comment: "")
+    })
+    container.prepareForTermination()
+
+    // Then: 종료 후 랜딩 창과 상태 표시줄 항목이 정리된다.
+    XCTAssertFalse(NSApp.windows.contains {
+      $0.isVisible && $0.title == NSLocalizedString("landing.title", bundle: .main, value: "Fake Sleep", comment: "")
+    })
+    XCTAssertNil(statusItem?.menu)
+  }
+
   func testAwake에서활성화하면모든화면을덮고커서를숨긴다() {
     let screenProvider = ScreenProviderSpy(screens: [.init(id: 1), .init(id: 2)])
     let overlayPresenter = OverlayPresenterSpy()

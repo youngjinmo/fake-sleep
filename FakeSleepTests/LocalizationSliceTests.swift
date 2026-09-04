@@ -138,6 +138,29 @@ final class LocalizationSliceTests: XCTestCase {
     }
   }
 
+  func testLandingShortcutInstruction은네언어에서placeholder하나만사용한다() throws {
+    // Given: 앱 번들의 Localizable String Catalog에서 랜딩 단축키 안내를 읽는다.
+    let catalog = try loadJSONResource(named: "Localizable", ext: "xcstrings")
+    let strings = try XCTUnwrap(catalog["strings"] as? [String: Any])
+    let entry = try XCTUnwrap(strings["landing.shortcutInstruction"] as? [String: Any])
+    let localizations = try XCTUnwrap(entry["localizations"] as? [String: Any])
+
+    // When: 네 언어의 실제 표시 문자열을 확인한다.
+    for language in ["en", "ko", "ja", "zh-Hans"] {
+      let value = try stringValue(
+        localizations[language],
+        key: "landing.shortcutInstruction",
+        language: language
+      )
+      let placeholderCount = value.components(separatedBy: "%@").count - 1
+      let remainingValue = value.replacingOccurrences(of: "%@", with: "")
+
+      // Then: %@는 정확히 하나이고 malformed percent token이 없다.
+      XCTAssertEqual(placeholderCount, 1, "%@ placeholder 개수 오류: \(language)")
+      XCTAssertFalse(remainingValue.contains("%"), "malformed percent token: \(language): \(value)")
+    }
+  }
+
   private func stringValue(_ rawLocalization: Any?, key: String, language: String) throws -> String {
     let localization = try XCTUnwrap(rawLocalization as? [String: Any], "\(key)의 \(language) localization 누락")
     let stringUnit = try XCTUnwrap(localization["stringUnit"] as? [String: Any])
