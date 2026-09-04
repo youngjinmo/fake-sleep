@@ -14,6 +14,10 @@ final class LandingWindowController: NSWindowController, NSWindowDelegate {
     self.coordinator = coordinator
     super.init(window: nil)
 
+    viewModel.setOnboardingCompletionHandler { [weak self] in
+      self?.close()
+    }
+
     stateObserverID = coordinator.addStateObserver { [weak self] state in
       guard state == .fakeSleeping else { return }
       self?.close()
@@ -28,6 +32,8 @@ final class LandingWindowController: NSWindowController, NSWindowDelegate {
   func open() {
     guard !isPreparedForTermination else { return }
 
+    viewModel.beginOnboarding()
+
     if window == nil {
       window = makeWindow()
     }
@@ -41,7 +47,7 @@ final class LandingWindowController: NSWindowController, NSWindowDelegate {
 
   @discardableResult
   func openAtLaunchIfNeeded() -> Bool {
-    guard !isPreparedForTermination, viewModel.showsAtLaunch else { return false }
+    guard !isPreparedForTermination, viewModel.shouldShowOnboarding else { return false }
 
     open()
     return window != nil
@@ -50,6 +56,7 @@ final class LandingWindowController: NSWindowController, NSWindowDelegate {
   override func close() {
     guard let window else { return }
 
+    viewModel.cancelOnboarding()
     window.delegate = nil
     window.close()
     self.window = nil
@@ -71,6 +78,7 @@ final class LandingWindowController: NSWindowController, NSWindowDelegate {
       return
     }
 
+    viewModel.cancelOnboarding()
     window = nil
   }
 
@@ -88,7 +96,7 @@ final class LandingWindowController: NSWindowController, NSWindowDelegate {
   private func makeWindow() -> NSWindow {
     let contentView = NSHostingView(rootView: LandingView(viewModel: viewModel))
     let landingWindow = NSWindow(
-      contentRect: NSRect(x: 0, y: 0, width: 520, height: 500),
+      contentRect: NSRect(x: 0, y: 0, width: 560, height: 520),
       styleMask: [.titled, .closable],
       backing: .buffered,
       defer: false
@@ -100,6 +108,8 @@ final class LandingWindowController: NSWindowController, NSWindowDelegate {
       comment: ""
     )
     landingWindow.isReleasedWhenClosed = false
+    landingWindow.minSize = NSSize(width: 560, height: 520)
+    landingWindow.maxSize = NSSize(width: 560, height: 520)
     landingWindow.contentView = contentView
     landingWindow.delegate = self
     landingWindow.center()

@@ -57,6 +57,11 @@ final class LocalizationSliceTests: XCTestCase {
     "landing.openSettings",
     "landing.dontShowAtLaunch",
     "menu.showUserGuide",
+    // Session mode and activation failure copy.
+    "mode.secureLeave",
+    "mode.blackout",
+    "fakeSleep.error.batteryBelowCutoff",
+    "fakeSleep.error.lockTimedOut",
   ]
 
   func testLocalizableCatalog에는필수키와네언어의비어있지않은값이있다() throws {

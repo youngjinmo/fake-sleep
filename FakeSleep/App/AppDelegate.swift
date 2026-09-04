@@ -12,4 +12,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     container?.prepareForTermination()
     return .terminateNow
   }
+
+  func applicationWillTerminate(_ notification: Notification) {
+    container?.prepareForTermination()
+  }
 }

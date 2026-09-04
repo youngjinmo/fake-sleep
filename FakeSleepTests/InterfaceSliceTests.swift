@@ -15,6 +15,7 @@ final class StatusMenuControllerTests: XCTestCase {
     let menu = try XCTUnwrap(controller.statusItem.menu)
 
     // Then: 첫 항목은 시작이고 설정과 종료 항목을 포함한다.
+    XCTAssertFalse(menu.autoenablesItems)
     XCTAssertEqual(menu.items.first?.title, localized("menu.startFakeSleep", fallback: "Start Fake Sleep"))
     XCTAssertTrue(menu.items.contains { $0.title == localized("menu.settings", fallback: "Settings…") })
     XCTAssertTrue(menu.items.contains { $0.title == localized("menu.quitFakeSleep", fallback: "Quit Fake Sleep") })

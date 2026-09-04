@@ -3,48 +3,44 @@ import XCTest
 @testable import FakeSleep
 
 final class LandingPresentationStoreTests: XCTestCase {
-  func test저장된값이없으면앱실행시표시한다() {
+  func test완료버전이없으면온보딩을앱실행시에표시한다() {
     // Given: 비어 있는 독립 UserDefaults suite가 주입되어 있다.
     let defaults = UserDefaults(suiteName: UUID().uuidString)!
     let store = LandingPresentationStore(defaults: defaults)
 
-    // When: 앱 실행 시 안내 표시 여부를 읽는다.
-    let showsAtLaunch = store.showsAtLaunch
+    // When: 앱 실행 시 온보딩 표시 여부를 읽는다.
+    let shouldShowOnboarding = store.shouldShowOnboarding
 
-    // Then: 저장된 값이 없으면 안내를 표시한다.
-    XCTAssertTrue(showsAtLaunch)
+    // Then: 완료 버전이 없으면 온보딩을 표시한다.
+    XCTAssertTrue(shouldShowOnboarding)
   }
 
-  func test앱실행시표시여부를끄고켜면새저장소에서도값을읽는다() {
+  func testlegacy표시안함값은온보딩자동표시정책에영향을주지않는다() {
+    // Given: 이전 버전의 앱 실행 표시 안 함 값만 저장되어 있다.
+    let defaults = UserDefaults(suiteName: UUID().uuidString)!
+    let store = LandingPresentationStore(defaults: defaults)
+
+    // When: legacy 표시 안 함 값을 저장하고 새 저장소에서 정책을 읽는다.
+    store.setShowsAtLaunch(false)
+    let restoredStore = LandingPresentationStore(defaults: defaults)
+
+    // Then: legacy 값은 호환성을 위해 읽히지만 새 온보딩은 표시한다.
+    XCTAssertFalse(restoredStore.showsAtLaunch)
+    XCTAssertTrue(restoredStore.shouldShowOnboarding)
+  }
+
+  func test온보딩버전1을완료하면새저장소에서도자동표시하지않는다() {
     // Given: 독립 UserDefaults suite에 연결된 저장소가 있다.
     let defaults = UserDefaults(suiteName: UUID().uuidString)!
     let store = LandingPresentationStore(defaults: defaults)
 
-    // When: 앱 실행 시 표시 여부를 차례로 끄고 켠다.
-    store.setShowsAtLaunch(false)
-    let hiddenStore = LandingPresentationStore(defaults: defaults)
-    let hiddenValue = hiddenStore.showsAtLaunch
-    store.setShowsAtLaunch(true)
-    let shownStore = LandingPresentationStore(defaults: defaults)
+    // When: 온보딩 버전 1을 완료 처리하고 새 저장소에서 읽는다.
+    store.markOnboardingCompleted(version: 1)
+    let restoredStore = LandingPresentationStore(defaults: defaults)
 
-    // Then: 각 설정이 UserDefaults에 저장되고 다시 읽힌다.
-    XCTAssertFalse(hiddenValue)
-    XCTAssertTrue(shownStore.showsAtLaunch)
-  }
-
-  func test서로다른UserDefaultssuite의앱실행시표시여부를격리한다() {
-    // Given: 서로 다른 UUID suite에 연결된 두 저장소가 있다.
-    let firstDefaults = UserDefaults(suiteName: UUID().uuidString)!
-    let secondDefaults = UserDefaults(suiteName: UUID().uuidString)!
-    let firstStore = LandingPresentationStore(defaults: firstDefaults)
-    let secondStore = LandingPresentationStore(defaults: secondDefaults)
-
-    // When: 첫 번째 suite에서만 앱 실행 시 표시를 끈다.
-    firstStore.setShowsAtLaunch(false)
-
-    // Then: 두 번째 suite의 기본 표시 설정에는 영향을 주지 않는다.
-    XCTAssertFalse(firstStore.showsAtLaunch)
-    XCTAssertTrue(secondStore.showsAtLaunch)
+    // Then: 버전 1 완료 사용자는 앱 실행 시 온보딩을 표시하지 않는다.
+    XCTAssertFalse(restoredStore.shouldShowOnboarding)
+    XCTAssertTrue(restoredStore.isOnboardingCompleted)
   }
 }
 

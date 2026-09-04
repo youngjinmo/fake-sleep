@@ -4,6 +4,7 @@ import SwiftUI
 struct ShortcutRecorderView: View {
   let shortcut: KeyboardShortcut?
   let onRecord: (KeyboardShortcut) -> Void
+  var isEnabled = true
 
   @State private var isRecording = false
   @State private var recordingError: ShortcutValidationError?
@@ -27,6 +28,7 @@ struct ShortcutRecorderView: View {
           recordingError = nil
           isRecording.toggle()
         }
+        .disabled(!isEnabled)
         .accessibilityLabel(
           Self.localized("shortcut.record.accessibilityLabel", fallback: "Record shortcut")
         )
@@ -47,6 +49,7 @@ struct ShortcutRecorderView: View {
       }
       .frame(width: 1, height: 1)
       .opacity(0.01)
+      .allowsHitTesting(isEnabled)
 
       if let recordingError {
         Text(recordingError.localizedDescription)

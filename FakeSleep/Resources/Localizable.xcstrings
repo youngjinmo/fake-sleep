@@ -1,6 +1,34 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "fakeSleep.error.batteryBelowCutoff" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery reached the configured cutoff, so the session stopped."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリーが設定したしきい値に達したため、セッションを終了しました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리가 설정한 기준 이하가 되어 세션을 종료했습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池电量达到设定阈值，因此会话已停止。"
+          }
+        }
+      }
+    },
     "fakeSleep.error.emergencyEscapeUnavailable" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -55,6 +83,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法覆盖所有显示器。"
+          }
+        }
+      }
+    },
+    "fakeSleep.error.lockTimedOut" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Mac was not locked within 60 seconds, so the session stopped."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "60秒以内にMacがロックされなかったため、セッションを終了しました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "60초 안에 Mac이 잠기지 않아 세션을 종료했습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac 未在 60 秒内锁定，因此会话已停止。"
           }
         }
       }
@@ -1333,6 +1389,1434 @@
         }
       }
     },
+    "onboarding.battery.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On battery power, end the session at or below this level."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリー使用時は、この残量以下になるとセッションを終了します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리 전원에서는 이 잔량 이하가 되면 세션을 종료합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用电池供电时，电量达到此数值或更低将结束会话。"
+          }
+        }
+      }
+    },
+    "onboarding.battery.disabled" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic battery stop is off."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリーによる自動終了はオフです。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리 자동 종료가 꺼져 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池自动停止已关闭。"
+          }
+        }
+      }
+    },
+    "onboarding.battery.inputPlaceholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percent"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パーセント"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "퍼센트"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "百分比"
+          }
+        }
+      }
+    },
+    "onboarding.battery.invalid" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a battery percentage from 0 to 100."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリー残量は0〜100の範囲で入力してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리 잔량을 0에서 100 사이로 입력하세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入 0 到 100 之间的电池百分比。"
+          }
+        }
+      }
+    },
+    "onboarding.battery.stepper" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop at %@ battery"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリー%@で停止"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리 %@에서 종료"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电量达到 %@ 时停止"
+          }
+        }
+      }
+    },
+    "onboarding.battery.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery auto-stop"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリー自動終了"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리 자동 종료"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池自动停止"
+          }
+        }
+      }
+    },
+    "onboarding.cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "취소"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
+    "onboarding.completion.failed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings could not be saved. Try again."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を保存できませんでした。もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정을 저장할 수 없습니다. 다시 시도하세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存设置，请重试。"
+          }
+        }
+      }
+    },
+    "onboarding.complete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish Setup"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を完了"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 완료"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成设置"
+          }
+        }
+      }
+    },
+    "onboarding.duration.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default session time"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトのセッション時間"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기본 세션 시간"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认会话时长"
+          }
+        }
+      }
+    },
+    "onboarding.loginAtLaunch.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch at login"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に起動"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그인 시 실행"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录时启动"
+          }
+        }
+      }
+    },
+    "onboarding.mode.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The recommended mode keeps the Mac running and relies on macOS for account security."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推奨モードはMacを動かし続け、アカウントの安全はmacOSに任せます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "권장 모드는 Mac을 계속 작동시키고 계정 보안은 macOS에 맡깁니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推荐模式会让 Mac 保持运行，并由 macOS 负责账户安全。"
+          }
+        }
+      }
+    },
+    "onboarding.mode.notSelected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not selected"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未選択"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택되지 않음"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未选择"
+          }
+        }
+      }
+    },
+    "onboarding.mode.selected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택됨"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选择"
+          }
+        }
+      }
+    },
+    "onboarding.mode.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose how to leave your Mac"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Macを離れる方法を選択"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac을 비울 방법을 선택하세요"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择离开 Mac 的方式"
+          }
+        }
+      }
+    },
+    "onboarding.next" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次へ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一步"
+          }
+        }
+      }
+    },
+    "onboarding.previous" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이전"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一步"
+          }
+        }
+      }
+    },
+    "onboarding.progress" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d/3"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d/3"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d/3"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d/3"
+          }
+        }
+      }
+    },
+    "onboarding.progress.accessibilityLabel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step %@ of 3"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3ステップ中%@ステップ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3단계 중 %@단계"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %@ 步，共 3 步"
+          }
+        }
+      }
+    },
+    "onboarding.settings.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can change these choices later in Settings."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これらの選択は後で設定から変更できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 선택은 나중에 설정에서 변경할 수 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "稍后可以在设置中更改这些选项。"
+          }
+        }
+      }
+    },
+    "onboarding.settings.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set your defaults"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトを設定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기본 설정을 선택하세요"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置默认选项"
+          }
+        }
+      }
+    },
+    "onboarding.shortcut.invalid" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a valid shortcut."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効なショートカットを選択してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "유효한 단축키를 선택하세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择有效的快捷键。"
+          }
+        }
+      }
+    },
+    "onboarding.shortcut.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Global shortcut"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "グローバルショートカット"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전역 단축키"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全局快捷键"
+          }
+        }
+      }
+    },
+    "onboarding.summary" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@ · Battery %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@ · バッテリー %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@ · 배터리 %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@ · 电池 %@"
+          }
+        }
+      }
+    },
+    "onboarding.summary.accessibilityLabel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected defaults"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択したデフォルト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택한 기본값"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选默认值"
+          }
+        }
+      }
+    },
+    "onboarding.value.battery.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End the session automatically at the battery level you choose."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択したバッテリー残量でセッションを自動終了します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택한 배터리 잔량에서 세션을 자동 종료합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在你选择的电池电量下自动结束会话。"
+          }
+        }
+      }
+    },
+    "onboarding.value.battery.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protect your battery"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリーを保護"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리 자동 보호"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保护电池"
+          }
+        }
+      }
+    },
+    "onboarding.value.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step away without interrupting downloads, builds, or AI work."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダウンロード、ビルド、AI作業を止めずに席を離れられます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다운로드, 빌드, AI 작업을 중단하지 않고 자리를 비우세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离开座位时不会中断下载、构建或 AI 工作。"
+          }
+        }
+      }
+    },
+    "onboarding.value.keepAwake.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prevents idle system sleep while your session is running."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セッション中はアイドルによるシステムスリープを防ぎます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "세션이 실행되는 동안 idle system sleep을 방지합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会话运行期间可防止系统因闲置而睡眠。"
+          }
+        }
+      }
+    },
+    "onboarding.value.keepAwake.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep Mac awake"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Macのスリープを防ぐ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac 깨우기 유지"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保持 Mac 唤醒"
+          }
+        }
+      }
+    },
+    "onboarding.value.limitation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep cannot prevent a closed lid, forced sleep, or thermal protection."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓋を閉じた場合、強制スリープ、熱保護によるスリープは防げません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "덮개 닫기, 강제 sleep, 열 보호에 따른 sleep은 방지할 수 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法阻止合上盖子、强制睡眠或温度保护。"
+          }
+        }
+      }
+    },
+    "onboarding.value.macOSLock.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lock your account with Control-Command-Q before you leave."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "離席する前にControl-Command-Qでアカウントをロックします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자리를 비우기 전에 Control-Command-Q로 계정을 잠그세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离开前使用 Control-Command-Q 锁定账户。"
+          }
+        }
+      }
+    },
+    "onboarding.value.macOSLock.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use macOS Lock"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOSのロックを使う"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 잠금 사용"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 macOS 锁定"
+          }
+        }
+      }
+    },
+    "onboarding.value.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac keeps working while your screen stays safe"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Macは動き続け、画面は安全に"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac은 계속 작동하고, 화면은 안전하게"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac 继续运行，屏幕保持安全"
+          }
+        }
+      }
+    },
+    "mode.blackout" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blackout Only · Not a Security Feature"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画面だけ隠す · セキュリティ機能ではありません"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면만 가리기 · 보안 기능 아님"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅隐藏屏幕 · 非安全功能"
+          }
+        }
+      }
+    },
+    "mode.blackout.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cover displays with a black overlay while the Mac keeps running."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Macを動かしたまま黒いオーバーレイでディスプレイを覆います。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac을 계속 실행하면서 검은색 오버레이로 디스플레이를 가립니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac 保持运行，同时用黑色覆盖层遮住显示器。"
+          }
+        }
+      }
+    },
+    "mode.blackout.displaySleep" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display sleep follows your macOS settings."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスプレイのスリープはmacOSの設定に従います。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "디스플레이 sleep 시점은 macOS 설정을 따릅니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示器睡眠时间遵循 macOS 设置。"
+          }
+        }
+      }
+    },
+    "mode.blackout.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide the screen only"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画面だけ隠す"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면만 가리기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅隐藏屏幕"
+          }
+        }
+      }
+    },
+    "mode.blackout.warning" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac is not locked. This mode is not a security feature."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Macはロックされません。このモードはセキュリティ機能ではありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac은 잠기지 않습니다. 이 모드는 보안 기능이 아닙니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac 不会锁定。此模式不是安全功能。"
+          }
+        }
+      }
+    },
+    "mode.recommended" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "おすすめ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "권장"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推荐"
+          }
+        }
+      }
+    },
+    "mode.secureLeave" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safely Leave · Recommended"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全に離席する · おすすめ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "안전하게 자리 비우기 · 권장"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全离开 · 推荐"
+          }
+        }
+      }
+    },
+    "mode.secureLeave.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prevent idle system sleep and lock macOS with Control-Command-Q."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アイドルによるシステムスリープを防ぎ、Control-Command-QでmacOSをロックします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "idle system sleep을 방지하고 Control-Command-Q로 macOS를 잠급니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防止系统因闲置而睡眠，并使用 Control-Command-Q 锁定 macOS。"
+          }
+        }
+      }
+    },
+    "mode.secureLeave.displaySleep" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display sleep follows your macOS settings."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスプレイのスリープはmacOSの設定に従います。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "디스플레이 sleep 시점은 macOS 설정을 따릅니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示器睡眠时间遵循 macOS 设置。"
+          }
+        }
+      }
+    },
+    "mode.secureLeave.lock" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press Control-Command-Q to lock macOS."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control-Command-Qを押してmacOSをロックします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control-Command-Q를 눌러 macOS를 잠그세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下 Control-Command-Q 锁定 macOS。"
+          }
+        }
+      }
+    },
+    "mode.secureLeave.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave safely"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全に離席する"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "안전하게 자리 비우기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全离开"
+          }
+        }
+      }
+    },
+    "duration.1Hour" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 hour"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1時間"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1시간"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 小时"
+          }
+        }
+      }
+    },
+    "duration.2Hours" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 hours"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2時間"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2시간"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 小时"
+          }
+        }
+      }
+    },
+    "duration.30Minutes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 minutes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30分"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30분"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 分钟"
+          }
+        }
+      }
+    },
+    "duration.4Hours" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4 hours"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4時間"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4시간"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4 小时"
+          }
+        }
+      }
+    },
+    "duration.indefinite" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Until I stop it"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自分で停止するまで"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자가 종료할 때까지"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直到我停止"
+          }
+        }
+      }
+    },
+    "duration.custom" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limited time"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時間制限"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제한 시간"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "限时"
+          }
+        }
+      }
+    },
     "shortcut.record.prompt" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1360,6 +2844,390 @@
             "value" : "请按下快捷键…"
           }
         }
+      }
+    },
+    "duration.minutes" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%d minutes" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%d分" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%d분" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%d分钟" } }
+      }
+    },
+    "duration.untilStopped" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Until I stop it" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "停止するまで" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "사용자가 종료할 때까지" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "直到我停止" } }
+      }
+    },
+    "menu.startSecureLeave" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Safely Leave" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "安全に離れる" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "안전하게 자리 비우기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "安全离开" } }
+      }
+    },
+    "menu.startBlackout" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Blackout Only" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "画面だけ隠す" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "화면만 가리기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "仅隐藏屏幕" } }
+      }
+    },
+    "menu.sessionDuration" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Session Duration" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッション時間" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "세션 시간" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话时长" } }
+      }
+    },
+    "menu.endSession" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "End Session" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションを終了" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "세션 종료" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "结束会话" } }
+      }
+    },
+    "menu.awaitingSystemLock" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Waiting for Mac to Lock" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Macのロックを待機中" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Mac 잠금 대기 중" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待 Mac 锁定" } }
+      }
+    },
+    "menu.lockShortcutHint" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press ⌃⌘Q to lock before you leave" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "離席する前に⌃⌘Qを押してロック" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "자리를 비우기 전에 ⌃⌘Q를 누르세요" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "离开前按下 ⌃⌘Q 锁定" } }
+      }
+    },
+    "menu.preparingBlackout" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Preparing Screen Cover" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "画面カバーを準備中" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "화면 가리기 준비 중" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在准备屏幕覆盖" } }
+      }
+    },
+    "menu.blackoutCountdown" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Screen cover starts in %d seconds" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "画面カバー開始まで%d秒" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "화면 가리기 시작까지 %d초" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%d 秒后开始遮盖屏幕" } }
+      }
+    },
+    "menu.cancelBlackoutPreparation" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "キャンセル" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "취소" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消" } }
+      }
+    },
+    "menu.unlockedWarning" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Keeping Mac Awake · Currently Unlocked" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Macの起動を維持中 · 現在ロック解除中" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Mac 깨우기 유지 중 · 현재 잠금 해제됨" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "保持 Mac 唤醒 · 当前未锁定" } }
+      }
+    },
+    "menu.active" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Fake Sleep On" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Fake Sleep オン" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Fake Sleep 켜짐" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Fake Sleep 已开启" } }
+      }
+    },
+    "menu.mode.secureLeave" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Safely Leave" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "安全に離れる" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "안전하게 자리 비우기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "安全离开" } }
+      }
+    },
+    "menu.mode.blackout" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Blackout Only · Not a Security Feature" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "画面だけ隠す · セキュリティ機能ではありません" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "화면만 가리기 · 보안 기능 아님" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "仅隐藏屏幕 · 不是安全功能" } }
+      }
+    },
+    "menu.lockCountdown" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mac Lock Pending · %d seconds remaining" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Macのロック待機中 · 残り%d秒" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Mac 잠금 대기 중 · %d초 남음" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待 Mac 锁定 · 剩余 %d 秒" } }
+      }
+    },
+    "menu.remaining" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%d minutes remaining" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "残り%d分" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%d분 남음" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "剩余 %d 分钟" } }
+      }
+    },
+    "menu.elapsed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Running for %d minutes" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%d分間実行中" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%d분 동안 실행 중" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已运行 %d 分钟" } }
+      }
+    },
+    "menu.batteryDisabled" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Battery Auto-stop Off" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バッテリー自動終了オフ" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "배터리 자동 종료 꺼짐" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电池自动停止已关闭" } }
+      }
+    },
+    "menu.batteryProtection" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Auto-stop at %d%% battery" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バッテリー%d%%で自動終了" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "배터리 %d%%에서 자동 종료" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电池剩余 %d%% 时自动停止" } }
+      }
+    },
+    "menu.timerEnded" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Session ended" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションが終了しました" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "세션이 종료됨" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话已结束" } }
+      }
+    },
+    "menu.timerEndedDuration" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%@ session ended" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%@のセッションが終了しました" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%@ 세션이 종료됨" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%@会话已结束" } }
+      }
+    },
+    "menu.batteryEnded" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Automatically stopped at %d%% battery" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バッテリー%d%%で自動終了しました" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "배터리 %d%%에서 자동 종료됨" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电池剩余 %d%% 时自动停止" } }
+      }
+    },
+    "menu.lockTimedOut" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Session ended · Mac was not locked" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッション終了 · Macがロックされませんでした" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "세션 종료됨 · Mac이 잠기지 않음" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话已结束 · Mac 未锁定" } }
+      }
+    },
+    "menu.activationFailed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Session could not start" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションを開始できませんでした" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "세션을 시작할 수 없음" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法开始会话" } }
+      }
+    },
+    "settings.section.defaultBehavior" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Default Behavior" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "基本動作" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "기본 동작" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "默认行为" } }
+      }
+    },
+    "settings.defaultMode" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Default mode" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "デフォルトモード" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "기본 모드" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "默认模式" } }
+      }
+    },
+    "settings.sessionDuration" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Session duration" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッション時間" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "세션 시간" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话时长" } }
+      }
+    },
+    "settings.openLockScreenSettings" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open macOS Lock Screen Settings" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "macOSのロック画面設定を開く" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "macOS 잠금 화면 설정 열기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开 macOS 锁定屏幕设置" } }
+      }
+    },
+    "settings.displaySleepFollowsSystem" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Display sleep timing follows macOS settings." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ディスプレイのスリープ時間はmacOSの設定に従います。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "화면 꺼짐 시간은 macOS 설정을 따릅니다." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "显示器休眠时间遵循 macOS 设置。" } }
+      }
+    },
+    "settings.section.power" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Power & Battery" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "電源とバッテリー" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "전원 및 배터리" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电源与电池" } }
+      }
+    },
+    "settings.batteryCutoffPrefix" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Automatically stop at" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "次の残量で自動終了:" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "배터리가" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "自动停止于" } }
+      }
+    },
+    "settings.batteryPercentPlaceholder" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "10" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "10" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "10" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "10" } }
+      }
+    },
+    "settings.battery.disabled" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Automatic stop is off." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "自動終了はオフです。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "자동 종료 꺼짐" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "自动停止已关闭。" } }
+      }
+    },
+    "settings.battery.invalid" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enter a battery percentage from 0 to 100." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "バッテリー残量は0〜100で入力してください。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "배터리 잔량은 0~100 사이로 입력하세요." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请输入 0 到 100 之间的电池百分比。" } }
+      }
+    },
+    "settings.battery.help" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Battery protection does not apply while the power adapter is connected. Set 0% to turn it off." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "電源アダプタ接続中は適用されません。0%にすると自動終了をオフにできます。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "전원 어댑터가 연결되어 있으면 적용되지 않습니다. 0%로 설정하면 자동 종료가 꺼집니다." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "连接电源适配器时不适用。设置为 0% 可关闭自动停止。" } }
+      }
+    },
+    "settings.section.shortcut" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Shortcut & Launch" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ショートカットと起動" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "단축키 및 실행" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "快捷键与启动" } }
+      }
+    },
+    "settings.sessionActiveNotice" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "End the current session before changing mode, duration, battery, or shortcut settings." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "モード、時間、バッテリー、ショートカットを変更するには現在のセッションを終了してください。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "모드, 시간, 배터리 또는 단축키를 변경하려면 현재 세션을 종료하세요." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请先结束当前会话，再更改模式、时长、电池或快捷键设置。" } }
+      }
+    },
+    "secureLeave.guidance.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your Mac stays awake" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Macは起動したままです" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Mac은 계속 작동합니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Mac 将保持唤醒" } }
+      }
+    },
+    "secureLeave.guidance.message" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press the keys below to lock your Mac. Your work will continue while it is locked." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "下のキーを押してMacをロックしてください。ロック中も作業は続きます。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "아래 키를 눌러 Mac을 잠그세요. 잠긴 동안에도 작업은 계속됩니다." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按下以下按键锁定 Mac。锁定后工作仍会继续。" } }
+      }
+    },
+    "secureLeave.guidance.shortcut" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press Control Command Q to lock your Mac" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Control Command Qを押してMacをロック" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Control Command Q를 눌러 Mac 잠그기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按下 Control Command Q 锁定 Mac" } }
+      }
+    },
+    "secureLeave.guidance.countdown" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Waiting for the lock screen · %d seconds remaining" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ロック画面を待機中 · 残り%d秒" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "잠금 화면 대기 중 · %d초 남음" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待锁定屏幕 · 剩余 %d 秒" } }
+      }
+    },
+    "secureLeave.guidance.cancel" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel Session" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "セッションをキャンセル" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "세션 취소" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消会话" } }
+      }
+    },
+    "secureLeave.guidance.openSettings" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Lock Screen Settings" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ロック画面設定を開く" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "잠금 화면 설정 열기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开锁定屏幕设置" } }
+      }
+    },
+    "secureLeave.key.control" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Control" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Control" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Control" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Control" } }
+      }
+    },
+    "secureLeave.key.command" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Command" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Command" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Command" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Command" } }
+      }
+    },
+    "overlay.restoreHint.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The screen is covered" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "画面を覆っています" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "화면이 가려졌습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "屏幕已遮盖" } }
+      }
+    },
+    "overlay.restoreHint.message" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Click or press any key to return." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "クリックするか、いずれかのキーを押すと戻ります。" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "클릭하거나 아무 키를 누르면 돌아갑니다." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "点击或按任意键即可返回。" } }
       }
     }
   },

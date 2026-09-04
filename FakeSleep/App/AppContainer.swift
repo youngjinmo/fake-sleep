@@ -8,14 +8,28 @@ final class AppContainer {
   private let hotKeyRegistrar: HotKeyRegistering
   private let shortcutManager: ShortcutManager
   private let cursor: CursorManaging
+  private let sleepPreventer: SleepPreventing
+  private let powerMonitor: PowerMonitoring
+  private let scheduler: SessionScheduling
+  private let sessionSettingsStore: SessionSettingsStore
   private let coordinator: FakeSleepCoordinator
+  private let shortcutActionCoordinator: FakeSleepCoordinatorProtocol
   private let loginItemManager: LoginItemManager
   private let settingsViewModel: SettingsViewModel
   private let settingsWindowController: SettingsWindowController
   private let landingWindowController: LandingWindowController
+  private let lockGuidanceController: LockGuidancePanelController
+  private let workspaceSessionObserver: WorkspaceSessionObserver
   private let statusMenuController: StatusMenuController
 
-  init(landingPresentationStore: LandingPresentationStore = LandingPresentationStore()) {
+  init(
+    landingPresentationStore: LandingPresentationStore = LandingPresentationStore(),
+    sessionSettingsStore: SessionSettingsStore = SessionSettingsStore(),
+    sleepPreventer: SleepPreventing = ProcessInfoSleepPreventer(),
+    powerMonitor: PowerMonitoring = IOKitPowerMonitor(),
+    scheduler: SessionScheduling = MonotonicSessionScheduler(),
+    shortcutCoordinator: FakeSleepCoordinatorProtocol? = nil
+  ) {
     let screenProvider = SystemScreenProvider()
     let overlayController = OverlayWindowController()
     let shortcutStore = ShortcutStore()
@@ -25,7 +39,13 @@ final class AppContainer {
       screenProvider: screenProvider,
       overlayPresenter: overlayController,
       hotKeyRegistrar: hotKeyRegistrar,
-      cursor: cursor
+      cursor: cursor,
+      sleepPreventer: sleepPreventer,
+      powerMonitor: powerMonitor,
+      scheduler: scheduler,
+      settingsStore: sessionSettingsStore,
+      reduceMotion: NSWorkspace.shared.accessibilityDisplayShouldReduceMotion,
+      defaultConfiguration: sessionSettingsStore.settings.configuration
     )
 
     self.screenProvider = screenProvider
@@ -33,13 +53,24 @@ final class AppContainer {
     self.shortcutStore = shortcutStore
     self.hotKeyRegistrar = hotKeyRegistrar
     self.cursor = cursor
+    self.sleepPreventer = sleepPreventer
+    self.powerMonitor = powerMonitor
+    self.scheduler = scheduler
+    self.sessionSettingsStore = sessionSettingsStore
     self.coordinator = coordinator
+    self.shortcutActionCoordinator = shortcutCoordinator ?? coordinator
 
+    let shortcutActionCoordinator = shortcutCoordinator ?? coordinator
     let shortcutManager = ShortcutManager(
       store: shortcutStore,
       registrar: hotKeyRegistrar,
-      handler: { @MainActor [weak coordinator] in
-        coordinator?.toggle()
+      handler: { @MainActor [weak shortcutActionCoordinator] in
+        guard let shortcutActionCoordinator else { return }
+        if shortcutActionCoordinator.isSessionActive {
+          shortcutActionCoordinator.endSession(reason: .manual)
+        } else {
+          shortcutActionCoordinator.start(configuration: sessionSettingsStore.settings.configuration)
+        }
       }
     )
     self.shortcutManager = shortcutManager
@@ -50,6 +81,9 @@ final class AppContainer {
     overlayController.onWake = { @MainActor [weak coordinator] in
       coordinator?.handleWake()
     }
+    overlayController.setRestoreHandler { @MainActor [weak coordinator] in
+      coordinator?.restore()
+    }
 
     shortcutManager.registerOnLaunch()
 
@@ -57,13 +91,22 @@ final class AppContainer {
     let settingsViewModel = SettingsViewModel(
       shortcutManager: shortcutManager,
       loginItemManager: loginItemManager,
-      coordinator: coordinator
+      coordinator: coordinator,
+      settingsStore: sessionSettingsStore
     )
     let settingsWindowController = SettingsWindowController(viewModel: settingsViewModel)
+    let lockGuidanceController = LockGuidancePanelController(
+      coordinator: coordinator,
+      settingsHandler: { @MainActor [weak settingsViewModel] in
+        settingsViewModel?.openLockScreenSettings()
+      }
+    )
+    let workspaceSessionObserver = WorkspaceSessionObserver(coordinator: coordinator)
     let landingViewModel = LandingViewModel(
       coordinator: coordinator,
       settingsViewModel: settingsViewModel,
       presentationStore: landingPresentationStore,
+      settingsStore: sessionSettingsStore,
       settingsHandler: { @MainActor [weak settingsWindowController] in
         settingsWindowController?.open()
       }
@@ -79,6 +122,13 @@ final class AppContainer {
       },
       userGuideHandler: { @MainActor [weak landingWindowController] in
         landingWindowController?.open()
+      },
+      settingsStore: sessionSettingsStore,
+      startHandler: { @MainActor [weak coordinator] configuration in
+        coordinator?.start(configuration: configuration)
+      },
+      settingsChangedHandler: { @MainActor [weak settingsViewModel] in
+        settingsViewModel?.refreshSettings()
       }
     )
 
@@ -86,16 +136,77 @@ final class AppContainer {
     self.settingsViewModel = settingsViewModel
     self.settingsWindowController = settingsWindowController
     self.landingWindowController = landingWindowController
+    self.lockGuidanceController = lockGuidanceController
+    self.workspaceSessionObserver = workspaceSessionObserver
     self.statusMenuController = statusMenuController
 
     landingWindowController.openAtLaunchIfNeeded()
   }
 
   func prepareForTermination() {
+    workspaceSessionObserver.stop()
+    lockGuidanceController.prepareForTermination()
     coordinator.prepareForTermination()
+    if shortcutActionCoordinator.isSessionActive {
+      shortcutActionCoordinator.endSession(reason: .manual)
+    }
     landingWindowController.prepareForTermination()
     settingsWindowController.close()
     statusMenuController.close()
+  }
+
+  convenience init(coordinator: FakeSleepCoordinatorProtocol) {
+    self.init(shortcutCoordinator: coordinator)
+  }
+
+  func invokeShortcutAction() {
+    if shortcutActionCoordinator.isSessionActive {
+      shortcutActionCoordinator.endSession(reason: .manual)
+    } else {
+      shortcutActionCoordinator.start(configuration: sessionSettingsStore.settings.configuration)
+    }
+  }
+}
+
+@MainActor
+private final class WorkspaceSessionObserver {
+  private let notificationCenter: NotificationCenter
+  private weak var coordinator: FakeSleepCoordinator?
+  private var observers: [NSObjectProtocol] = []
+
+  init(
+    coordinator: FakeSleepCoordinator,
+    notificationCenter: NotificationCenter = NSWorkspace.shared.notificationCenter
+  ) {
+    self.coordinator = coordinator
+    self.notificationCenter = notificationCenter
+    observers.append(
+      notificationCenter.addObserver(
+        forName: NSWorkspace.sessionDidResignActiveNotification,
+        object: nil,
+        queue: .main
+      ) { [weak self] _ in
+        Task { @MainActor in
+          self?.coordinator?.handleWorkspaceSessionDidResignActive()
+        }
+      }
+    )
+    observers.append(
+      notificationCenter.addObserver(
+        forName: NSWorkspace.sessionDidBecomeActiveNotification,
+        object: nil,
+        queue: .main
+      ) { [weak self] _ in
+        Task { @MainActor in
+          self?.coordinator?.handleWorkspaceSessionDidBecomeActive()
+        }
+      }
+    )
+  }
+
+  func stop() {
+    observers.forEach { notificationCenter.removeObserver($0) }
+    observers.removeAll()
   }
 }
 

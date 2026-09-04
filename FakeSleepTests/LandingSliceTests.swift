@@ -89,6 +89,49 @@ final class LandingViewModelTests: XCTestCase {
     XCTAssertEqual(settingsOpenCount, 1)
   }
 
+  func test온보딩로그인시작실패는원래nil단축키와설정을원자적으로롤백한다() {
+    // Given: 기존 단축키가 nil이고 로그인 항목 변경이 실패하는 상태다.
+    let defaults = UserDefaults(suiteName: UUID().uuidString)!
+    let settingsStore = SessionSettingsStore(defaults: defaults)
+    let registrar = LandingHotKeyRegisteringFake()
+    let shortcutManager = ShortcutManager(
+      store: ShortcutStore(defaults: UserDefaults(suiteName: UUID().uuidString)!),
+      registrar: registrar,
+      handler: {}
+    )
+    let loginItemManager = LandingLoginItemManagingFake()
+    loginItemManager.setEnabledError = LandingLoginItemError.operationFailed
+    let settingsViewModel = SettingsViewModel(
+      shortcutManager: shortcutManager,
+      loginItemManager: loginItemManager,
+      coordinator: nil,
+      settingsStore: settingsStore
+    )
+    let presentationStore = LandingPresentationStore(defaults: defaults)
+    let viewModel = LandingViewModel(
+      coordinator: makeCoordinator(),
+      settingsViewModel: settingsViewModel,
+      presentationStore: presentationStore,
+      settingsStore: settingsStore
+    )
+    let customShortcut = KeyboardShortcut(keyCode: 0, modifiers: [.command])
+    viewModel.beginOnboarding()
+    viewModel.setDraftShortcut(customShortcut)
+    viewModel.setLaunchAtLogin(true)
+    _ = viewModel.next()
+    _ = viewModel.next()
+
+    // When: 로그인 시작까지 포함한 온보딩 완료를 요청한다.
+    let didComplete = viewModel.completeOnboarding()
+
+    // Then: 완료되지 않고 원래 nil 단축키와 기존 설정으로 복구된다.
+    XCTAssertFalse(didComplete)
+    XCTAssertNil(settingsViewModel.shortcut)
+    XCTAssertEqual(settingsViewModel.sessionSettings, SessionSettingsStore.defaultSettings)
+    XCTAssertFalse(settingsViewModel.loginItemStatus == .enabled)
+    XCTAssertFalse(presentationStore.isOnboardingCompleted)
+  }
+
   private func makeViewModel(coordinator: FakeSleepCoordinator) -> LandingViewModel {
     LandingViewModel(
       coordinator: coordinator,
@@ -130,7 +173,7 @@ final class LandingViewModelTests: XCTestCase {
 
 @MainActor
 final class LandingWindowControllerTests: XCTestCase {
-  func testshowsAtLaunch가꺼져있어도자동열기는건너뛰고수동열기는된다() {
+  func testlegacy표시안함값과무관하게미완료온보딩은자동으로열리고수동으로다시열수있다() {
     let coordinator = makeCoordinator()
     let presentationStore = LandingPresentationStore(
       defaults: UserDefaults(suiteName: UUID().uuidString)!
@@ -142,21 +185,115 @@ final class LandingWindowControllerTests: XCTestCase {
     )
     let controller = LandingWindowController(viewModel: viewModel, coordinator: coordinator)
 
-    // Given: 앱 실행 시 랜딩을 표시하지 않도록 저장되어 있다.
+    // Given: 이전 버전에서 앱 실행 시 랜딩을 표시하지 않도록 저장되어 있다.
     viewModel.setShowsAtLaunch(false)
     XCTAssertFalse(viewModel.showsAtLaunch)
 
-    // When: 앱 실행 시 랜딩을 자동으로 열도록 요청한다.
-    controller.openAtLaunchIfNeeded()
+    // When: 새 온보딩이 완료되지 않은 상태에서 앱 실행 자동 열기를 요청한다.
+    let didOpenAtLaunch = controller.openAtLaunchIfNeeded()
 
-    // Then: 자동 열기는 저장된 설정에 따라 건너뛴다.
-    XCTAssertNil(controller.window)
+    // Then: legacy 표시 안 함 값은 무시되고 온보딩 창이 열린다.
+    XCTAssertTrue(didOpenAtLaunch)
+    XCTAssertNotNil(controller.window)
 
-    // When: 사용자가 메뉴에서 랜딩을 수동으로 연다.
+    // When: 사용자가 창을 닫은 뒤 메뉴에서 랜딩을 수동으로 다시 연다.
+    controller.close()
     controller.open()
 
-    // Then: 수동 열기는 자동 표시 설정과 무관하게 창을 만든다.
+    // Then: 수동 열기는 완료 버전과 무관하게 창을 만든다.
     XCTAssertNotNil(controller.window)
+
+    controller.prepareForTermination()
+  }
+
+  func test온보딩버전1완료후자동열기는건너뛰고수동열기는된다() {
+    let defaults = UserDefaults(suiteName: UUID().uuidString)!
+    let presentationStore = LandingPresentationStore(defaults: defaults)
+    presentationStore.markOnboardingCompleted()
+    let coordinator = makeCoordinator()
+    let viewModel = makeViewModel(
+      coordinator: coordinator,
+      presentationStore: presentationStore,
+      settingsStore: presentationStore.settingsStore
+    )
+    let controller = LandingWindowController(viewModel: viewModel, coordinator: coordinator)
+
+    // Given: 현재 온보딩 버전 1이 완료되어 있다.
+    XCTAssertFalse(viewModel.shouldShowOnboarding)
+
+    // When: 앱 실행 자동 열기와 메뉴의 수동 열기를 차례로 요청한다.
+    let didOpenAtLaunch = controller.openAtLaunchIfNeeded()
+    controller.open()
+
+    // Then: 자동 열기는 건너뛰지만 수동 열기는 가능하다.
+    XCTAssertFalse(didOpenAtLaunch)
+    XCTAssertNotNil(controller.window)
+
+    controller.prepareForTermination()
+  }
+
+  func test온보딩완료후창닫기취소경로가저장된설정과완료버전을되돌리지않는다() {
+    let defaults = UserDefaults(suiteName: UUID().uuidString)!
+    let presentationStore = LandingPresentationStore(defaults: defaults)
+    let settingsStore = presentationStore.settingsStore
+    let coordinator = makeCoordinator()
+    let settingsViewModel = makeSettingsViewModel(settingsStore: settingsStore)
+    let viewModel = LandingViewModel(
+      coordinator: coordinator,
+      settingsViewModel: settingsViewModel,
+      presentationStore: presentationStore,
+      settingsStore: settingsStore
+    )
+    let controller = LandingWindowController(viewModel: viewModel, coordinator: coordinator)
+    controller.open()
+
+    // Given: 온보딩에서 기본 설정을 변경하고 마지막 단계까지 이동했다.
+    viewModel.setMode(.blackout)
+    viewModel.setDuration(.minutes(120))
+    viewModel.setBatteryCutoffPercent(0)
+    _ = viewModel.next()
+    _ = viewModel.next()
+
+    // When: 온보딩을 완료한다. 완료 callback은 창을 닫으며 취소 경로도 호출한다.
+    let didComplete = viewModel.completeOnboarding()
+
+    // Then: 저장된 설정과 완료 버전은 취소 경로에 의해 되돌아가지 않는다.
+    XCTAssertTrue(didComplete)
+    XCTAssertEqual(settingsStore.settings.defaultMode, .blackout)
+    XCTAssertEqual(settingsStore.settings.defaultDuration, .minutes(120))
+    XCTAssertEqual(settingsStore.settings.batteryCutoffPercent, 0)
+    XCTAssertEqual(settingsStore.onboardingVersion, 1)
+
+    controller.prepareForTermination()
+  }
+
+  func test온보딩창을취소하면작성중인초안은저장되지않는다() {
+    let defaults = UserDefaults(suiteName: UUID().uuidString)!
+    let presentationStore = LandingPresentationStore(defaults: defaults)
+    let settingsStore = presentationStore.settingsStore
+    let originalSettings = settingsStore.settings
+    let coordinator = makeCoordinator()
+    let viewModel = LandingViewModel(
+      coordinator: coordinator,
+      settingsViewModel: makeSettingsViewModel(settingsStore: settingsStore),
+      presentationStore: presentationStore,
+      settingsStore: settingsStore
+    )
+    let controller = LandingWindowController(viewModel: viewModel, coordinator: coordinator)
+    controller.open()
+
+    // Given: 사용자가 온보딩 초안을 수정했지만 아직 완료하지 않았다.
+    viewModel.setMode(.blackout)
+    viewModel.setDuration(.minutes(240))
+    viewModel.setBatteryCutoffPercent(100)
+
+    // When: 창을 닫아 온보딩을 취소한다.
+    controller.close()
+
+    // Then: 초안과 완료 버전은 저장되지 않고 기존 설정이 유지된다.
+    XCTAssertEqual(settingsStore.settings, originalSettings)
+    XCTAssertEqual(settingsStore.onboardingVersion, 0)
+    XCTAssertNil(controller.window)
 
     controller.prepareForTermination()
   }
@@ -210,14 +347,32 @@ final class LandingWindowControllerTests: XCTestCase {
   }
 
   private func makeViewModel(coordinator: FakeSleepCoordinator) -> LandingViewModel {
-    LandingViewModel(
+    let presentationStore = makePresentationStore()
+    return makeViewModel(
       coordinator: coordinator,
-      settingsViewModel: makeSettingsViewModel(),
-      presentationStore: makePresentationStore()
+      presentationStore: presentationStore,
+      settingsStore: presentationStore.settingsStore
     )
   }
 
-  private func makeSettingsViewModel() -> SettingsViewModel {
+  private func makeViewModel(
+    coordinator: FakeSleepCoordinator,
+    presentationStore: LandingPresentationStore,
+    settingsStore: SessionSettingsStore
+  ) -> LandingViewModel {
+    LandingViewModel(
+      coordinator: coordinator,
+      settingsViewModel: makeSettingsViewModel(settingsStore: settingsStore),
+      presentationStore: presentationStore,
+      settingsStore: settingsStore
+    )
+  }
+
+  private func makeSettingsViewModel(
+    settingsStore: SessionSettingsStore = SessionSettingsStore(
+      defaults: UserDefaults(suiteName: UUID().uuidString)!
+    )
+  ) -> SettingsViewModel {
     let shortcutManager = ShortcutManager(
       store: ShortcutStore(defaults: UserDefaults(suiteName: UUID().uuidString)!),
       registrar: LandingHotKeyRegisteringFake(),
@@ -228,7 +383,8 @@ final class LandingWindowControllerTests: XCTestCase {
     return SettingsViewModel(
       shortcutManager: shortcutManager,
       loginItemManager: LandingLoginItemManagingFake(),
-      coordinator: nil
+      coordinator: nil,
+      settingsStore: settingsStore
     )
   }
 
@@ -314,15 +470,27 @@ private final class LandingCursorManagingFake: CursorManaging {
 
 @MainActor
 private final class LandingLoginItemManagingFake: LoginItemManaging {
-  private(set) var status: LoginItemStatus = .disabled
+  private(set) var status: LoginItemStatus
+  var setEnabledError: Error?
+
+  init(status: LoginItemStatus = .disabled) {
+    self.status = status
+  }
 
   func refreshStatus() {}
 
   func setEnabled(_ enabled: Bool) throws {
+    if let setEnabledError {
+      throw setEnabledError
+    }
     status = enabled ? .enabled : .disabled
   }
 
   func openSystemSettings() {}
+}
+
+private enum LandingLoginItemError: Error {
+  case operationFailed
 }
 
 private enum LandingHotKeyRegistrationError: Error {
