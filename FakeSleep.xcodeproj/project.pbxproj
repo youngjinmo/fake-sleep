@@ -27,6 +27,8 @@
 		A10000000000000000000012 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012 /* SettingsViewModel.swift */; };
 		A10000000000000000000013 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013 /* SettingsWindowController.swift */; };
 		A10000000000000000000014 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014 /* ShortcutRecorderView.swift */; };
+		A10000000000000000000022 /* LandingPresentationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001C /* LandingPresentationStore.swift */; };
+		A10000000000000000000023 /* KeyboardShortcutFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001D /* KeyboardShortcutFormatter.swift */; };
 		A10000000000000000000015 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015 /* Localizable.xcstrings */; };
 		A10000000000000000000016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016 /* Assets.xcassets */; };
 		A10000000000000000000020 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001B /* InfoPlist.xcstrings */; };
@@ -34,6 +36,7 @@
 		A10000000000000000000018 /* InterfaceSliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000002 /* InterfaceSliceTests.swift */; };
 		A10000000000000000000019 /* LoginItemSliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000003 /* LoginItemSliceTests.swift */; };
 		A10000000000000000000021 /* LocalizationSliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000004 /* LocalizationSliceTests.swift */; };
+		A10000000000000000000027 /* GuideSliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000005 /* GuideSliceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,8 @@
 		A20000000000000000000012 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		A20000000000000000000013 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		A20000000000000000000014 /* ShortcutRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRecorderView.swift; sourceTree = "<group>"; };
+		A2000000000000000000001C /* LandingPresentationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPresentationStore.swift; sourceTree = "<group>"; };
+		A2000000000000000000001D /* KeyboardShortcutFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutFormatter.swift; sourceTree = "<group>"; };
 		A20000000000000000000015 /* Localizable.xcstrings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A20000000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A20000000000000000000017 /* FakeSleep.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FakeSleep.entitlements; sourceTree = "<group>"; };
@@ -78,6 +83,7 @@
 		A30000000000000000000002 /* InterfaceSliceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceSliceTests.swift; sourceTree = "<group>"; };
 		A30000000000000000000003 /* LoginItemSliceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemSliceTests.swift; sourceTree = "<group>"; };
 		A30000000000000000000004 /* LocalizationSliceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationSliceTests.swift; sourceTree = "<group>"; };
+		A30000000000000000000005 /* GuideSliceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSliceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,7 @@
 			children = (
 				A80000000000000000000005 /* App */,
 				A80000000000000000000006 /* Core */,
+				A8000000000000000000000D /* Landing */,
 				A80000000000000000000007 /* Overlay */,
 				A80000000000000000000008 /* HotKey */,
 				A80000000000000000000009 /* LoginItem */,
@@ -113,7 +120,7 @@
 		};
 		A80000000000000000000003 /* FakeSleepTests */ = {
 			isa = PBXGroup;
-			children = (A30000000000000000000001 /* FakeSleepTests.swift */, A30000000000000000000002 /* InterfaceSliceTests.swift */, A30000000000000000000003 /* LoginItemSliceTests.swift */, A30000000000000000000004 /* LocalizationSliceTests.swift */);
+			children = (A30000000000000000000001 /* FakeSleepTests.swift */, A30000000000000000000002 /* InterfaceSliceTests.swift */, A30000000000000000000003 /* LoginItemSliceTests.swift */, A30000000000000000000004 /* LocalizationSliceTests.swift */, A30000000000000000000005 /* GuideSliceTests.swift */);
 			path = FakeSleepTests;
 			sourceTree = "<group>";
 		};
@@ -121,7 +128,8 @@
 		A80000000000000000000005 /* App */ = {isa = PBXGroup; children = (A20000000000000000000001 /* main.swift */, A20000000000000000000002 /* AppDelegate.swift */, A20000000000000000000003 /* AppContainer.swift */); path = App; sourceTree = "<group>"; };
 		A80000000000000000000006 /* Core */ = {isa = PBXGroup; children = (A20000000000000000000004 /* FakeSleepCoordinator.swift */, A20000000000000000000005 /* FakeSleepState.swift */, A20000000000000000000006 /* ScreenProviding.swift */); path = Core; sourceTree = "<group>"; };
 		A80000000000000000000007 /* Overlay */ = {isa = PBXGroup; children = (A20000000000000000000007 /* OverlayPresenting.swift */, A20000000000000000000008 /* OverlayWindowController.swift */, A20000000000000000000009 /* SystemScreenProvider.swift */); path = Overlay; sourceTree = "<group>"; };
-		A80000000000000000000008 /* HotKey */ = {isa = PBXGroup; children = (A2000000000000000000000A /* KeyboardShortcut.swift */, A2000000000000000000000B /* HotKeyRegistering.swift */, A2000000000000000000000C /* CarbonHotKeyController.swift */, A2000000000000000000000D /* ShortcutStore.swift */); path = HotKey; sourceTree = "<group>"; };
+		A80000000000000000000008 /* HotKey */ = {isa = PBXGroup; children = (A2000000000000000000000A /* KeyboardShortcut.swift */, A2000000000000000000001D /* KeyboardShortcutFormatter.swift */, A2000000000000000000000B /* HotKeyRegistering.swift */, A2000000000000000000000C /* CarbonHotKeyController.swift */, A2000000000000000000000D /* ShortcutStore.swift */); path = HotKey; sourceTree = "<group>"; };
+		A8000000000000000000000D /* Landing */ = {isa = PBXGroup; children = (A2000000000000000000001C /* LandingPresentationStore.swift */); path = Landing; sourceTree = "<group>"; };
 		A80000000000000000000009 /* LoginItem */ = {isa = PBXGroup; children = (A2000000000000000000000E /* LoginItemManaging.swift */, A2000000000000000000000F /* LoginItemManager.swift */); path = LoginItem; sourceTree = "<group>"; };
 		A8000000000000000000000A /* MenuBar */ = {isa = PBXGroup; children = (A20000000000000000000010 /* StatusMenuController.swift */); path = MenuBar; sourceTree = "<group>"; };
 		A8000000000000000000000B /* Settings */ = {isa = PBXGroup; children = (A20000000000000000000011 /* SettingsView.swift */, A20000000000000000000012 /* SettingsViewModel.swift */, A20000000000000000000013 /* SettingsWindowController.swift */, A20000000000000000000014 /* ShortcutRecorderView.swift */); path = Settings; sourceTree = "<group>"; };
@@ -190,8 +198,8 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A90000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001 /* main.swift in Sources */, A10000000000000000000002 /* AppDelegate.swift in Sources */, A10000000000000000000003 /* AppContainer.swift in Sources */, A10000000000000000000004 /* FakeSleepCoordinator.swift in Sources */, A10000000000000000000005 /* FakeSleepState.swift in Sources */, A10000000000000000000006 /* ScreenProviding.swift in Sources */, A10000000000000000000007 /* OverlayPresenting.swift in Sources */, A10000000000000000000008 /* OverlayWindowController.swift in Sources */, A10000000000000000000009 /* SystemScreenProvider.swift in Sources */, A1000000000000000000000A /* KeyboardShortcut.swift in Sources */, A1000000000000000000000B /* HotKeyRegistering.swift in Sources */, A1000000000000000000000C /* CarbonHotKeyController.swift in Sources */, A1000000000000000000000D /* ShortcutStore.swift in Sources */, A1000000000000000000000E /* LoginItemManaging.swift in Sources */, A1000000000000000000000F /* LoginItemManager.swift in Sources */, A10000000000000000000010 /* StatusMenuController.swift in Sources */, A10000000000000000000011 /* SettingsView.swift in Sources */, A10000000000000000000012 /* SettingsViewModel.swift in Sources */, A10000000000000000000013 /* SettingsWindowController.swift in Sources */, A10000000000000000000014 /* ShortcutRecorderView.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
-		A90000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000017 /* FakeSleepTests.swift in Sources */, A10000000000000000000018 /* InterfaceSliceTests.swift in Sources */, A10000000000000000000019 /* LoginItemSliceTests.swift in Sources */, A10000000000000000000021 /* LocalizationSliceTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		A90000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001 /* main.swift in Sources */, A10000000000000000000002 /* AppDelegate.swift in Sources */, A10000000000000000000003 /* AppContainer.swift in Sources */, A10000000000000000000004 /* FakeSleepCoordinator.swift in Sources */, A10000000000000000000005 /* FakeSleepState.swift in Sources */, A10000000000000000000006 /* ScreenProviding.swift in Sources */, A10000000000000000000007 /* OverlayPresenting.swift in Sources */, A10000000000000000000008 /* OverlayWindowController.swift in Sources */, A10000000000000000000009 /* SystemScreenProvider.swift in Sources */, A1000000000000000000000A /* KeyboardShortcut.swift in Sources */, A10000000000000000000023 /* KeyboardShortcutFormatter.swift in Sources */, A1000000000000000000000B /* HotKeyRegistering.swift in Sources */, A1000000000000000000000C /* CarbonHotKeyController.swift in Sources */, A1000000000000000000000D /* ShortcutStore.swift in Sources */, A1000000000000000000000E /* LoginItemManaging.swift in Sources */, A1000000000000000000000F /* LoginItemManager.swift in Sources */, A10000000000000000000010 /* StatusMenuController.swift in Sources */, A10000000000000000000011 /* SettingsView.swift in Sources */, A10000000000000000000012 /* SettingsViewModel.swift in Sources */, A10000000000000000000013 /* SettingsWindowController.swift in Sources */, A10000000000000000000014 /* ShortcutRecorderView.swift in Sources */, A10000000000000000000022 /* LandingPresentationStore.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		A90000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000017 /* FakeSleepTests.swift in Sources */, A10000000000000000000018 /* InterfaceSliceTests.swift in Sources */, A10000000000000000000019 /* LoginItemSliceTests.swift in Sources */, A10000000000000000000021 /* LocalizationSliceTests.swift in Sources */, A10000000000000000000027 /* GuideSliceTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
