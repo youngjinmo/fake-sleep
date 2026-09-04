@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "fakeSleep.error.emergencyEscapeUnavailable" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -9,16 +10,16 @@
             "value" : "Emergency Escape could not be registered."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "긴급 Escape를 등록할 수 없습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "緊急復元用のEscapeを登録できませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "긴급 Escape를 등록할 수 없습니다."
           }
         },
         "zh-Hans" : {
@@ -30,6 +31,7 @@
       }
     },
     "fakeSleep.error.incompleteOverlayCoverage" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -37,16 +39,16 @@
             "value" : "Could not cover every display."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "모든 디스플레이를 가릴 수 없습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "すべてのディスプレイを覆えませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모든 디스플레이를 가릴 수 없습니다."
           }
         },
         "zh-Hans" : {
@@ -58,6 +60,7 @@
       }
     },
     "fakeSleep.error.noRestorePath" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -65,16 +68,16 @@
             "value" : "No restore shortcut is available."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "복원 단축키를 사용할 수 없습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "復元ショートカットを利用できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복원 단축키를 사용할 수 없습니다."
           }
         },
         "zh-Hans" : {
@@ -86,6 +89,7 @@
       }
     },
     "fakeSleep.error.noScreens" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -93,16 +97,16 @@
             "value" : "No displays are available."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "사용 가능한 디스플레이가 없습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "利用可能なディスプレイがありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 가능한 디스플레이가 없습니다."
           }
         },
         "zh-Hans" : {
@@ -113,119 +117,37 @@
         }
       }
     },
-    "loginItem.status.disabled" : {
+    "landing.darkenScreens" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Disabled"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "비활성화됨"
+            "value" : "Darken Screens"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無効"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停用"
-          }
-        }
-      }
-    },
-    "loginItem.status.enabled" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enabled"
+            "value" : "ディスプレイを暗くする"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "활성화됨"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "有効"
+            "value" : "화면 어둡게 하기"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已启用"
-          }
-        }
-      }
-    },
-    "loginItem.status.requiresApproval" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Approval Required"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "승인 필요"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "承認が必要"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "需要批准"
-          }
-        }
-      }
-    },
-    "loginItem.status.unavailable" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unavailable"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "사용할 수 없음"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "利用不可"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不可用"
+            "value" : "使屏幕变暗"
           }
         }
       }
     },
     "landing.description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -233,16 +155,16 @@
             "value" : "A visual blackout for every connected display."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "연결된 모든 디스플레이를 시각적으로 어둡게 표시합니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "接続されたすべてのディスプレイを視覚的に暗転させます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "연결된 모든 디스플레이를 시각적으로 어둡게 표시합니다."
           }
         },
         "zh-Hans" : {
@@ -254,6 +176,7 @@
       }
     },
     "landing.displayLimitation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -261,16 +184,16 @@
             "value" : "Fake Sleep covers your displays with black overlays. It does not change display brightness or power."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fake Sleep은 검은색 오버레이로 디스플레이를 가립니다. 디스플레이 밝기나 전원을 변경하지 않습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleepは黒いオーバーレイでディスプレイを覆います。ディスプレイの明るさや電源は変更しません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep은 검은색 오버레이로 디스플레이를 가립니다. 디스플레이 밝기나 전원을 변경하지 않습니다."
           }
         },
         "zh-Hans" : {
@@ -281,35 +204,8 @@
         }
       }
     },
-    "landing.darkenScreens" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Darken Screens"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "화면 어둡게 하기"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ディスプレイを暗くする"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使屏幕变暗"
-          }
-        }
-      }
-    },
     "landing.dontShowAtLaunch" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -317,16 +213,16 @@
             "value" : "Don't show this guide at launch"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "시작할 때 이 가이드 표시 안 함"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "起動時にこのガイドを表示しない"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시작할 때 이 가이드 표시 안 함"
           }
         },
         "zh-Hans" : {
@@ -338,6 +234,7 @@
       }
     },
     "landing.instructions" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -345,16 +242,16 @@
             "value" : "How to use"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "사용 방법"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleepの使い方"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 방법"
           }
         },
         "zh-Hans" : {
@@ -366,6 +263,7 @@
       }
     },
     "landing.openSettings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -373,16 +271,16 @@
             "value" : "Open Settings…"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "설정 열기…"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定を開く…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 열기…"
           }
         },
         "zh-Hans" : {
@@ -394,6 +292,7 @@
       }
     },
     "landing.restoreInstruction" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -401,16 +300,16 @@
             "value" : "Press Esc at any time while Fake Sleep is active to restore your displays."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fake Sleep이 활성화된 동안 언제든지 Esc를 누르면 디스플레이를 복원할 수 있습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleepが有効な間は、いつでもEscを押すとディスプレイを復元できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep이 활성화된 동안 언제든지 Esc를 누르면 디스플레이를 복원할 수 있습니다."
           }
         },
         "zh-Hans" : {
@@ -422,6 +321,7 @@
       }
     },
     "landing.shortcutInstruction" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -429,16 +329,16 @@
             "value" : "Press %@ anywhere, or use the button below."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@를 어디서든 누르거나 아래 버튼을 사용하세요."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "どこでも%@を押すか、下のボタンを使ってください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@를 어디서든 누르거나 아래 버튼을 사용하세요."
           }
         },
         "zh-Hans" : {
@@ -450,6 +350,7 @@
       }
     },
     "landing.shortcutNotSet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -457,16 +358,16 @@
             "value" : "No shortcut is set. Open Settings… to choose one, or use the button below."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "단축키가 설정되지 않았습니다. 설정…에서 선택하거나 아래 버튼을 사용하세요."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ショートカットが設定されていません。「設定…」で選択するか、下のボタンを使ってください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키가 설정되지 않았습니다. 설정…에서 선택하거나 아래 버튼을 사용하세요."
           }
         },
         "zh-Hans" : {
@@ -485,13 +386,13 @@
             "value" : "Fake Sleep"
           }
         },
-        "ko" : {
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
           }
         },
-        "ja" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
@@ -505,7 +406,124 @@
         }
       }
     },
+    "loginItem.status.disabled" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disabled"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無効"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "비활성화됨"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已停用"
+          }
+        }
+      }
+    },
+    "loginItem.status.enabled" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enabled"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활성화됨"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启用"
+          }
+        }
+      }
+    },
+    "loginItem.status.requiresApproval" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approval Required"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "承認が必要"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "승인 필요"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要批准"
+          }
+        }
+      }
+    },
+    "loginItem.status.unavailable" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用不可"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용할 수 없음"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不可用"
+          }
+        }
+      }
+    },
     "menu.accessibilityLabel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -513,13 +531,13 @@
             "value" : "Fake Sleep"
           }
         },
-        "ko" : {
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
           }
         },
-        "ja" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
@@ -534,6 +552,7 @@
       }
     },
     "menu.quitFakeSleep" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -541,16 +560,16 @@
             "value" : "Quit Fake Sleep"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fake Sleep 종료"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleepを終了"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep 종료"
           }
         },
         "zh-Hans" : {
@@ -562,6 +581,7 @@
       }
     },
     "menu.restoreAccessibilityLabel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -569,16 +589,16 @@
             "value" : "Restore Displays"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "디스플레이 복원"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ディスプレイを復元"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "디스플레이 복원"
           }
         },
         "zh-Hans" : {
@@ -590,11 +610,18 @@
       }
     },
     "menu.restoreDisplays" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore Displays"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスプレイを復元"
           }
         },
         "ko" : {
@@ -603,10 +630,33 @@
             "value" : "디스플레이 복원"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复显示器"
+          }
+        }
+      }
+    },
+    "menu.restoreTooltip" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Displays"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ディスプレイを復元"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "디스플레이 복원"
           }
         },
         "zh-Hans" : {
@@ -618,6 +668,7 @@
       }
     },
     "menu.settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -625,16 +676,16 @@
             "value" : "Settings…"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "설정…"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정…"
           }
         },
         "zh-Hans" : {
@@ -646,6 +697,7 @@
       }
     },
     "menu.showUserGuide" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -653,16 +705,16 @@
             "value" : "Show User Guide"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "사용자 가이드 보기"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ユーザーガイドを表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 가이드 보기"
           }
         },
         "zh-Hans" : {
@@ -674,6 +726,7 @@
       }
     },
     "menu.startFakeSleep" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -681,16 +734,16 @@
             "value" : "Start Fake Sleep"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fake Sleep 시작"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleepを開始"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep 시작"
           }
         },
         "zh-Hans" : {
@@ -701,35 +754,8 @@
         }
       }
     },
-    "menu.restoreTooltip" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore Displays"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "디스플레이 복원"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ディスプレイを復元"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复显示器"
-          }
-        }
-      }
-    },
     "menu.tooltip" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -737,13 +763,13 @@
             "value" : "Fake Sleep"
           }
         },
-        "ko" : {
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
           }
         },
-        "ja" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
@@ -758,6 +784,7 @@
       }
     },
     "settings.launchAtLogin" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -765,16 +792,16 @@
             "value" : "Launch at Login"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "로그인 시 실행"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ログイン時に起動"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그인 시 실행"
           }
         },
         "zh-Hans" : {
@@ -786,6 +813,7 @@
       }
     },
     "settings.loginApprovalRequired" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -793,16 +821,16 @@
             "value" : "Approval is required in Login Items."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "로그인 항목에서 승인이 필요합니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ログイン項目で承認が必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그인 항목에서 승인이 필요합니다."
           }
         },
         "zh-Hans" : {
@@ -814,6 +842,7 @@
       }
     },
     "settings.openLoginItemsSettings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -821,16 +850,16 @@
             "value" : "Open Login Items Settings"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "로그인 항목 설정 열기"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ログイン項目の設定を開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그인 항목 설정 열기"
           }
         },
         "zh-Hans" : {
@@ -842,6 +871,7 @@
       }
     },
     "settings.resetDefault" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -849,16 +879,16 @@
             "value" : "Reset to Default"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "기본값으로 재설정"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "デフォルトに戻す"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기본값으로 재설정"
           }
         },
         "zh-Hans" : {
@@ -870,6 +900,7 @@
       }
     },
     "settings.shortcut" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -877,16 +908,16 @@
             "value" : "Shortcut"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "단축키"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ショートカット"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키"
           }
         },
         "zh-Hans" : {
@@ -905,16 +936,16 @@
             "value" : "Settings"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "설정"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
           }
         },
         "zh-Hans" : {
@@ -926,6 +957,7 @@
       }
     },
     "shortcut.error.defaultUnavailable" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -933,16 +965,16 @@
             "value" : "The default shortcut is unavailable."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "기본 단축키를 사용할 수 없습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "デフォルトのショートカットを利用できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기본 단축키를 사용할 수 없습니다."
           }
         },
         "zh-Hans" : {
@@ -954,6 +986,7 @@
       }
     },
     "shortcut.error.escapeNotAllowed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -961,16 +994,16 @@
             "value" : "Escape is reserved for emergency restore."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Escape는 긴급 복원용으로 예약되어 있습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escapeは緊急復元用に予約されています。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escape는 긴급 복원용으로 예약되어 있습니다."
           }
         },
         "zh-Hans" : {
@@ -982,6 +1015,7 @@
       }
     },
     "shortcut.error.keyRequired" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -989,16 +1023,16 @@
             "value" : "A key is required."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "키를 지정해야 합니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "キーを指定してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "키를 지정해야 합니다."
           }
         },
         "zh-Hans" : {
@@ -1010,6 +1044,7 @@
       }
     },
     "shortcut.error.modifierRequired" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1017,16 +1052,16 @@
             "value" : "Add a modifier key."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "보조 키를 추가해야 합니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "修飾キーを追加してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보조 키를 추가해야 합니다."
           }
         },
         "zh-Hans" : {
@@ -1038,6 +1073,7 @@
       }
     },
     "shortcut.error.persistenceFailed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1045,16 +1081,16 @@
             "value" : "Could not save the shortcut."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "단축키를 저장할 수 없습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ショートカットを保存できませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키를 저장할 수 없습니다."
           }
         },
         "zh-Hans" : {
@@ -1066,6 +1102,7 @@
       }
     },
     "shortcut.error.primaryModifierRequired" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1073,16 +1110,16 @@
             "value" : "Use Command, Option, or Control."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Command, Option 또는 Control을 사용하세요."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Command、Option、またはControlを使用してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command, Option 또는 Control을 사용하세요."
           }
         },
         "zh-Hans" : {
@@ -1094,6 +1131,7 @@
       }
     },
     "shortcut.error.registrationFailed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1101,16 +1139,16 @@
             "value" : "Could not register the shortcut."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "단축키를 등록할 수 없습니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ショートカットを登録できませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키를 등록할 수 없습니다."
           }
         },
         "zh-Hans" : {
@@ -1122,6 +1160,7 @@
       }
     },
     "shortcut.error.unsupportedKey" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1129,16 +1168,16 @@
             "value" : "This key is not supported."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "지원되지 않는 키입니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "このキーはサポートされていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지원되지 않는 키입니다."
           }
         },
         "zh-Hans" : {
@@ -1150,6 +1189,7 @@
       }
     },
     "shortcut.error.unsupportedModifiers" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1157,16 +1197,16 @@
             "value" : "These modifiers are not supported."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "지원되지 않는 보조 키입니다."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "これらの修飾キーはサポートされていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지원되지 않는 보조 키입니다."
           }
         },
         "zh-Hans" : {
@@ -1178,6 +1218,7 @@
       }
     },
     "shortcut.record.accessibilityLabel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1185,16 +1226,16 @@
             "value" : "Record shortcut"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "단축키 기록"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ショートカットを記録"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키 기록"
           }
         },
         "zh-Hans" : {
@@ -1206,6 +1247,7 @@
       }
     },
     "shortcut.record.button" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1213,16 +1255,16 @@
             "value" : "Record"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "기록"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "記録"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기록"
           }
         },
         "zh-Hans" : {
@@ -1234,6 +1276,7 @@
       }
     },
     "shortcut.record.cancel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1241,16 +1284,16 @@
             "value" : "Cancel"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "취소"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "キャンセル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "취소"
           }
         },
         "zh-Hans" : {
@@ -1262,6 +1305,7 @@
       }
     },
     "shortcut.record.none" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1269,16 +1313,16 @@
             "value" : "Not set"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "설정되지 않음"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "未設定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정되지 않음"
           }
         },
         "zh-Hans" : {
@@ -1290,6 +1334,7 @@
       }
     },
     "shortcut.record.prompt" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1297,16 +1342,16 @@
             "value" : "Press a shortcut…"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "단축키를 누르세요…"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ショートカットを押してください…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키를 누르세요…"
           }
         },
         "zh-Hans" : {

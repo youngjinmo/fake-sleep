@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -9,13 +10,13 @@
             "value" : "Fake Sleep"
           }
         },
-        "ko" : {
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
           }
         },
-        "ja" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
@@ -30,6 +31,7 @@
       }
     },
     "CFBundleName" : {
+      "comment" : "Bundle name",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -37,13 +39,13 @@
             "value" : "Fake Sleep"
           }
         },
-        "ko" : {
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
           }
         },
-        "ja" : {
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
