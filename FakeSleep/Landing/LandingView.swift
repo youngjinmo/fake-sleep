@@ -37,7 +37,7 @@ struct LandingView: View {
             Text(
               Self.localized(
                 "landing.shortcutNotSet",
-                fallback: "Shortcut not set. Open Settings… to choose one, or use the button below."
+                fallback: "No shortcut is set. Open Settings… to choose one, or use the button below."
               )
             )
           }
