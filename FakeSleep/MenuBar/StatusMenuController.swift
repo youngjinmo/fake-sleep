@@ -8,6 +8,7 @@ final class StatusMenuController: NSObject {
   private let statusBar: NSStatusBar
   private weak var coordinator: FakeSleepCoordinator?
   private let settingsHandler: () -> Void
+  private let userGuideHandler: () -> Void
   private let quitHandler: () -> Void
   private var stateObserverID: UUID?
   private var isClosed = false
@@ -15,11 +16,13 @@ final class StatusMenuController: NSObject {
   init(
     coordinator: FakeSleepCoordinator,
     settingsHandler: @escaping () -> Void = {},
+    userGuideHandler: @escaping () -> Void = {},
     quitHandler: @escaping () -> Void = { NSApp.terminate(nil) },
     statusBar: NSStatusBar = .system
   ) {
     self.coordinator = coordinator
     self.settingsHandler = settingsHandler
+    self.userGuideHandler = userGuideHandler
     self.quitHandler = quitHandler
     self.statusBar = statusBar
     self.statusItem = statusBar.statusItem(withLength: NSStatusItem.squareLength)
@@ -35,6 +38,13 @@ final class StatusMenuController: NSObject {
       )
     )
     menu.addItem(.separator())
+    menu.addItem(
+      NSMenuItem(
+        title: Self.localized("menu.showUserGuide", fallback: "Show User Guide"),
+        action: #selector(openUserGuide),
+        keyEquivalent: ""
+      )
+    )
     menu.addItem(
       NSMenuItem(
         title: Self.localized("menu.settings", fallback: "Settings…"),
@@ -119,11 +129,35 @@ final class StatusMenuController: NSObject {
   }
 
   @objc
+  private func openUserGuide() {
+    userGuideHandler()
+  }
+
+  @objc
   private func quit() {
     quitHandler()
   }
 
   private static func localized(_ key: String, fallback: String) -> String {
     NSLocalizedString(key, bundle: .main, value: fallback, comment: "")
+  }
+}
+
+@MainActor
+extension StatusMenuController {
+  convenience init(
+    coordinator: FakeSleepCoordinator,
+    settingsHandler: @escaping () -> Void = {},
+    guideHandler: @escaping () -> Void,
+    quitHandler: @escaping () -> Void = { NSApp.terminate(nil) },
+    statusBar: NSStatusBar = .system
+  ) {
+    self.init(
+      coordinator: coordinator,
+      settingsHandler: settingsHandler,
+      userGuideHandler: guideHandler,
+      quitHandler: quitHandler,
+      statusBar: statusBar
+    )
   }
 }

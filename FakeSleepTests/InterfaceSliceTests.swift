@@ -45,6 +45,29 @@ final class StatusMenuControllerTests: XCTestCase {
     XCTAssertFalse(button?.toolTip?.isEmpty ?? true)
   }
 
+  func test사용자안내메뉴를선택하면안내callback을호출한다() throws {
+    let coordinator = makeCoordinator()
+    var userGuideCallCount = 0
+    let controller = StatusMenuController(
+      coordinator: coordinator,
+      userGuideHandler: { userGuideCallCount += 1 }
+    )
+    defer { controller.close() }
+
+    // Given: 사용자 안내 메뉴 항목이 상태바 메뉴에 노출되어 있다.
+    let menu = try XCTUnwrap(controller.statusItem.menu)
+    let item = try XCTUnwrap(menu.items.first {
+      $0.title == localized("menu.showUserGuide", fallback: "Show User Guide")
+    })
+    let action = try XCTUnwrap(item.action)
+
+    // When: 사용자 안내 메뉴 action을 실행한다.
+    XCTAssertTrue(NSApp.sendAction(action, to: item.target, from: item))
+
+    // Then: 주입한 사용자 안내 callback이 한 번 호출된다.
+    XCTAssertEqual(userGuideCallCount, 1)
+  }
+
   func test메뉴동작은코디네이터토글을호출한다() throws {
     let coordinator = makeCoordinator()
     let controller = StatusMenuController(coordinator: coordinator)

@@ -12,9 +12,10 @@ final class AppContainer {
   private let loginItemManager: LoginItemManager
   private let settingsViewModel: SettingsViewModel
   private let settingsWindowController: SettingsWindowController
+  private let landingWindowController: LandingWindowController
   private let statusMenuController: StatusMenuController
 
-  init() {
+  init(landingPresentationStore: LandingPresentationStore = LandingPresentationStore()) {
     let screenProvider = SystemScreenProvider()
     let overlayController = OverlayWindowController()
     let shortcutStore = ShortcutStore()
@@ -59,21 +60,40 @@ final class AppContainer {
       coordinator: coordinator
     )
     let settingsWindowController = SettingsWindowController(viewModel: settingsViewModel)
+    let landingViewModel = LandingViewModel(
+      coordinator: coordinator,
+      settingsViewModel: settingsViewModel,
+      presentationStore: landingPresentationStore,
+      settingsHandler: { @MainActor [weak settingsWindowController] in
+        settingsWindowController?.open()
+      }
+    )
+    let landingWindowController = LandingWindowController(
+      viewModel: landingViewModel,
+      coordinator: coordinator
+    )
     let statusMenuController = StatusMenuController(
       coordinator: coordinator,
       settingsHandler: { @MainActor [weak settingsWindowController] in
         settingsWindowController?.open()
+      },
+      userGuideHandler: { @MainActor [weak landingWindowController] in
+        landingWindowController?.open()
       }
     )
 
     self.loginItemManager = loginItemManager
     self.settingsViewModel = settingsViewModel
     self.settingsWindowController = settingsWindowController
+    self.landingWindowController = landingWindowController
     self.statusMenuController = statusMenuController
+
+    landingWindowController.openAtLaunchIfNeeded()
   }
 
   func prepareForTermination() {
     coordinator.prepareForTermination()
+    landingWindowController.prepareForTermination()
     settingsWindowController.close()
     statusMenuController.close()
   }
