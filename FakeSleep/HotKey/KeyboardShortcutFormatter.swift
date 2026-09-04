@@ -1,4 +1,8 @@
 enum KeyboardShortcutFormatter {
+  static func string(for shortcut: KeyboardShortcut) -> String {
+    string(from: shortcut)
+  }
+
   static func string(from shortcut: KeyboardShortcut) -> String {
     var result = ""
     if shortcut.modifiers.contains(.control) { result += "⌃" }

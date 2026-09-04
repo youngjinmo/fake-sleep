@@ -10,6 +10,7 @@ final class SettingsViewModel: ObservableObject {
   private let loginItemManager: LoginItemManaging
   private weak var coordinator: FakeSleepCoordinator?
   private var coordinatorErrorObserverID: UUID?
+  private var shortcutObservers: [UUID: (KeyboardShortcut?) -> Void] = [:]
   private var loginItemError: Error?
 
   init(
@@ -39,15 +40,27 @@ final class SettingsViewModel: ObservableObject {
     }
   }
 
+  @discardableResult
+  func addShortcutObserver(_ observer: @escaping (KeyboardShortcut?) -> Void) -> UUID {
+    let id = UUID()
+    shortcutObservers[id] = observer
+    observer(shortcut)
+    return id
+  }
+
+  func removeShortcutObserver(_ id: UUID) {
+    shortcutObservers.removeValue(forKey: id)
+  }
+
   func setShortcut(_ shortcut: KeyboardShortcut) {
     _ = shortcutManager.setShortcut(shortcut)
-    self.shortcut = shortcutManager.currentShortcut
+    updateShortcut()
     refreshError()
   }
 
   func resetToDefault() {
     _ = shortcutManager.resetToDefault()
-    shortcut = shortcutManager.currentShortcut
+    updateShortcut()
     refreshError()
   }
 
@@ -76,5 +89,10 @@ final class SettingsViewModel: ObservableObject {
 
   private func refreshError() {
     error = shortcutManager.error ?? loginItemError ?? coordinator?.error
+  }
+
+  private func updateShortcut() {
+    shortcut = shortcutManager.currentShortcut
+    shortcutObservers.values.forEach { $0(shortcut) }
   }
 }

@@ -13,7 +13,14 @@ struct LandingPresentationStore {
     defaults.object(forKey: Self.showsAtLaunchKey) as? Bool ?? true
   }
 
+  var shouldShowAtLaunch: Bool {
+    get { showsAtLaunch }
+    nonmutating set { setShowsAtLaunch(newValue) }
+  }
+
   func setShowsAtLaunch(_ value: Bool) {
     defaults.set(value, forKey: Self.showsAtLaunchKey)
   }
 }
+
+typealias LandingDisplayStore = LandingPresentationStore
