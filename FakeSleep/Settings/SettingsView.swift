@@ -1,5 +1,10 @@
 import SwiftUI
 
+enum SettingsWindowLayout {
+  static let width: CGFloat = 520
+  static let minHeight: CGFloat = 520
+}
+
 struct SettingsView: View {
   @ObservedObject var viewModel: SettingsViewModel
 
@@ -18,7 +23,8 @@ struct SettingsView: View {
     }
     .formStyle(.grouped)
     .padding()
-    .frame(width: 520)
+    .frame(width: SettingsWindowLayout.width)
+    .frame(minHeight: SettingsWindowLayout.minHeight, alignment: .top)
   }
 
   private var defaultBehaviorSection: some View {
@@ -95,56 +101,72 @@ struct SettingsView: View {
     Section(
       header: Text(Self.localized("settings.section.power", fallback: "Power & Battery"))
     ) {
-      HStack(spacing: 8) {
-        Text(Self.localized("settings.batteryCutoffPrefix", fallback: "Automatically stop at"))
-        TextField(
-          Self.localized("settings.batteryPercentPlaceholder", fallback: "10"),
-          text: Binding(
-            get: { viewModel.batteryInput },
-            set: { viewModel.setBatteryInput($0) }
+      VStack(alignment: .leading, spacing: 8) {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+          Text(Self.localized("settings.batteryCutoffPrefix", fallback: "Automatically stop at"))
+            .fixedSize(horizontal: false, vertical: true)
+
+          Spacer(minLength: 8)
+
+          HStack(alignment: .firstTextBaseline, spacing: 6) {
+            TextField(
+              Self.localized("settings.batteryPercentPlaceholder", fallback: "10"),
+              text: Binding(
+                get: { viewModel.batteryInput },
+                set: { viewModel.setBatteryInput($0) }
+              )
+            )
+            .frame(width: 52)
+            .multilineTextAlignment(.trailing)
+            .textFieldStyle(.roundedBorder)
+            .onSubmit {
+              viewModel.commitBatteryInput()
+            }
+
+            Text("%")
+
+            Stepper(
+              "",
+              value: Binding(
+                get: { viewModel.batteryCutoffPercent },
+                set: { viewModel.setBatteryCutoffPercent($0) }
+              ),
+              in: 0...100,
+              step: 1
+            )
+            .labelsHidden()
+          }
+          .fixedSize(horizontal: true, vertical: false)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .disabled(viewModel.isSessionActive)
+
+        if viewModel.batteryCutoffPercent == 0 {
+          Text(Self.localized("settings.battery.disabled", fallback: "Automatic stop is off."))
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+
+        if let validationError = viewModel.batteryValidationError {
+          Text(validationError)
+            .font(.caption)
+            .foregroundStyle(.red)
+            .accessibilityLabel(validationError)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+
+        Text(
+          Self.localized(
+            "settings.battery.help",
+            fallback: "Battery protection does not apply while the power adapter is connected. Set 0% to turn it off."
           )
         )
-        .frame(width: 52)
-        .multilineTextAlignment(.trailing)
-        .textFieldStyle(.roundedBorder)
-        .onSubmit {
-          viewModel.commitBatteryInput()
-        }
-        Text("%")
-        Stepper(
-          "",
-          value: Binding(
-            get: { viewModel.batteryCutoffPercent },
-            set: { viewModel.setBatteryCutoffPercent($0) }
-          ),
-          in: 0...100,
-          step: 1
-        )
-        .labelsHidden()
+        .font(.caption)
+        .foregroundStyle(.secondary)
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxWidth: .infinity, alignment: .leading)
       }
-      .disabled(viewModel.isSessionActive)
-
-      if viewModel.batteryCutoffPercent == 0 {
-        Text(Self.localized("settings.battery.disabled", fallback: "Automatic stop is off."))
-          .font(.caption)
-          .foregroundStyle(.secondary)
-      }
-
-      if let validationError = viewModel.batteryValidationError {
-        Text(validationError)
-          .font(.caption)
-          .foregroundStyle(.red)
-          .accessibilityLabel(validationError)
-      }
-
-      Text(
-        Self.localized(
-          "settings.battery.help",
-          fallback: "Battery protection does not apply while the power adapter is connected. Set 0% to turn it off."
-        )
-      )
-      .font(.caption)
-      .foregroundStyle(.secondary)
     }
   }
 

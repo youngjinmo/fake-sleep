@@ -1,23 +1,36 @@
 import SwiftUI
 
+enum LandingWindowLayout {
+  static let width: CGFloat = 560
+  static let height: CGFloat = 600
+  static let footerMinHeight: CGFloat = 72
+}
+
 struct LandingView: View {
   @ObservedObject var viewModel: LandingViewModel
 
   var body: some View {
     VStack(spacing: 0) {
-      ScrollView {
+      ScrollView(.vertical) {
         stepContent
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding(28)
       }
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .layoutPriority(1)
 
       Divider()
 
       footer
         .padding(.horizontal, 20)
         .padding(.vertical, 14)
+        .frame(
+          maxWidth: .infinity,
+          minHeight: LandingWindowLayout.footerMinHeight,
+          alignment: .center
+        )
     }
-    .frame(width: 560, height: 520)
+    .frame(width: LandingWindowLayout.width, height: LandingWindowLayout.height)
     .onAppear {
       viewModel.beginOnboarding()
     }
@@ -68,7 +81,7 @@ struct LandingView: View {
           ),
           description: Self.localized(
             "onboarding.value.macOSLock.description",
-            fallback: "Lock your account with Control-Command-Q before you leave."
+            fallback: "Use Control-Command-Q to lock macOS before you leave."
           )
         )
         valueRow(
@@ -118,12 +131,12 @@ struct LandingView: View {
         ),
         description: Self.localized(
           "mode.secureLeave.description",
-          fallback: "Prevent idle system sleep and lock macOS with Control-Command-Q."
+          fallback: "Prevent idle system sleep and lock macOS with the macOS lock shortcut."
         ),
         details: [
           Self.localized(
             "mode.secureLeave.lock",
-            fallback: "Press Control-Command-Q to lock macOS."
+            fallback: "Use the macOS lock shortcut to lock macOS."
           ),
           Self.localized(
             "mode.secureLeave.displaySleep",

@@ -2542,25 +2542,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prevent idle system sleep and lock macOS with Control-Command-Q."
+            "value" : "Prevent idle system sleep and lock macOS with the macOS lock shortcut."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アイドルによるシステムスリープを防ぎ、Control-Command-QでmacOSをロックします。"
+            "value" : "アイドルによるシステムスリープを防ぎ、macOSのロック用ショートカットで画面をロックします。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "idle system sleep을 방지하고 Control-Command-Q로 macOS를 잠급니다."
+            "value" : "idle system sleep을 방지하고 macOS 잠금 단축키(Shortcut)로 화면을 잠급니다."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "防止系统因闲置而睡眠，并使用 Control-Command-Q 锁定 macOS。"
+            "value" : "防止系统因闲置而睡眠，并使用 macOS 锁定快捷键锁定屏幕。"
           }
         }
       }
@@ -2598,25 +2598,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Press Control-Command-Q to lock macOS."
+            "value" : "Use the macOS lock shortcut to lock macOS."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Control-Command-Qを押してmacOSをロックします。"
+            "value" : "macOSのロック用ショートカットでmacOSをロックします。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Control-Command-Q를 눌러 macOS를 잠그세요."
+            "value" : "macOS 잠금 단축키(Shortcut)를 눌러 macOS를 잠그세요."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按下 Control-Command-Q 锁定 macOS。"
+            "value" : "使用 macOS 锁定快捷键锁定 macOS。"
           }
         }
       }

@@ -59,9 +59,12 @@ final class LocalizationSliceTests: XCTestCase {
     "menu.showUserGuide",
     // Session mode and activation failure copy.
     "mode.secureLeave",
+    "mode.secureLeave.description",
+    "mode.secureLeave.lock",
     "mode.blackout",
     "fakeSleep.error.batteryBelowCutoff",
     "fakeSleep.error.lockTimedOut",
+    "onboarding.value.macOSLock.description",
   ]
 
   func testLocalizableCatalog에는필수키와네언어의비어있지않은값이있다() throws {
@@ -163,6 +166,65 @@ final class LocalizationSliceTests: XCTestCase {
       // Then: %@는 정확히 하나이고 malformed percent token이 없다.
       XCTAssertEqual(placeholderCount, 1, "%@ placeholder 개수 오류: \(language)")
       XCTAssertFalse(remainingValue.contains("%"), "malformed percent token: \(language): \(value)")
+    }
+  }
+
+  func test온보딩macOS잠금방법카피는네언어에서직접단축키조합을명시하지않는다() throws {
+    // Given: 온보딩의 잠금 관련 카피를 네 언어로 읽는다.
+    let catalog = try loadJSONResource(named: "Localizable", ext: "xcstrings")
+    let strings = try XCTUnwrap(catalog["strings"] as? [String: Any])
+    let keys = ["mode.secureLeave.description", "mode.secureLeave.lock"]
+
+    // When: 각 키와 언어의 설명 문구를 확인한다.
+    for key in keys {
+      let entry = try XCTUnwrap(strings[key] as? [String: Any])
+      let localizations = try XCTUnwrap(entry["localizations"] as? [String: Any])
+      for language in ["en", "ko", "ja", "zh-Hans"] {
+        let value = try stringValue(localizations[language], key: key, language: language)
+
+        // Then: 변경 가능한 단축키를 특정 조합으로 고정하지 않는다.
+        XCTAssertFalse(
+          value.contains("⌃⌘") || value.contains("⌥⌘"),
+          "온보딩 카피가 기호형 단축키 조합을 고정합니다: \(key), \(language): \(value)"
+        )
+        let compactValue = value
+          .lowercased()
+          .replacingOccurrences(of: "⌃", with: "control")
+          .replacingOccurrences(of: "⌘", with: "command")
+          .filter { !$0.isWhitespace && !"-+·⌃⌘".contains($0) }
+        XCTAssertFalse(
+          compactValue.contains("controlcommand") ||
+            compactValue.contains("ctrlcommand") ||
+            compactValue.contains("controlcmd") ||
+            compactValue.contains("ctrlcmd") ||
+            compactValue.contains("commandq") ||
+            compactValue.contains("コントロールコマンド"),
+          "온보딩 카피가 직접 단축키 조합을 고정합니다: \(key), \(language): \(value)"
+        )
+      }
+    }
+  }
+
+  func test1단계macOS잠금방법카피는네언어에서ControlCommandQ안내를유지한다() throws {
+    // Given: 1단계 macOS 잠금 방법 설명의 네 언어 카피를 읽는다.
+    let catalog = try loadJSONResource(named: "Localizable", ext: "xcstrings")
+    let strings = try XCTUnwrap(catalog["strings"] as? [String: Any])
+    let entry = try XCTUnwrap(strings["onboarding.value.macOSLock.description"] as? [String: Any])
+    let localizations = try XCTUnwrap(entry["localizations"] as? [String: Any])
+
+    // When: 각 언어 설명의 단축키 안내를 확인한다.
+    for language in ["en", "ko", "ja", "zh-Hans"] {
+      let value = try stringValue(
+        localizations[language],
+        key: "onboarding.value.macOSLock.description",
+        language: language
+      )
+      let compactValue = value
+        .lowercased()
+        .filter { !$0.isWhitespace && !"-+·⌃⌘".contains($0) }
+
+      // Then: 1단계의 실제 macOS 잠금 안내는 Control-Command-Q를 유지한다.
+      XCTAssertTrue(compactValue.contains("controlcommandq"), "잠금 안내 누락: \(language): \(value)")
     }
   }
 

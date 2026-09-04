@@ -34,8 +34,12 @@ final class SettingsWindowController: NSWindowController {
   func open() {
     if window == nil {
       let contentView = NSHostingView(rootView: SettingsView(viewModel: viewModel))
+      let contentSize = NSSize(
+        width: SettingsWindowLayout.width,
+        height: SettingsWindowLayout.minHeight
+      )
       let settingsWindow = NSWindow(
-        contentRect: NSRect(x: 0, y: 0, width: 520, height: 460),
+        contentRect: NSRect(origin: .zero, size: contentSize),
         styleMask: [.titled, .closable],
         backing: .buffered,
         defer: false
@@ -47,7 +51,13 @@ final class SettingsWindowController: NSWindowController {
         comment: ""
       )
       settingsWindow.isReleasedWhenClosed = false
+      settingsWindow.contentMinSize = contentSize
       settingsWindow.contentView = contentView
+      contentView.layoutSubtreeIfNeeded()
+      let fittingHeight = max(contentSize.height, contentView.fittingSize.height)
+      settingsWindow.setContentSize(
+        NSSize(width: contentSize.width, height: fittingHeight)
+      )
       settingsWindow.center()
       window = settingsWindow
     }
