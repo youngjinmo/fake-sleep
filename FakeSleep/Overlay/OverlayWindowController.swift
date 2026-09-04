@@ -12,6 +12,7 @@ protocol OverlayWindowing: AnyObject {
   func setRestoreHandler(_ handler: (() -> Void)?)
   func makeKeyAndOrderFront()
   func resignKeyOverlay()
+  func setCanBecomeKey(_ canBecomeKey: Bool)
 }
 
 @MainActor
@@ -30,6 +31,8 @@ extension OverlayWindowing {
   }
 
   func resignKeyOverlay() {}
+
+  func setCanBecomeKey(_ canBecomeKey: Bool) {}
 }
 
 @MainActor
@@ -40,6 +43,7 @@ protocol OverlayWindowCreating: AnyObject {
 @MainActor
 final class OverlayWindow: NSWindow, OverlayWindowing {
   private var didRequestRestore = false
+  private var allowsKeyWindow = true
 
   var onRestoreRequested: (() -> Void)?
 
@@ -48,7 +52,7 @@ final class OverlayWindow: NSWindow, OverlayWindowing {
     set { setFrame(newValue, display: true) }
   }
 
-  override var canBecomeKey: Bool { true }
+  override var canBecomeKey: Bool { allowsKeyWindow }
   override var canBecomeMain: Bool { true }
 
   func setRestoreHandler(_ handler: (() -> Void)?) {
@@ -61,6 +65,10 @@ final class OverlayWindow: NSWindow, OverlayWindowing {
 
   func resignKeyOverlay() {
     resignKey()
+  }
+
+  func setCanBecomeKey(_ canBecomeKey: Bool) {
+    allowsKeyWindow = canBecomeKey
   }
 
   override func sendEvent(_ event: NSEvent) {
@@ -269,10 +277,12 @@ final class OverlayWindowController: OverlayPresenting {
     }
 
     for (screenID, window) in windows where screenID != primaryScreenID {
+      window.setCanBecomeKey(false)
       window.resignKeyOverlay()
       window.orderFrontRegardless()
     }
 
+    primaryWindow.setCanBecomeKey(true)
     primaryWindow.makeKeyAndOrderFront()
   }
 }
