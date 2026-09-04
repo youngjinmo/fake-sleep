@@ -129,8 +129,17 @@ struct ShortcutStore {
     defaults.removeObject(forKey: Self.modifiersKey)
   }
 
+  var hasMigratedLegacyDefault: Bool {
+    defaults.bool(forKey: Self.legacyDefaultMigrationKey)
+  }
+
+  func markLegacyDefaultMigrated() {
+    defaults.set(true, forKey: Self.legacyDefaultMigrationKey)
+  }
+
   private static let keyCodeKey = "shortcut.keyCode"
   private static let modifiersKey = "shortcut.modifiers"
+  private static let legacyDefaultMigrationKey = "shortcut.legacyDefaultMigrated"
 
   private func uint32Value(forKey key: String) -> UInt32? {
     guard let number = defaults.object(forKey: key) as? NSNumber,
@@ -202,18 +211,24 @@ final class ShortcutManager {
 
   func registerOnLaunch() {
     let storedShortcut = store.load()
-    let candidate = storedShortcut ?? .defaultShortcut
+    let shouldMigrateLegacyDefault = storedShortcut == .legacyDefaultShortcut
+      && !store.hasMigratedLegacyDefault
+    let candidate = launchCandidate(
+      storedShortcut: storedShortcut,
+      shouldMigrateLegacyDefault: shouldMigrateLegacyDefault
+    )
 
     guard register(candidate) else {
-      if candidate != .defaultShortcut, register(.defaultShortcut) {
-        persist(.defaultShortcut)
-      } else {
-        error = .defaultUnavailable
+      if shouldMigrateLegacyDefault {
+        restoreLegacyShortcut(storedShortcut)
+        return
       }
+
+      recoverWithDefault(from: candidate)
       return
     }
 
-    persist(candidate)
+    persistAfterLaunch(candidate)
   }
 
   @discardableResult
@@ -279,13 +294,58 @@ final class ShortcutManager {
     }
   }
 
-  private func persist(_ shortcut: KeyboardShortcut) {
+  private func launchCandidate(
+    storedShortcut: KeyboardShortcut?,
+    shouldMigrateLegacyDefault: Bool
+  ) -> KeyboardShortcut {
+    if shouldMigrateLegacyDefault {
+      return .defaultShortcut
+    }
+
+    return storedShortcut ?? .defaultShortcut
+  }
+
+  private func restoreLegacyShortcut(_ storedShortcut: KeyboardShortcut?) {
+    guard let storedShortcut, register(storedShortcut) else {
+      error = .defaultUnavailable
+      return
+    }
+
+    error = .registrationFailed
+  }
+
+  private func recoverWithDefault(from candidate: KeyboardShortcut) {
+    guard candidate != .defaultShortcut else {
+      error = .defaultUnavailable
+      return
+    }
+
+    guard register(.defaultShortcut) else {
+      error = .defaultUnavailable
+      return
+    }
+
+    persistAfterLaunch(.defaultShortcut)
+  }
+
+  private func persistAfterLaunch(_ shortcut: KeyboardShortcut) {
+    guard persist(shortcut) else {
+      return
+    }
+
+    store.markLegacyDefaultMigrated()
+  }
+
+  @discardableResult
+  private func persist(_ shortcut: KeyboardShortcut) -> Bool {
     do {
       try store.save(shortcut)
       currentShortcut = shortcut
       error = nil
+      return true
     } catch _ {
       error = .persistenceFailed
+      return false
     }
   }
 }

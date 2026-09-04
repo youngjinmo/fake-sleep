@@ -608,15 +608,122 @@ final class ShortcutBehaviorTests: XCTestCase {
     let store = ShortcutStore(defaults: defaults)
     let registrar = HotKeyRegistrarSpy()
     let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    let expectedDefault = KeyboardShortcut(keyCode: 1, modifiers: [.control, .command])
 
     // Given: 저장된 단축키가 없다.
     // When: 앱 실행 시 단축키를 등록한다.
     manager.registerOnLaunch()
 
-    // Then: Option-Command-S를 등록하고 같은 값이 저장된다.
-    XCTAssertEqual(registrar.primaryRegistrations, [.defaultShortcut])
-    XCTAssertEqual(store.load(), .defaultShortcut)
-    XCTAssertEqual(manager.currentShortcut, .defaultShortcut)
+    // Then: Control-Command-S를 등록하고 같은 값이 저장된다.
+    XCTAssertEqual(registrar.primaryRegistrations, [expectedDefault])
+    XCTAssertEqual(store.load(), expectedDefault)
+    XCTAssertEqual(manager.currentShortcut, expectedDefault)
+  }
+
+  func testlegacy기본OptionCommandS만새기본ControlCommandS로한번마이그레이션한다() {
+    let store = ShortcutStore(defaults: defaults)
+    let legacyShortcut = KeyboardShortcut(keyCode: 1, modifiers: [.option, .command])
+    try! store.save(legacyShortcut)
+    let firstRegistrar = HotKeyRegistrarSpy()
+    let firstManager = ShortcutManager(store: store, registrar: firstRegistrar, handler: {})
+    let expectedDefault = KeyboardShortcut(keyCode: 1, modifiers: [.control, .command])
+
+    // Given: 이전 버전의 기본 단축키만 저장되어 있다.
+    // When: 새 버전 앱을 처음 실행한다.
+    firstManager.registerOnLaunch()
+
+    // Then: legacy 값 대신 새 기본값을 등록하고 저장한다.
+    XCTAssertEqual(firstRegistrar.primaryRegistrations, [expectedDefault])
+    XCTAssertEqual(firstManager.currentShortcut, expectedDefault)
+    XCTAssertEqual(store.load(), expectedDefault)
+
+    // Given: 마이그레이션 후 사용자가 legacy와 같은 조합을 직접 다시 선택했다.
+    XCTAssertTrue(firstManager.setShortcut(legacyShortcut))
+
+    // When: 같은 저장소로 앱을 다시 실행한다.
+    let secondRegistrar = HotKeyRegistrarSpy()
+    let secondManager = ShortcutManager(store: store, registrar: secondRegistrar, handler: {})
+    secondManager.registerOnLaunch()
+
+    // Then: 일회성 마이그레이션 이후에는 사용자의 선택을 보존한다.
+    XCTAssertEqual(secondRegistrar.primaryRegistrations, [legacyShortcut])
+    XCTAssertEqual(secondManager.currentShortcut, legacyShortcut)
+  }
+
+  func test새기본등록실패후legacy재등록성공시legacy를유지하고다음실행에서마이그레이션을재시도한다() {
+    let store = ShortcutStore(defaults: defaults)
+    let legacyShortcut = KeyboardShortcut(keyCode: 1, modifiers: [.option, .command])
+    let expectedDefault = KeyboardShortcut(keyCode: 1, modifiers: [.control, .command])
+    try! store.save(legacyShortcut)
+    let registrar = HotKeyRegistrarSpy()
+    registrar.primaryRegistrationFailures = [expectedDefault]
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+
+    // Given: legacy 기본값이 저장되어 있고 새 기본값 등록만 실패한다.
+    // When: 업그레이드 직후 앱을 실행한다.
+    manager.registerOnLaunch()
+
+    // Then: legacy 등록으로 복구하고 마이그레이션 완료로 저장하지 않는다.
+    XCTAssertEqual(manager.currentShortcut, legacyShortcut)
+    XCTAssertEqual(store.load(), legacyShortcut)
+    XCTAssertEqual(registrar.primaryRegistrations, [expectedDefault, legacyShortcut])
+    XCTAssertEqual(manager.error, .registrationFailed)
+
+    // When: 새 기본값 등록이 가능한 상태에서 다음 실행을 한다.
+    registrar.primaryRegistrationFailures = []
+    let nextManager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    nextManager.registerOnLaunch()
+
+    // Then: 이전 실패 때문에 영구히 legacy에 머물지 않고 마이그레이션을 재시도한다.
+    XCTAssertEqual(nextManager.currentShortcut, expectedDefault)
+    XCTAssertEqual(store.load(), expectedDefault)
+  }
+
+  func testlegacy값과다른사용자지정단축키는마이그레이션하지않고보존한다() {
+    let store = ShortcutStore(defaults: defaults)
+    let customShortcut = KeyboardShortcut(keyCode: 0, modifiers: [.command])
+    try! store.save(customShortcut)
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+
+    // Given: 사용자가 legacy 기본값과 다른 단축키를 저장했다.
+    // When: 새 버전 앱을 실행한다.
+    manager.registerOnLaunch()
+
+    // Then: 사용자의 단축키를 그대로 등록하고 저장한다.
+    XCTAssertEqual(registrar.primaryRegistrations, [customShortcut])
+    XCTAssertEqual(manager.currentShortcut, customShortcut)
+    XCTAssertEqual(store.load(), customShortcut)
+
+    // When: 사용자가 이후 legacy와 같은 조합을 직접 선택하고 앱을 다시 실행한다.
+    let legacyShortcut = KeyboardShortcut(keyCode: 1, modifiers: [.option, .command])
+    XCTAssertTrue(manager.setShortcut(legacyShortcut))
+    let restoredManager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    restoredManager.registerOnLaunch()
+
+    // Then: 최초 custom 사용으로 migration 검사가 끝났으므로 사용자 선택을 덮어쓰지 않는다.
+    XCTAssertEqual(restoredManager.currentShortcut, legacyShortcut)
+    XCTAssertEqual(store.load(), legacyShortcut)
+  }
+
+  func test기본값초기화는새ControlCommandS를저장하고등록한다() {
+    let store = ShortcutStore(defaults: defaults)
+    let registrar = HotKeyRegistrarSpy()
+    let manager = ShortcutManager(store: store, registrar: registrar, handler: {})
+    let expectedDefault = KeyboardShortcut(keyCode: 1, modifiers: [.control, .command])
+    let customShortcut = KeyboardShortcut(keyCode: 0, modifiers: [.command])
+    try! store.save(customShortcut)
+    manager.registerOnLaunch()
+
+    // Given: 사용자가 단축키를 변경한 상태다.
+    // When: 기본값 복원을 요청한다.
+    let changed = manager.resetToDefault()
+
+    // Then: 새 기본 단축키가 등록되고 저장된다.
+    XCTAssertTrue(changed)
+    XCTAssertEqual(manager.currentShortcut, expectedDefault)
+    XCTAssertEqual(store.load(), expectedDefault)
+    XCTAssertEqual(registrar.primaryRegistrations.last, expectedDefault)
   }
 
   func test유효한사용자단축키는등록되고저장된다() {
@@ -1042,6 +1149,7 @@ private final class OverlayWindowFactorySpy: OverlayWindowCreating {
 @MainActor
 private final class HotKeyRegistrarSpy: HotKeyRegistering {
   var primaryRegistrationSucceeds: Bool
+  var primaryRegistrationFailures: Set<KeyboardShortcut> = []
   let emergencyRegistrationSucceeds: Bool
   private(set) var isPrimaryRegistered: Bool
   private(set) var primaryRegistrations: [KeyboardShortcut] = []
@@ -1058,7 +1166,7 @@ private final class HotKeyRegistrarSpy: HotKeyRegistering {
 
   func registerPrimary(_ shortcut: KeyboardShortcut, handler: @escaping () -> Void) throws {
     primaryRegistrations.append(shortcut)
-    guard primaryRegistrationSucceeds else {
+    guard primaryRegistrationSucceeds, !primaryRegistrationFailures.contains(shortcut) else {
       primaryRegistrationErrors.append(HotKeyError.unavailable)
       isPrimaryRegistered = false
       throw HotKeyError.unavailable

@@ -45,15 +45,15 @@ final class LandingPresentationStoreTests: XCTestCase {
 }
 
 final class KeyboardShortcutFormatterTests: XCTestCase {
-  func test기본OptionCommandS를macOS기호로변환한다() {
+  func test기본ControlCommandS를macOS기호로변환한다() {
     // Given: 기본 전역 단축키가 있다.
     let shortcut = KeyboardShortcut.defaultShortcut
 
     // When: 단축키 표시 문자열을 만든다.
     let string = KeyboardShortcutFormatter.string(from: shortcut)
 
-    // Then: Option과 Command가 기호 순서로 표시된다.
-    XCTAssertEqual(string, "⌥⌘S")
+    // Then: Control과 Command가 기호 순서로 표시된다.
+    XCTAssertEqual(string, "⌃⌘S")
   }
 
   func test모든modifier를ControlOptionShiftCommand순서와keyname으로변환한다() {

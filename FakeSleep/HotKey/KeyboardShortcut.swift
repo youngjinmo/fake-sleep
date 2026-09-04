@@ -18,6 +18,11 @@ struct KeyboardShortcut: Equatable, Codable, Hashable {
 
   static let defaultShortcut = KeyboardShortcut(
     keyCode: UInt32(kVK_ANSI_S),
+    modifiers: [.control, .command]
+  )
+
+  static let legacyDefaultShortcut = KeyboardShortcut(
+    keyCode: UInt32(kVK_ANSI_S),
     modifiers: [.option, .command]
   )
 }
