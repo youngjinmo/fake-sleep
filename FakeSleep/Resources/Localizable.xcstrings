@@ -14,6 +14,18 @@
             "state" : "translated",
             "value" : "긴급 Escape를 등록할 수 없습니다."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "緊急復元用のEscapeを登録できませんでした。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法注册用于紧急恢复的 Escape。"
+          }
         }
       }
     },
@@ -29,6 +41,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "모든 디스플레이를 가릴 수 없습니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのディスプレイを覆えませんでした。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法覆盖所有显示器。"
           }
         }
       }
@@ -46,6 +70,18 @@
             "state" : "translated",
             "value" : "복원 단축키를 사용할 수 없습니다."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復元ショートカットを利用できません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有可用的恢复快捷键。"
+          }
         }
       }
     },
@@ -61,6 +97,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "사용 가능한 디스플레이가 없습니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用可能なディスプレイがありません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有可用的显示器。"
           }
         }
       }
@@ -78,6 +126,18 @@
             "state" : "translated",
             "value" : "비활성화됨"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無効"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已停用"
+          }
         }
       }
     },
@@ -93,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "활성화됨"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启用"
           }
         }
       }
@@ -110,6 +182,18 @@
             "state" : "translated",
             "value" : "승인 필요"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "承認が必要"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要批准"
+          }
         }
       }
     },
@@ -126,6 +210,298 @@
             "state" : "translated",
             "value" : "사용할 수 없음"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用不可"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不可用"
+          }
+        }
+      }
+    },
+    "landing.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A visual blackout for every connected display."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "연결된 모든 디스플레이를 시각적으로 어둡게 표시합니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続されたすべてのディスプレイを視覚的に暗転させます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让所有已连接的显示器呈现黑屏。"
+          }
+        }
+      }
+    },
+    "landing.displayLimitation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep covers your displays with black overlays. It does not change display brightness or power."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep은 검은색 오버레이로 디스플레이를 가립니다. 디스플레이 밝기나 전원을 변경하지 않습니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleepは黒いオーバーレイでディスプレイを覆います。ディスプレイの明るさや電源は変更しません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep 通过黑色覆盖层遮住显示器，不会改变显示器亮度或电源状态。"
+          }
+        }
+      }
+    },
+    "landing.darkenScreens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Darken Screens"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면 어둡게 하기"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスプレイを暗くする"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使屏幕变暗"
+          }
+        }
+      }
+    },
+    "landing.dontShowAtLaunch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't show this guide at launch"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시작할 때 이 가이드 표시 안 함"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起動時にこのガイドを表示しない"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动时不显示此指南"
+          }
+        }
+      }
+    },
+    "landing.instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to use"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 방법"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleepの使い方"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep 使用指南"
+          }
+        }
+      }
+    },
+    "landing.openSettings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 열기…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を開く…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置…"
+          }
+        }
+      }
+    },
+    "landing.restoreInstruction" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press Esc at any time while Fake Sleep is active to restore your displays."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep이 활성화된 동안 언제든지 Esc를 누르면 디스플레이를 복원할 수 있습니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleepが有効な間は、いつでもEscを押すとディスプレイを復元できます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep 处于活动状态时，随时按下 Esc 即可恢复显示器。"
+          }
+        }
+      }
+    },
+    "landing.shortcutInstruction" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press %@ anywhere, or use the button below."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@를 어디서든 누르거나 아래 버튼을 사용하세요."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どこでも%@を押すか、下のボタンを使ってください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在任意位置按 %@，或使用下方的按钮。"
+          }
+        }
+      }
+    },
+    "landing.shortcutNotSet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No shortcut is set. Open Settings… to choose one, or use the button below."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단축키가 설정되지 않았습니다. 설정…에서 선택하거나 아래 버튼을 사용하세요."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットが設定されていません。「設定…」で選択するか、下のボタンを使ってください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未设置快捷键。请打开“设置…”进行选择，或使用下方的按钮。"
+          }
+        }
+      }
+    },
+    "landing.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
         }
       }
     },
@@ -138,6 +514,18 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
@@ -158,6 +546,18 @@
             "state" : "translated",
             "value" : "Fake Sleep 종료"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleepを終了"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 Fake Sleep"
+          }
         }
       }
     },
@@ -173,6 +573,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "디스플레이 복원"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスプレイを復元"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复显示器"
           }
         }
       }
@@ -190,6 +602,18 @@
             "state" : "translated",
             "value" : "디스플레이 복원"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスプレイを復元"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复显示器"
+          }
         }
       }
     },
@@ -205,6 +629,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "설정…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
+          }
+        }
+      }
+    },
+    "menu.showUserGuide" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show User Guide"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 가이드 보기"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ユーザーガイドを表示"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示使用指南"
           }
         }
       }
@@ -222,6 +686,18 @@
             "state" : "translated",
             "value" : "Fake Sleep 시작"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleepを開始"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动 Fake Sleep"
+          }
         }
       }
     },
@@ -238,6 +714,18 @@
             "state" : "translated",
             "value" : "디스플레이 복원"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスプレイを復元"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复显示器"
+          }
         }
       }
     },
@@ -250,6 +738,18 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fake Sleep"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fake Sleep"
@@ -270,6 +770,18 @@
             "state" : "translated",
             "value" : "로그인 시 실행"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に起動"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录时启动"
+          }
         }
       }
     },
@@ -285,6 +797,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "로그인 항목에서 승인이 필요합니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン項目で承認が必要です。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要在“登录项”中批准。"
           }
         }
       }
@@ -302,6 +826,18 @@
             "state" : "translated",
             "value" : "로그인 항목 설정 열기"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン項目の設定を開く"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开“登录项”设置"
+          }
         }
       }
     },
@@ -317,6 +853,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "기본값으로 재설정"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトに戻す"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认设置"
           }
         }
       }
@@ -334,6 +882,18 @@
             "state" : "translated",
             "value" : "단축키"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカット"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "快捷键"
+          }
         }
       }
     },
@@ -349,6 +909,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "설정"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
           }
         }
       }
@@ -366,6 +938,18 @@
             "state" : "translated",
             "value" : "기본 단축키를 사용할 수 없습니다."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトのショートカットを利用できません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认快捷键不可用。"
+          }
         }
       }
     },
@@ -381,6 +965,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escape는 긴급 복원용으로 예약되어 있습니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escapeは緊急復元用に予約されています。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escape 已保留用于紧急恢复。"
           }
         }
       }
@@ -398,6 +994,18 @@
             "state" : "translated",
             "value" : "키를 지정해야 합니다."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーを指定してください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必须指定按键。"
+          }
         }
       }
     },
@@ -413,6 +1021,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "보조 키를 추가해야 합니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修飾キーを追加してください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请添加修饰键。"
           }
         }
       }
@@ -430,6 +1050,18 @@
             "state" : "translated",
             "value" : "단축키를 저장할 수 없습니다."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットを保存できませんでした。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存快捷键。"
+          }
         }
       }
     },
@@ -445,6 +1077,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Command, Option 또는 Control을 사용하세요."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command、Option、またはControlを使用してください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请使用 Command、Option 或 Control。"
           }
         }
       }
@@ -462,6 +1106,18 @@
             "state" : "translated",
             "value" : "단축키를 등록할 수 없습니다."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットを登録できませんでした。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法注册快捷键。"
+          }
         }
       }
     },
@@ -477,6 +1133,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "지원되지 않는 키입니다."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このキーはサポートされていません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持此按键。"
           }
         }
       }
@@ -494,6 +1162,18 @@
             "state" : "translated",
             "value" : "지원되지 않는 보조 키입니다."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これらの修飾キーはサポートされていません。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持这些修饰键。"
+          }
         }
       }
     },
@@ -509,6 +1189,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "단축키 기록"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットを記録"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "录制快捷键"
           }
         }
       }
@@ -526,6 +1218,18 @@
             "state" : "translated",
             "value" : "기록"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "录制"
+          }
         }
       }
     },
@@ -541,6 +1245,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "취소"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }
@@ -558,6 +1274,18 @@
             "state" : "translated",
             "value" : "설정되지 않음"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未設定"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未设置"
+          }
         }
       }
     },
@@ -573,6 +1301,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "단축키를 누르세요…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ショートカットを押してください…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请按下快捷键…"
           }
         }
       }

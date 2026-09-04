@@ -45,18 +45,30 @@ final class LocalizationSliceTests: XCTestCase {
     "fakeSleep.error.noScreens",
     "fakeSleep.error.incompleteOverlayCoverage",
     "fakeSleep.error.emergencyEscapeUnavailable",
+    // Landing page copy.
+    "landing.title",
+    "landing.description",
+    "landing.instructions",
+    "landing.shortcutInstruction",
+    "landing.shortcutNotSet",
+    "landing.restoreInstruction",
+    "landing.displayLimitation",
+    "landing.darkenScreens",
+    "landing.openSettings",
+    "landing.dontShowAtLaunch",
+    "menu.showUserGuide",
   ]
 
-  func testLocalizableCatalog에는필수키와영어한국어비어있지않은값이있다() throws {
+  func testLocalizableCatalog에는필수키와네언어의비어있지않은값이있다() throws {
     // Given: 앱 번들 또는 저장소의 Localizable String Catalog를 읽는다.
     let catalog = try loadJSONResource(named: "Localizable", ext: "xcstrings")
 
-    // When: 구현 계약에 정의된 모든 키의 영어/한국어 값을 확인한다.
+    // When: 구현 계약에 정의된 모든 키의 네 언어 값을 확인한다.
     let strings = try XCTUnwrap(catalog["strings"] as? [String: Any])
     for key in requiredLocalizationKeys {
       let entry = try XCTUnwrap(strings[key] as? [String: Any], "누락된 localization key: \(key)")
       let localizations = try XCTUnwrap(entry["localizations"] as? [String: Any])
-      for language in ["en", "ko"] {
+      for language in ["en", "ko", "ja", "zh-Hans"] {
         let localization = try XCTUnwrap(
           localizations[language] as? [String: Any],
           "\(key)의 \(language) localization이 없습니다"
@@ -109,7 +121,7 @@ final class LocalizationSliceTests: XCTestCase {
     }
   }
 
-  func testInfoPlistCatalog에는앱표시이름과plist이름의영어한국어계약이있다() throws {
+  func testInfoPlistCatalog에는앱표시이름과plist이름의네언어계약이있다() throws {
     // Given: InfoPlist localization catalog를 읽는다.
     let catalog = try loadJSONResource(named: "InfoPlist", ext: "xcstrings")
     let strings = try XCTUnwrap(catalog["strings"] as? [String: Any])
@@ -118,10 +130,10 @@ final class LocalizationSliceTests: XCTestCase {
     for key in ["CFBundleDisplayName", "CFBundleName"] {
       let entry = try XCTUnwrap(strings[key] as? [String: Any], "InfoPlist key 누락: \(key)")
       let localizations = try XCTUnwrap(entry["localizations"] as? [String: Any])
-      for language in ["en", "ko"] {
+      for language in ["en", "ko", "ja", "zh-Hans"] {
         let value = try stringValue(localizations[language], key: key, language: language)
         XCTAssertFalse(value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-        XCTAssertEqual(value, "Fake Sleep", "제품명은 영어/한국어에서 번역하지 않습니다")
+        XCTAssertEqual(value, "Fake Sleep", "제품명은 네 언어에서 번역하지 않습니다")
       }
     }
   }
