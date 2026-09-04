@@ -234,6 +234,7 @@ final class OverlayWindowController: OverlayPresenting {
     let disconnectedScreenIDs = Set(windows.keys).subtracting(connectedScreenIDs)
     for screenID in disconnectedScreenIDs {
       guard let window = windows.removeValue(forKey: screenID) else { continue }
+      window.setRestoreHandler(nil)
       window.close()
     }
   }
