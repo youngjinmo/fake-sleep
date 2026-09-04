@@ -3,8 +3,33 @@ import AppKit
 @MainActor
 protocol OverlayWindowing: AnyObject {
   var frame: CGRect { get set }
+  var onRestoreRequested: (() -> Void)? { get set }
   func orderFrontRegardless()
   func close()
+
+  // Optional hooks let the real AppKit window receive and consume the first
+  // restore input without requiring every test double to model NSWindow.
+  func setRestoreHandler(_ handler: (() -> Void)?)
+  func makeKeyAndOrderFront()
+  func resignKeyOverlay()
+}
+
+@MainActor
+extension OverlayWindowing {
+  var onRestoreRequested: (() -> Void)? {
+    get { nil }
+    set {}
+  }
+
+  func setRestoreHandler(_ handler: (() -> Void)?) {
+    onRestoreRequested = handler
+  }
+
+  func makeKeyAndOrderFront() {
+    orderFrontRegardless()
+  }
+
+  func resignKeyOverlay() {}
 }
 
 @MainActor
@@ -14,9 +39,53 @@ protocol OverlayWindowCreating: AnyObject {
 
 @MainActor
 final class OverlayWindow: NSWindow, OverlayWindowing {
+  private var didRequestRestore = false
+
+  var onRestoreRequested: (() -> Void)?
+
   override var frame: CGRect {
     get { super.frame }
     set { setFrame(newValue, display: true) }
+  }
+
+  override var canBecomeKey: Bool { true }
+  override var canBecomeMain: Bool { true }
+
+  func setRestoreHandler(_ handler: (() -> Void)?) {
+    onRestoreRequested = handler
+  }
+
+  func makeKeyAndOrderFront() {
+    makeKeyAndOrderFront(nil)
+  }
+
+  func resignKeyOverlay() {
+    resignKey()
+  }
+
+  override func sendEvent(_ event: NSEvent) {
+    if shouldRequestRestore(for: event) {
+      requestRestore()
+      return
+    }
+
+    super.sendEvent(event)
+  }
+
+  private func shouldRequestRestore(for event: NSEvent) -> Bool {
+    switch event.type {
+    case .leftMouseDown, .rightMouseDown, .otherMouseDown, .keyDown:
+      return true
+    default:
+      return false
+    }
+  }
+
+  private func requestRestore() {
+    guard !didRequestRestore else { return }
+
+    didRequestRestore = true
+    onRestoreRequested?()
   }
 }
 
@@ -34,7 +103,8 @@ final class OverlayWindowFactory: OverlayWindowCreating {
     window.isOpaque = true
     window.alphaValue = 1
     window.hasShadow = false
-    window.ignoresMouseEvents = true
+    window.ignoresMouseEvents = false
+    window.acceptsMouseMovedEvents = true
     window.isReleasedWhenClosed = false
     window.level = .screenSaver
     window.collectionBehavior = [
@@ -58,12 +128,24 @@ final class OverlayWindowController: OverlayPresenting {
   private let factory: OverlayWindowCreating
   private var windows: [UInt32: OverlayWindowing] = [:]
   private var notificationObservers: OverlayNotificationObserverStore?
+  private var primaryScreenID: UInt32?
+  private var restoreRequestInFlight = false
+
+  var onRestoreRequested: (() -> Void)? {
+    didSet {
+      installRestoreHandlers()
+    }
+  }
 
   var onScreenConfigurationChange: (() -> Void)?
   var onWake: (() -> Void)?
 
   var coveredScreenIDs: Set<UInt32> {
     Set(windows.keys)
+  }
+
+  var keyScreenID: UInt32? {
+    primaryScreenID
   }
 
   init(
@@ -96,19 +178,35 @@ final class OverlayWindowController: OverlayPresenting {
     for screen in uniqueScreens {
       if let window = windows[screen.id] {
         window.frame = screen.frame
+        installRestoreHandler(on: window)
         window.orderFrontRegardless()
       } else if let window = factory.makeWindow(frame: screen.frame) {
         windows[screen.id] = window
+        installRestoreHandler(on: window)
         window.orderFrontRegardless()
       }
     }
+
+    primaryScreenID = uniqueScreens.first(where: { windows[$0.id] != nil })?.id
+    enforcePrimaryKeyWindow()
   }
 
   func removeAll() {
     for window in windows.values {
+      window.setRestoreHandler(nil)
       window.close()
     }
     windows.removeAll()
+    primaryScreenID = nil
+    restoreRequestInFlight = false
+  }
+
+  func setRestoreHandler(_ handler: (() -> Void)?) {
+    onRestoreRequested = handler
+  }
+
+  func requestRestore() {
+    handleRestoreRequest()
   }
 
   private func observeNotifications(
@@ -138,6 +236,43 @@ final class OverlayWindowController: OverlayPresenting {
       guard let window = windows.removeValue(forKey: screenID) else { continue }
       window.close()
     }
+  }
+
+  private func installRestoreHandlers() {
+    for window in windows.values {
+      installRestoreHandler(on: window)
+    }
+  }
+
+  private func installRestoreHandler(on window: OverlayWindowing) {
+    window.setRestoreHandler { [weak self] in
+      self?.handleRestoreRequest()
+    }
+  }
+
+  private func handleRestoreRequest() {
+    guard !restoreRequestInFlight else { return }
+
+    restoreRequestInFlight = true
+    if let onRestoreRequested {
+      onRestoreRequested()
+    } else {
+      removeAll()
+    }
+  }
+
+  private func enforcePrimaryKeyWindow() {
+    guard let primaryScreenID,
+          let primaryWindow = windows[primaryScreenID] else {
+      return
+    }
+
+    for (screenID, window) in windows where screenID != primaryScreenID {
+      window.resignKeyOverlay()
+      window.orderFrontRegardless()
+    }
+
+    primaryWindow.makeKeyAndOrderFront()
   }
 }
 
